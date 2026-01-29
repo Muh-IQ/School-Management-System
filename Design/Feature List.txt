@@ -1,0 +1,48 @@
+0- Multi-Tenant & School Management
+    0.1- The system must allow a Super Admin to create a new school (tenant).
+    0.2- The system must allow a Super Admin to assign a School Admin for each school.
+    0.3- The system must allow a School Admin or Assistant to manage the school (students, teachers, classes , section, subjects).
+    0.4- The system must ensure data isolation between schools (tenants).
+    0.5- The system must allow the School Admin or Assistant to define and manage the timetable for each class and section.
+    0.6- Distributing alerts to students and parents
+    0.7- The system must allow the School Admin to define and manage his/her Assistant 
+    0.8- The assistant can to add or approve leave of absence.
+
+1- Student & Enrollment
+    1.1- The system must allow School Admin or Assistant to register a new student with personal and academic information.
+    1.2- The system must allow School Admin or Assistant to assign students to a class and section for a specific academic year.
+    1.3- The system must keep a complete academic history for each student across years.
+    1.4- The system must allow transferring a student between sections or classes.
+    1.5- The system must allow changing a student status.
+    1.6- The system must allow students to view their timetable.
+
+2- Teacher & Teaching
+    2.1- The system must allow School Admin or Assistant to register teachers and their subjects.
+    2.2- The system must allow School Admin or Assistant to assign teachers to subjects and classes.
+    2.3- The system must allow teachers to view their teaching schedule.
+
+3- Academic Structure
+    3.1- The system must allow School Admin or Assistant to define academic years.
+    3.2- The system must allow School Admin or Assistant to define classes and sections.
+    3.3- The system must allow School Admin or Assistant to define subjects per class.
+
+4- Attendance
+    4.1- The system must allow teachers to record student attendance per subject session.               
+    4.2- The system must generate attendance summaries per student and class.
+
+5- Exams & Grades
+    5.1- The system must allow teachers to create exams for his/her subject.
+    5.2- The system must allow teachers to enter student grades.
+    5.3- The system must calculate final results automatically.
+    5.4- The system must allow students and parents to view and export student results.
+
+6- Parent Interaction
+    6.1- The system must allow linking a student to one or more parents.
+    6.2- The system must allow parents to view attendance and grades.
+    6.3- The system must allow parents to view their child’s timetable.
+    6.4- chat parents for each students with teachers
+    6.5- Parents can request leave for the student
+
+7- Reports
+    7.1- The system must generate academic reports for School Admin and Assistant .
+    7.2- The system must provide performance summaries per class and year.
