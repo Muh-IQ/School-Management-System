@@ -1,0 +1,6 @@
+@Modules.School.WebAPI_HostAddress = http://localhost:5207
+
+GET {{Modules.School.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
