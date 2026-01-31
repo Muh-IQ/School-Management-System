@@ -1,5 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+using Modules.School.Infrastructure.Persistent;
+
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
+builder.Services.AddDbContext<SchoolManagementDbContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
 
 
 
