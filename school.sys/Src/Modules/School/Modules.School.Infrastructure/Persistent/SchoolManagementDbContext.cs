@@ -10,13 +10,14 @@ using System.Threading.Tasks;
 namespace Modules.School.Infrastructure.Persistent
 {
    
-    public class XDbContext :DbContext
+    public class SchoolManagementDbContext :DbContext
     {
-      public  XDbContext(DbContextOptions<DbContext> options)   
+      public  SchoolManagementDbContext(DbContextOptions<DbContext> options)   
             : base(options)
         {
          
         }
+
 
     }
 }
