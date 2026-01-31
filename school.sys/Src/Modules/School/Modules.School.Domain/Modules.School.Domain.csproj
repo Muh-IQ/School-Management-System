@@ -10,7 +10,6 @@
     <Folder Include="Entities\" />
     <Folder Include="DTOs\" />
     <Folder Include="IThirdPartyServices\" />
-    <Folder Include="IRepository\" />
   </ItemGroup>
 
 </Project>
