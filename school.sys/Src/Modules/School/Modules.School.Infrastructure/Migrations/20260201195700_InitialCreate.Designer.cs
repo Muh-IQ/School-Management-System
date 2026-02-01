@@ -12,7 +12,7 @@ using Modules.School.Infrastructure.Persistent;
 namespace Modules.School.Infrastructure.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20260201183551_InitialCreate")]
+    [Migration("20260201195700_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -71,6 +71,10 @@ namespace Modules.School.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("sanitizeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
