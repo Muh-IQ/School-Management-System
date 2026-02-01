@@ -16,7 +16,7 @@ namespace Modules.School.Infrastructure.Persistent
         public  SchoolDbContext(DbContextOptions<DbContext> options)   
             : base(options)
         {
-         
+
         }
         public DbSet<Languages> Languages {  get; set; }
         public DbSet<Schools> Schools { get; set; }

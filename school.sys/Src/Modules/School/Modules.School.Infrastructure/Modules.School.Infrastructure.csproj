@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <Folder Include="ThirdPartyServices\" />
-    <Folder Include="Persistent\Seed\" />
+    <Folder Include="Persistent\seed\" />
   </ItemGroup>
 
   <ItemGroup>
