@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Modules.School.Domain.IRepositories
+﻿namespace Modules.School.Domain.IRepositories
 {
-    public interface IRepository<T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         Task AddAsync(T entity);
         Task<T> GetByIdAsync(Guid id);
