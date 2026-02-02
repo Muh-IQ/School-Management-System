@@ -3,11 +3,8 @@ namespace Modules.School.Application.Common.Results;
 public class Result<T> : Result
 {
     public T? Value { get; private set; }
-    private Result()
-    {   
-    }
 
-    private Result(bool isSuccess, T? value, ErrorType errorType, string errorMessage)
+    protected Result(bool isSuccess, T? value, ErrorType errorType, string errorMessage)
         : base(isSuccess, errorType, errorMessage)
     {
         Value = value;
