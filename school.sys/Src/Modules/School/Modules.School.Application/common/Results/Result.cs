@@ -5,7 +5,7 @@ public class Result
     public bool IsFailure => !IsSuccess;
 
     public List<Error> Errors { get; set; }
-
+    
     protected Result(bool isSuccess, ErrorType errorType, string errorMessage)
     {
         IsSuccess = isSuccess;
