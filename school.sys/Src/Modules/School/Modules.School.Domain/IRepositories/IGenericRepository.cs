@@ -5,9 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Modules.School.Domain.IRepositories
+
+﻿namespace Modules.School.Domain.IRepositories
 {
-    public interface IRepository<T> where T : class
+    public interface IGenericRepository<T> where T : class
     {
         Task<bool> AddAsync(T entity);
         Task<T> GetByIdAsync(Guid id);

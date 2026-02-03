@@ -1,8 +1,6 @@
 namespace Modules.School.Application.Common.Results;
 
-/// <summary>
-/// Represents the type of error that occurred during an operation.
-/// </summary>
+
 public enum ErrorType
 {
     /// <summary>

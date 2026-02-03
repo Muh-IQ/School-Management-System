@@ -12,9 +12,9 @@ namespace Modules.School.Application.Services
 {
     public class LanguageService : ILanguageService
     {
-        private readonly IRepository<Language> _Repository;
+        private readonly IGenericRepository<Language> _Repository;
 
-        public LanguageService(IRepository<Language> repository)
+        public LanguageService(IGenericRepository<Language> repository)
         {
             _Repository = repository;
         }
@@ -88,7 +88,7 @@ namespace Modules.School.Application.Services
             {
                 return Result.Failure(ErrorType.InternalServerError, "Updated Failed.");
             }
-
+             
             return Result.Success();
         }
 
@@ -106,6 +106,10 @@ namespace Modules.School.Application.Services
             {
                 return Result.Failure(ErrorType.InternalServerError, "Delete Failed.");
             }
+         
+            
+            
+            
             return Result.Success();
         }
     }

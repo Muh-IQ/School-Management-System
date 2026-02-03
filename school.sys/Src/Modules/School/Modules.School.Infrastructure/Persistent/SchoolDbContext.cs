@@ -13,24 +13,24 @@ namespace Modules.School.Infrastructure.Persistent
 
         }
         public DbSet<Language> Languages {  get; set; }
-        public DbSet<SChool> Schools { get; set; }
+        public DbSet<Domain.Entities.School> Schools { get; set; }
         public DbSet<Policy> Policies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Schools>()
+            modelBuilder.Entity<Domain.Entities.School>()
                 .HasOne(s => s.Language)
                 .WithMany()
                 .HasForeignKey(s => s.LanguageId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Schools>()
+            modelBuilder.Entity<Domain.Entities.School>()
                 .HasOne(s => s.Policy)
                 .WithMany()
                 .HasForeignKey(s => s.PolicyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Schools>()
+            modelBuilder.Entity<Domain.Entities.School>()
                 .OwnsOne(s => s.ContactInfo);
         }
 

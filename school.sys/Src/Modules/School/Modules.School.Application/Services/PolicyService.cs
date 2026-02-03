@@ -12,9 +12,9 @@ namespace Modules.School.Application.Services
 {
     public class PolicyService : IPolicyService
     {
-        private readonly IRepository<Policy> _Repository;
+        private readonly IGenericRepository<Policy> _Repository;
 
-        public PolicyService(IRepository<Policy> repository)
+        public PolicyService(IGenericRepository<Policy> repository)
         {
             _Repository = repository;
         }

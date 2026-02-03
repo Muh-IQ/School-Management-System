@@ -14,14 +14,14 @@ namespace Modules.School.Application.Services
 {
     public class SchoolService : ISchoolService
     {
-        private readonly IRepository<SChool> _Repository;
+        private readonly IGenericRepository<Domain.Entities.School> _Repository;
 
-        public SchoolService(IRepository<SChool> repository)
+        public SchoolService(IGenericRepository<Domain.Entities.School> repository)
         {
             _Repository = repository; 
         }
 
-        public async Task<Result>CreateAsync(SChool school)
+        public async Task<Result>CreateAsync(Domain.Entities.School school)
         {
             var exist = await _Repository.AnyAsync(s => s.Name == school.Name);
 
@@ -53,27 +53,27 @@ namespace Modules.School.Application.Services
             return Result.Success();
         }
 
-        public async Task<Result<IEnumerable< SChool>>> GetAllAsync()
+        public async Task<Result<IEnumerable<Domain.Entities.School>>> GetAllAsync()
         {
             var School = await _Repository.GetAllAsync();
             if(School == null)
             {
-                return Result<IEnumerable<SChool>>.Failure(ErrorType.NotFound, "Schools Not Found.");
+                return Result<IEnumerable<Domain.Entities.School>>.Failure(ErrorType.NotFound, "Schools Not Found.");
             }
-             return Result<IEnumerable<SChool>>.Success(School);           
+             return Result<IEnumerable<Domain.Entities.School>>.Success(School);           
         }
         
-        public async Task<Result<IEnumerable<SChool>>>GetAllAsync(int pageing=1,int pageSize = 10)
+        public async Task<Result<IEnumerable<Domain.Entities.School>>>GetAllAsync(int pageing=1,int pageSize = 10)
         {
             var School = await _Repository.GetAllAsync(pageing,pageSize);
             if (School == null)
             {
-                return Result<IEnumerable<SChool>>.Failure(ErrorType.NotFound, "Schools Not Found");
+                return Result<IEnumerable<Domain.Entities.School>>.Failure(ErrorType.NotFound, "Schools Not Found");
             }
-            return Result<IEnumerable<SChool>>.Success(School);
+            return Result<IEnumerable<Domain.Entities.School>>.Success(School);
         }
 
-        public async Task<Result> UpdateAsync(SChool school)
+        public async Task<Result> UpdateAsync(Domain.Entities.School school)
         {
             var exist=await _Repository.AnyAsync(s => s.Id == school.Id);
 

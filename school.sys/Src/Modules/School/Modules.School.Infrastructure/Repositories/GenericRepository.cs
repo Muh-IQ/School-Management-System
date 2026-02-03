@@ -11,7 +11,7 @@ using Modules.School.Infrastructure.Persistent;
 
 namespace Modules.School.Infrastructure.Repositories
 {
-    internal class GenericRepository<T>(SchoolDbContext context) : IRepository<T> where T : class
+    internal class GenericRepository<T>(SchoolDbContext context) : IGenericRepository<T> where T : class
     {
         public async Task<bool> AddAsync(T entity)
         {
