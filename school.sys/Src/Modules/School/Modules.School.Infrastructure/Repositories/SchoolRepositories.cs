@@ -31,38 +31,38 @@ namespace Modules.School.Infrastructure.Repositories
             return await context.Schools.AnyAsync(s => s.Name == name && !s.IsDeleted);
         }
 
-        public async Task<IEnumerable<Schools>> GetActiveSchoolsAsync()
+        public async Task<IEnumerable<Domain.Entities.School>> GetActiveSchoolsAsync()
         {
             return await context.Schools.Where(s=>s.IsActive && !s.IsDeleted).ToListAsync();
         }
 
-        public async Task<Schools?> GetByIdWithDetailsAsync(Guid schoolId)
+        public async Task<Domain.Entities.School?> GetByIdWithDetailsAsync(Guid schoolId)
         {
             return await context.Schools.Include(s => s.Language).Include(s => s.Policy).
                 FirstOrDefaultAsync(s => s.Id == schoolId && !s.IsDeleted);
         }
 
-        public async Task<IEnumerable<Schools>> GetByLanguageAsync(Guid languageId)
+        public async Task<IEnumerable<Domain.Entities.School>> GetByLanguageAsync(Guid languageId)
         {
             return await context.Schools.Where(s=>s.LanguageId==languageId&&
                 !s.IsDeleted && s.IsActive).ToListAsync();
         }
 
-        public async Task<IEnumerable<Schools>> GetByPolicyAsync(Guid policyId)
+        public async Task<IEnumerable<Domain.Entities.School>> GetByPolicyAsync(Guid policyId)
         {
             return await context.Schools.Where(s => s.PolicyId == policyId &&
                             !s.IsDeleted && s.IsActive).ToListAsync();
         }
 
-        public async Task<Schools?> GetBySanitizedNameAsync(string sanitizeName)
+        public async Task<Domain.Entities.School?> GetBySanitizedNameAsync(string sanitizeName)
         {
             return await context.Schools.FirstOrDefaultAsync(s =>s.sanitizeName == sanitizeName &&
             !s.IsDeleted);
         }
 
-        public async Task<IEnumerable<Schools>> GetSchoolsAsync(int page, int pageSize, string? searchTerm)
+        public async Task<IEnumerable<Domain.Entities.School>> GetSchoolsAsync(int page, int pageSize, string? searchTerm)
         {
-            IQueryable<Schools> query=context.Schools.Where(s=>!s.IsDeleted);
+            IQueryable<Domain.Entities.School> query=context.Schools.Where(s=>!s.IsDeleted);
             if(!string.IsNullOrEmpty(searchTerm))
             {
                 query = query.Where(s => s.Name.Contains(searchTerm));

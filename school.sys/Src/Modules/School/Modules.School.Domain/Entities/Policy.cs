@@ -1,6 +1,6 @@
 ﻿namespace Modules.School.Domain.Entities
 {
-    public class Policies:BaseEntity
+    public class Policy:BaseEntity
     {
         public string Title { get; set; }
         public string sanitizeName { get; set; }

@@ -8,5 +8,6 @@ namespace Modules.School.Infrastructure
 {
     public static class DependencyInjectionInfrastructure
     {
+
     }
 }
