@@ -8,16 +8,16 @@ namespace Modules.School.Application.IServices
 {
     public interface IPolicyService
     {
-        Task<Result<Policies>> CreateAsync(Policies policy);
+        Task<Result> CreateAsync(Policy policy);
 
-        Task<Result<Policies>> GetByIdAsync(Guid id);
+        Task<Result> GetByIdAsync(Guid id);
 
-        Task<Result<IEnumerable<Policies>>> GetAllAsync();
+        Task<Result<IEnumerable<Policy>>> GetAllAsync();
 
-        Task<Result<IEnumerable<Policies>>> GetAllAsync(int paging, int pageSize);
+        Task<Result<IEnumerable<Policy>>> GetAllAsync(int paging=1, int pageSize=10);
 
-        Task<Result<Policies>> UpdateAsync(Policies policy);
+        Task<Result> UpdateAsync(Policy policy);
 
-        Task<Result<Policies>> DeleteAsync(Policies policy);
+        Task<Result> DeleteAsync(Guid Id);
     }
 }

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Modules.School.Domain.Entities
 {
-    public class Schools:BaseEntity
+    public class SChool:BaseEntity
     {
         public string sanitizeName {  get; set; }
         public string Name {  get; set; }
         public string TimeZone { get; set; }
         public ContactInfo ContactInfo {  get; set; }
         public Guid LanguageId { get; set; }
-        public virtual Languages Language { get; set; }
+        public virtual Language Language { get; set; }
 
 
 

@@ -8,16 +8,16 @@ namespace Modules.School.Application.IServices
 {
     public interface ISchoolService
     {
-        Task<Result<Schools>> CreateAsync(Schools school);
+        Task<Result> CreateAsync(SChool school);
 
-        Task<Result<Schools>> GetByIdAsync(Guid id);
+        Task<Result> GetByIdAsync(Guid id);
 
-        Task<Result<IEnumerable<Schools>>> GetAllAsync();
+        Task<Result<IEnumerable<SChool>>> GetAllAsync();
 
-        Task<Result<IEnumerable<Schools>>> GetAllAsync(int paging, int pageSize);
+        Task<Result<IEnumerable<SChool>>> GetAllAsync(int paging=1, int pageSize=10);
 
-        Task<Result<Schools>> UpdateAsync(Schools school);
+        Task<Result> UpdateAsync(SChool school);
 
-        Task<Result<Schools>> DeleteAsync(Schools school);
+        Task<Result> DeleteAsync(Guid Id);
     }
 }

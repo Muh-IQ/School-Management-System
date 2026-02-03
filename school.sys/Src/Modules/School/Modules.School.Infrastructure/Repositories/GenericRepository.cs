@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,15 +13,21 @@ namespace Modules.School.Infrastructure.Repositories
 {
     internal class GenericRepository<T>(SchoolDbContext context) : IRepository<T> where T : class
     {
-        public async Task AddAsync(T entity)
+        public async Task<bool> AddAsync(T entity)
         {
             context.Set<T>().Add(entity);
-            await context.SaveChangesAsync();
+            var result= await context.SaveChangesAsync();
+            return result > 0 ;
         }
-        public Task DeleteAsync(T entity)
+        public async Task<bool> DeleteAsync(T entity)
         {
             context.Set<T>().Remove(entity);
-            return context.SaveChangesAsync();
+            var result=await context.SaveChangesAsync();
+            return result > 0 ;
+        }
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>>predicate)
+        {
+            return await context.Set<T>().AnyAsync(predicate);
         }
         public async Task<IEnumerable<T>> GetAllAsync()
         {
@@ -37,10 +44,11 @@ namespace Modules.School.Infrastructure.Repositories
             return await context.Set<T>().FindAsync(id);
         }
 
-        public async Task UpdateAsync(T entity)
+        public async Task<bool> UpdateAsync(T entity)
         {
             context.Set<T>().Update(entity);
-            await context.SaveChangesAsync();
+            var updated= await context.SaveChangesAsync();
+            return updated > 0 ; 
         }
     }
 }

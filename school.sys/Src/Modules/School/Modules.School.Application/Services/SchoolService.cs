@@ -14,184 +14,100 @@ namespace Modules.School.Application.Services
 {
     public class SchoolService : ISchoolService
     {
-        private readonly IRepository<Schools> _Repository;
+        private readonly IRepository<SChool> _Repository;
 
-        public SchoolService(IRepository<Schools> repository)
+        public SchoolService(IRepository<SChool> repository)
         {
             _Repository = repository; 
         }
 
-        public async Task<Result<Schools>>CreateAsync(Schools school)
+        public async Task<Result>CreateAsync(SChool school)
         {
-            if (school == null)
-            {
-                return Result<Schools>.Failure(ErrorType.BadRequest, "School is Required.");
-            }
-
-            var result=Result<Schools>.Success(school);
-
-            if (string.IsNullOrWhiteSpace(school.Name))
-            {
-                return result.WithError(ErrorType.Validation, "School Name is Reqierd.");         
-            }
-
-            if (school.ContactInfo == null)
-            {
-                return result.WithError(ErrorType.Validation, "Contact Info Reqiered."); 
-            }
-            
-            else
-            {
-                if (string.IsNullOrWhiteSpace(school.ContactInfo.Phone))
-                {
-                    return result.WithError(ErrorType.Validation, "School Phone is Reqierd.");
-                }
-
-                if (string.IsNullOrWhiteSpace(school.ContactInfo.Email))
-                {
-                    return result.WithError(ErrorType.Validation, "School Email is Reqierd.");
-                }
-            }
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var exist=(await _Repository.GetAllAsync()).Any(s =>s.Name==school.Name);
+            var exist = await _Repository.AnyAsync(s => s.Name == school.Name);
 
             if (exist)
             {
-                return Result<Schools>.Failure(ErrorType.Conflict, "School Already Exists.");
+                return Result.Failure(ErrorType.Conflict, "School Is Already Exists.");
             }
 
-            await _Repository.AddAsync(school);
-            
-            return Result<Schools>.Success(school);
-        
+            var added = await _Repository.AddAsync(school);
+
+            if (!added)
+            {
+                return Result.Failure(ErrorType.InternalServerError, "Faild To Create School.");
+            }
+
+            return Result.Success();
         }
 
 
-        public async Task<Result<Schools>>GetByIdAsync(Guid Id)
-        {
-            if (Id == Guid.Empty)
-            {
-                return Result<Schools>.Failure(ErrorType.BadRequest,"Invalid School ID.");
-            }
-          
+        public async Task<Result>GetByIdAsync(Guid Id)
+        {  
             var school=await _Repository.GetByIdAsync(Id);
             
             if(school == null)
             {
-                return Result<Schools>.Failure(ErrorType.NotFound, "School Not Found.");
+                return Result.Failure(ErrorType.NotFound, "School Not Found.");
             }
             
-            return Result<Schools>.Success(school);
+            return Result.Success();
         }
 
-        public async Task<Result<IEnumerable< Schools>>> GetAllAsync()
+        public async Task<Result<IEnumerable< SChool>>> GetAllAsync()
         {
             var School = await _Repository.GetAllAsync();
             if(School == null)
             {
-                return Result<IEnumerable<Schools>>.Failure(ErrorType.NotFound, "Schools Not Found.");
+                return Result<IEnumerable<SChool>>.Failure(ErrorType.NotFound, "Schools Not Found.");
             }
-             return Result<IEnumerable<Schools>>.Success(School);           
+             return Result<IEnumerable<SChool>>.Success(School);           
         }
         
-        public async Task<Result<IEnumerable<Schools>>>GetAllAsync(int pageing=1,int pageSize = 10)
+        public async Task<Result<IEnumerable<SChool>>>GetAllAsync(int pageing=1,int pageSize = 10)
         {
-            if(pageing <= 0 || pageSize <= 0)
-            {
-                return Result<IEnumerable<Schools>>.Failure(ErrorType.Validation, "Invalid Paging Values");
-            }
             var School = await _Repository.GetAllAsync(pageing,pageSize);
             if (School == null)
             {
-                return Result<IEnumerable<Schools>>.Failure(ErrorType.NotFound, "Schools Not Found");
+                return Result<IEnumerable<SChool>>.Failure(ErrorType.NotFound, "Schools Not Found");
             }
-            return Result<IEnumerable<Schools>>.Success(School);
+            return Result<IEnumerable<SChool>>.Success(School);
         }
 
-        public async Task<Result<Schools>> UpdateAsync(Schools school)
+        public async Task<Result> UpdateAsync(SChool school)
         {
+            var exist=await _Repository.AnyAsync(s => s.Id == school.Id);
 
-            if (school == null)
+            if (!exist)
             {
-                return Result<Schools>.Failure(ErrorType.BadRequest, "School is Empty.");
+                return Result.Failure(ErrorType.NotFound, $"School With ID {school.Id} Not Found.");
             }
+
+            var updated= await _Repository.UpdateAsync(school);
             
-            if (school.Id == Guid.Empty)
+            if (!updated)
             {
-                return Result<Schools>.Failure(ErrorType.NotFound, "Invalid School ID.");
+                return Result.Failure(ErrorType.InternalServerError, "Updated Failed.");
             }
 
-            var oldSchool = await _Repository.GetByIdAsync(school.Id);
-            
-
-            if (oldSchool == null)
-            {
-                return Result<Schools>.Failure(ErrorType.NotFound, $"School With ID :{school.Id} not Found.");
-            }
-
-            var result = Result<Schools>.Success(school);
-
-
-            if (string.IsNullOrWhiteSpace(school.Name))
-            {
-                return result.WithError(ErrorType.Validation, "School Name Reqiered.");
-            }
-
-            if (school.ContactInfo == null)
-            {
-                return result.WithError(ErrorType.Validation, "Contact Info Reqiered.");
-              
-            }
-
-            else
-            {
-                if (string.IsNullOrWhiteSpace(school.ContactInfo.Phone))
-                {
-                    return result.WithError(ErrorType.Validation, "School Phone Reqiered.");
-                }
-
-                if (string.IsNullOrWhiteSpace(school.ContactInfo.Email))
-                {
-                    return result.WithError(ErrorType.Validation, "School Email Reqiered.");
-                }
-            }
-
-            if (string.IsNullOrWhiteSpace(school.TimeZone))
-            {
-                return result.WithError(ErrorType.Validation, "Time Zone Reqiered.");
-            }
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            await _Repository.UpdateAsync(school);
-            return Result<Schools>.Success(school);
+            return Result.Success();
 
         }
 
-        public async Task<Result<Schools>> DeleteAsync(Schools school)
+        public async Task<Result> DeleteAsync(Guid id)
         {
+            var school = await _Repository.GetByIdAsync(id);
+
             if (school == null)
             {
-                return Result<Schools>.Failure(ErrorType.BadRequest, "School is Reqiered.");
+                return Result.Failure(ErrorType.NotFound, $"School With ID ;{id} Not Found");
             }
+            var delete = await _Repository.DeleteAsync(school);
 
-            var MarkSchool = await _Repository.GetByIdAsync(school.Id);
-           
-            if (MarkSchool == null)
+            if (!delete)
             {
-                return Result<Schools>.Failure(ErrorType.NotFound, "School Not Found.");
+                return Result.Failure(ErrorType.InternalServerError, "Delete Failed.");
             }
-
-            await _Repository.DeleteAsync(MarkSchool);
-            return Result<Schools>.Success(MarkSchool);
+            return Result.Success();
         }       
     }
 }

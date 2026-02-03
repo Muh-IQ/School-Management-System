@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modules.School.Domain.Entities
 {
-    public class Policies:BaseEntity
+    public class Policy:BaseEntity
     {
         public string Title { get; set; }
         public string PloicyType { get; set; }

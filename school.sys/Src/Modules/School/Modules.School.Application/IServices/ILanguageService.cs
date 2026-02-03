@@ -9,16 +9,16 @@ namespace Modules.School.Application.IServices
 
     public interface ILanguageService
     {
-        Task<Result<Languages>> CreateAsync(Languages language);
+        Task<Result> CreateAsync(Language language);
 
-        Task<Result<Languages>> GetByIdAsync(Guid id);
+        Task<Result> GetByIdAsync(Guid id);
 
-        Task<Result<IEnumerable<Languages>>> GetAllAsync();
+        Task<Result<IEnumerable<Language>>> GetAllAsync();
 
-        Task<Result<IEnumerable<Languages>>> GetAllAsync(int paging, int pageSize);
+        Task<Result<IEnumerable<Language>>> GetAllAsync(int paging=1, int pageSize=10);
 
-        Task<Result<Languages>> UpdateAsync(Languages language);
+        Task<Result> UpdateAsync(Language language);
 
-        Task<Result<Languages>> DeleteAsync(Languages language);
+        Task<Result> DeleteAsync(Guid Id);
     }
 }

@@ -18,9 +18,9 @@ namespace Modules.School.Infrastructure.Persistent
         {
 
         }
-        public DbSet<Languages> Languages {  get; set; }
-        public DbSet<Schools> Schools { get; set; }
-        public DbSet<Policies> Policies { get; set; }
+        public DbSet<Language> Languages {  get; set; }
+        public DbSet<SChool> Schools { get; set; }
+        public DbSet<Policy> Policies { get; set; }
 
 
 

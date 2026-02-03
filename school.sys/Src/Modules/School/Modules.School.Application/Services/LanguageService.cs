@@ -12,152 +12,101 @@ namespace Modules.School.Application.Services
 {
     public class LanguageService : ILanguageService
     {
-        private readonly IRepository<Languages> _Repository;
+        private readonly IRepository<Language> _Repository;
 
-        public LanguageService(IRepository<Languages> repository)
+        public LanguageService(IRepository<Language> repository)
         {
             _Repository = repository;
         }
-        public async Task<Result<Languages>> CreateAsync(Languages language)
+        public async Task<Result> CreateAsync(Language language)
         {
-            if (language == null)
-            {
-                return Result<Languages>.Failure(ErrorType.BadRequest, "Language Is Reqiered.");
-            }
+            var exist = await _Repository.AnyAsync(s => s.Name == language.Name);
             
-            var result=Result<Languages>.Success(language);
-
-            if (language.Name == null)
-            {
-                return result.WithError(ErrorType.Validation, "Lanuage Name Is Reqiered.");
-            }
-
-            if (language.Code == null)
-            {
-                return result.WithError(ErrorType.Validation, "Language Code Is reqiered.");
-            }
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            var exist = (await _Repository.GetAllAsync()).Any(s => s.Name == language.Name);
-
             if (exist)
             {
-                return Result<Languages>.Failure(ErrorType.Conflict, "Language Already Exists.");
-            }     
+                return Result.Failure(ErrorType.Conflict, "Language Already Exists.");
+            }               
+            
+            var added= await _Repository.AddAsync(language);
 
-            await _Repository.AddAsync(language);
-            return result;
-        }
-
-        public async Task<Result<Languages>> GetByIdAsync(Guid Id)
-        {
-            if (Id == Guid.Empty)
+            if (!added)
             {
-                return Result<Languages>.Failure(ErrorType.BadRequest, "Invalid Language ID.");
+                return Result.Failure(ErrorType.InternalServerError, "Faild To Create Language.");
             }
 
+            return Result.Success();
+        }
+
+        public async Task<Result> GetByIdAsync(Guid Id)
+        {
             var lang = await _Repository.GetByIdAsync(Id);
 
             if (lang == null)
             {
-                return Result<Languages>.Failure(ErrorType.NotFound, "Language Not Found.");
+                return Result.Failure(ErrorType.NotFound, "Language Not Found.");
             }
 
-            return Result<Languages>.Success(lang);
+            return Result.Success();
         }
 
-        public async Task<Result<IEnumerable<Languages>>> GetAllAsync()
+        public async Task<Result<IEnumerable<Language>>> GetAllAsync()
         {
             var lang = await _Repository.GetAllAsync();
             
             if (lang == null)
             {
-                return Result<IEnumerable<Languages>>.Failure(ErrorType.NotFound, "Schools Not Found.");
+                return Result<IEnumerable<Language>>.Failure(ErrorType.NotFound, "Schools Not Found.");
             }
 
-            return Result<IEnumerable<Languages>>.Success(lang);
+            return Result<IEnumerable<Language>>.Success(lang);
         }
 
-        public async Task<Result<IEnumerable<Languages>>> GetAllAsync(int pageing = 1, int pageSize = 10)
+        public async Task<Result<IEnumerable<Language>>> GetAllAsync(int pageing = 1, int pageSize = 10)
         {
-            if (pageing <= 0 || pageSize <= 0)
-            {
-                return Result<IEnumerable<Languages>>.Failure(ErrorType.Validation, "Invalid Paging Values");
-            }
-          
             var lang = await _Repository.GetAllAsync(pageing, pageSize);
             
             if (lang == null)
             {
-                return Result<IEnumerable<Languages>>.Failure(ErrorType.NotFound, "Language Not Found");
+                return Result<IEnumerable<Language>>.Failure(ErrorType.NotFound, "Language Not Found");
             }
             
-            return Result<IEnumerable<Languages>>.Success(lang);
+            return Result<IEnumerable<Language>>.Success(lang);
         }
 
-        public async Task<Result<Languages>> UpdateAsync(Languages language)
+        public async Task<Result> UpdateAsync(Language language)
         {
-            if(language == null)
+            var exist = await _Repository.AnyAsync(s => s.Id == language.Id);
+
+            if (!exist)
             {
-                return Result<Languages>.Failure(ErrorType.BadRequest, "Language Not Found.");
+                return Result.Failure(ErrorType.NotFound, $"Language With ID {language.Id} Not Found.");
             }
 
-            if (language.Id == Guid.Empty)
+            var updated = await _Repository.UpdateAsync(language);
+
+            if (!updated)
             {
-                return Result<Languages>.Failure(ErrorType.NotFound, "Invalid Language ID.");
+                return Result.Failure(ErrorType.InternalServerError, "Updated Failed.");
             }
 
-            var oldLang = await _Repository.GetByIdAsync(language.Id);
-
-
-            if (oldLang == null)
-            {
-                return Result<Languages>.Failure(ErrorType.NotFound, $"School With ID :{language.Id} not Found.");
-            }
-
-            var result = Result<Languages>.Success(language);
-
-
-            if (string.IsNullOrWhiteSpace(language.Name))
-            {
-                return result.WithError(ErrorType.Validation, "Language Name Reqiered.");
-            }
-
-            if (string.IsNullOrWhiteSpace(language.Code))
-            {
-                return result.WithError(ErrorType.Validation, "Language Code Reqiered.");
-            }
-
-            if (!result.IsSuccess)
-            {
-                return result;
-            }
-
-            await _Repository.UpdateAsync(language);
-            return Result<Languages>.Success(language);
-
+            return Result.Success();
         }
 
-        public async Task<Result<Languages>> DeleteAsync(Languages language)
+        public async Task<Result> DeleteAsync(Guid id)
         {
-            if (language == null)
+            var lang= await _Repository.GetByIdAsync(id);
+
+            if(lang == null)
             {
-                return Result<Languages>.Failure(ErrorType.BadRequest, "Language is Reqiered.");
+                return Result.Failure(ErrorType.NotFound, $"Language With ID :{id} Not Found");
             }
+            var delete=await _Repository.DeleteAsync(lang);
 
-            var markLang = await _Repository.GetByIdAsync(language.Id);
-
-            if (markLang == null)
+            if (!delete)
             {
-                return Result<Languages>.Failure(ErrorType.NotFound, "Language Not Found.");
+                return Result.Failure(ErrorType.InternalServerError, "Delete Failed.");
             }
-
-            await _Repository.DeleteAsync(markLang);
-            return Result<Languages>.Success(markLang);
+            return Result.Success();
         }
     }
 }
