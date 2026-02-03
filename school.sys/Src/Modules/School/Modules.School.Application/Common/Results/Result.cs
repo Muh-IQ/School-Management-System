@@ -4,11 +4,8 @@ public class Result
     public bool IsSuccess { get; private set; }
     public bool IsFailure => !IsSuccess;
 
-    public List<Error> Errors { get;private set; }
-    protected Result()
-    {
-        
-    }
+    public List<Error> Errors { get; set; }
+    
     protected Result(bool isSuccess, ErrorType errorType, string errorMessage)
     {
         IsSuccess = isSuccess;
@@ -26,4 +23,3 @@ public class Result
         return this;
     }
 }
- 
