@@ -16,9 +16,12 @@ namespace Modules.School.Application.Services
     {
         private readonly IGenericRepository<Domain.Entities.School> _Repository;
 
-        public SchoolService(IGenericRepository<Domain.Entities.School> repository)
+        private readonly ITimeService _TimeService;
+
+        public SchoolService(IGenericRepository<Domain.Entities.School> repository,ITimeService timeService)
         {
             _Repository = repository; 
+            _TimeService = timeService;
         }
 
         public async Task<Result>CreateAsync(Domain.Entities.School school)
@@ -29,6 +32,8 @@ namespace Modules.School.Application.Services
             {
                 return Result.Failure(ErrorType.Conflict, "School Is Already Exists.");
             }
+
+            school.TimeCreated = _TimeService.UtcNow();
 
             var added = await _Repository.AddAsync(school);
 

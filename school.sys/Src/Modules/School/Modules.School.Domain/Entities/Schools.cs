@@ -8,7 +8,8 @@ namespace Modules.School.Domain.Entities
     {
         public string sanitizeName {  get; set; }
         public string Name {  get; set; }
-        public string TimeZone { get; set; }
+        public string TimeZone{ get; set; }
+        public DateTime TimeCreated {  get; set; }
         public ContactInfo ContactInfo {  get; set; }
         public Guid LanguageId { get; set; }
         public virtual Language Language { get; set; }
