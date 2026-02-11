@@ -11,7 +11,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Modules\Communication\Modules.Communication.WebAPI\Modules.Communication.WebAPI.csproj" />
     <ProjectReference Include="..\Modules\School\Modules.School.WebAPI\Modules.School.WebAPI.csproj" />
+    <ProjectReference Include="..\Modules\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
 </Project>
