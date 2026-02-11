@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Modules.School.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,10 +16,10 @@ namespace Modules.School.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(10)", nullable: false),
-                    Code = table.Column<string>(type: "nvarchar(5)", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false,defaultValue:false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false,defaultValue:true)
+                    Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(10)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -32,11 +32,11 @@ namespace Modules.School.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    sanitizeName = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    PloicyType = table.Column<string>(type: "nvarchar(30)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false)
+                    sanitizeName = table.Column<string>(type: "nvarchar(60)", nullable: false),
+                    PolicyType = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(200)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -48,15 +48,15 @@ namespace Modules.School.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    sanitizeName = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                    sanitizeName = table.Column<string>(type: "nvarchar(60)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     TimeZone = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", nullable: false),
-                    Phone = table.Column<string>(type: "nvarchar(20)", nullable: false),
+                    Phone = table.Column<string>(type: "nvarchar(50)", nullable: false),
                     LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     PolicyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false,defaultValue:false),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false,defaultValue:true)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false, defaultValue: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {

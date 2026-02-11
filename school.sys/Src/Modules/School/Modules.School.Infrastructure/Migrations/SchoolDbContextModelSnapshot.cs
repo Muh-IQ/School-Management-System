@@ -22,7 +22,7 @@ namespace Modules.School.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Modules.School.Domain.Entities.Languages", b =>
+            modelBuilder.Entity("Modules.School.Domain.Entities.Language", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -47,7 +47,7 @@ namespace Modules.School.Infrastructure.Migrations
                     b.ToTable("Languages");
                 });
 
-            modelBuilder.Entity("Modules.School.Domain.Entities.Policies", b =>
+            modelBuilder.Entity("Modules.School.Domain.Entities.Policy", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -63,7 +63,7 @@ namespace Modules.School.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PloicyType")
+                    b.Property<string>("PolicyType")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -80,11 +80,15 @@ namespace Modules.School.Infrastructure.Migrations
                     b.ToTable("Policies");
                 });
 
-            modelBuilder.Entity("Modules.School.Domain.Entities.Schools", b =>
+            modelBuilder.Entity("Modules.School.Domain.Entities.School", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -96,6 +100,10 @@ namespace Modules.School.Infrastructure.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -119,42 +127,18 @@ namespace Modules.School.Infrastructure.Migrations
                     b.ToTable("Schools");
                 });
 
-            modelBuilder.Entity("Modules.School.Domain.Entities.Schools", b =>
+            modelBuilder.Entity("Modules.School.Domain.Entities.School", b =>
                 {
-                    b.HasOne("Modules.School.Domain.Entities.Languages", "Language")
+                    b.HasOne("Modules.School.Domain.Entities.Language", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Modules.School.Domain.Entities.Policies", "Policy")
+                    b.HasOne("Modules.School.Domain.Entities.Policy", "Policy")
                         .WithMany()
                         .HasForeignKey("PolicyId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.OwnsOne("Modules.School.Domain.DTOs.ContactInfo", "ContactInfo", b1 =>
-                        {
-                            b1.Property<Guid>("SchoolsId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Email")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Phone")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("SchoolsId");
-
-                            b1.ToTable("Schools");
-
-                            b1.WithOwner()
-                                .HasForeignKey("SchoolsId");
-                        });
-
-                    b.Navigation("ContactInfo")
                         .IsRequired();
 
                     b.Navigation("Language");

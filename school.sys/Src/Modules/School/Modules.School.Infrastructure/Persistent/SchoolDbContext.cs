@@ -30,8 +30,6 @@ namespace Modules.School.Infrastructure.Persistent
                 .HasForeignKey(s => s.PolicyId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Domain.Entities.School>()
-                .OwnsOne(s => s.ContactInfo);
         }
 
     }

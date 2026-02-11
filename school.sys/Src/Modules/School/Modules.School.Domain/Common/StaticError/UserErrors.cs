@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Modules.School.Domain.Common.StaticError
 {
-    static class UserErrors
+    public static class UserErrors
     {
         public static string NoneMessage()
         {
@@ -45,15 +45,15 @@ namespace Modules.School.Domain.Common.StaticError
                 : $"User with ID '{id}' was not found.";
         }
 
-        public static string ConflictMessage(Guid?ExistsId=null,string?ExistsName=null)
+        public static string ConflictMessage(Guid? ExistsId = null, string? ExistsName = null)
         {
             if (ExistsId != null)
             {
                 return $"The operation could not be completed due to a conflict with entity with ID '{ExistsId}'";
             }
-            else if (ExistsId != null)
+            else if (ExistsName != null)
             {
-                return $"The operation could not be completed due to a conflict with entity with Name '{ExistsId}'";
+                return $"The operation could not be completed due to a conflict with entity with Name '{ExistsName}'";
             }
             return $"The operation could not be completed due to a conflict.";
         }
@@ -72,7 +72,7 @@ namespace Modules.School.Domain.Common.StaticError
 
         public static string InternalServerErrorMessage()
         {
-            return "An unexpected error occurred. Please contact support.";
+            return "There was a server error. Please try again later.";
         }
 
         public static string ServiceUnavailableMessage()

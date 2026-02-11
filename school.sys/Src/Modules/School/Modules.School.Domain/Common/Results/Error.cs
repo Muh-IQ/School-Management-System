@@ -15,8 +15,6 @@ public class Error
     }
     private Error(ErrorType errorType, string message)
     {
-        if (string.IsNullOrWhiteSpace(message))
-            throw new ArgumentException("Error message cannot be null or empty.", nameof(message));
 
         ErrorType = errorType;
         Message = message;
