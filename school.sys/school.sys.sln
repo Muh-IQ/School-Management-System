@@ -28,15 +28,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Communication", "Communicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Communication.WebAPI", "Src\Modules\Communication\Modules.Communication.WebAPI\Modules.Communication.WebAPI.csproj", "{652C12F2-4F30-4755-AD7F-D1B9A3458B3D}"
 EndProject
-<<<<<<< HEAD
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SSM.Host", "Src\SSM.Host\SSM.Host.csproj", "{9885A7D9-7B17-49F0-A92E-60F1269F5385}"
-=======
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Communication.Domain", "Src\Modules\Communication\Modules.Communication.Domain\Modules.Communication.Domain.csproj", "{00FC46F1-1A59-48CE-B53F-393DB18E84FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Communication.Infrastructure", "Src\Modules\Communication\Modules.Communication.Infrastructure\Modules.Communication.Infrastructure.csproj", "{EEAFD5BE-194C-424C-A19F-0FEAE82380D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modules.Communication.Application", "Src\Modules\Communication\Modules.Communication.Application\Modules.Communication.Application.csproj", "{0FDF9A2B-38FA-4C2A-A727-FBC27C198532}"
->>>>>>> cd2fbe559e0dfc416dd4e7889226b025b25f5ac2
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -64,12 +61,10 @@ Global
 		{652C12F2-4F30-4755-AD7F-D1B9A3458B3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{652C12F2-4F30-4755-AD7F-D1B9A3458B3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{652C12F2-4F30-4755-AD7F-D1B9A3458B3D}.Release|Any CPU.Build.0 = Release|Any CPU
-<<<<<<< HEAD
 		{9885A7D9-7B17-49F0-A92E-60F1269F5385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9885A7D9-7B17-49F0-A92E-60F1269F5385}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9885A7D9-7B17-49F0-A92E-60F1269F5385}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9885A7D9-7B17-49F0-A92E-60F1269F5385}.Release|Any CPU.Build.0 = Release|Any CPU
-=======
 		{00FC46F1-1A59-48CE-B53F-393DB18E84FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{00FC46F1-1A59-48CE-B53F-393DB18E84FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00FC46F1-1A59-48CE-B53F-393DB18E84FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -82,7 +77,6 @@ Global
 		{0FDF9A2B-38FA-4C2A-A727-FBC27C198532}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FDF9A2B-38FA-4C2A-A727-FBC27C198532}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FDF9A2B-38FA-4C2A-A727-FBC27C198532}.Release|Any CPU.Build.0 = Release|Any CPU
->>>>>>> cd2fbe559e0dfc416dd4e7889226b025b25f5ac2
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -97,13 +91,10 @@ Global
 		{05CCA75C-4739-4E5B-A5A3-E53FDF324492} = {61BE85A7-2DAE-45FF-BA02-4073C31CEF0D}
 		{D27BB515-4E5A-497E-998D-6C4C04262B52} = {E66520C2-0E90-4580-A784-711DBA39F51C}
 		{652C12F2-4F30-4755-AD7F-D1B9A3458B3D} = {D27BB515-4E5A-497E-998D-6C4C04262B52}
-<<<<<<< HEAD
 		{9885A7D9-7B17-49F0-A92E-60F1269F5385} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
-=======
 		{00FC46F1-1A59-48CE-B53F-393DB18E84FE} = {D27BB515-4E5A-497E-998D-6C4C04262B52}
 		{EEAFD5BE-194C-424C-A19F-0FEAE82380D9} = {D27BB515-4E5A-497E-998D-6C4C04262B52}
 		{0FDF9A2B-38FA-4C2A-A727-FBC27C198532} = {D27BB515-4E5A-497E-998D-6C4C04262B52}
->>>>>>> cd2fbe559e0dfc416dd4e7889226b025b25f5ac2
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {919CC48E-B167-4CB5-924E-4CA4A88E78EC}
