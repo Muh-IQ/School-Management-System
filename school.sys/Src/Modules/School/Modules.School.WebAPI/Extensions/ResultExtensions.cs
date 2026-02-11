@@ -1,25 +1,63 @@
-using Modules.School.Application.Common.Results;
+using Microsoft.AspNetCore.Mvc;
+using Modules.School.Domain.Common.Results;
 using Modules.School.WebAPI.Contracts;
 
 namespace Modules.School.WebAPI.Extensions;
 
 public static class ResultExtensions
 {
-    public static ApiResponse<T> ToApiResponse<T>(this Result<T> result)
-        => new()
+    public static IActionResult ToApiResponse(this Result result, int successStatusCode = 200)
+    {
+        if (result.IsSuccess)
         {
-            Success = result.IsSuccess,
-            Data = result.IsSuccess ? result.Value : default,
-            Errors = result.IsFailure ? result.Errors : [],
-            StatusCode = result.IsSuccess ? 200 : (result.Errors.Count > 0 ? result.Errors[0].ErrorType.ToHttpStatus() : 500)
-        };
+            return new ObjectResult(ApiResponse.Ok()) { StatusCode = successStatusCode };
+        }
 
-    public static ApiResponse<object?> ToApiResponse(this Result result)
-        => new()
+        return HandleErrorResponse(result.Errors);
+    }
+
+    public static IActionResult ToApiResponse<T>(this Modules.School.Domain.Common.Results.Result<T> result, int successStatusCode = 200)
+    {
+        if (result.IsSuccess)
         {
-            Success = result.IsSuccess,
-            Data = null,
-            Errors = result.IsFailure ? result.Errors : [],
-            StatusCode = result.IsSuccess ? 200 : (result.Errors.Count > 0 ? result.Errors[0].ErrorType.ToHttpStatus() : 500)
-        };
+            return new ObjectResult(ApiResponse<T>.Ok(result.Value!)) { StatusCode = successStatusCode };
+        }
+
+        return HandleErrorResponse(result.Errors);
+    }
+
+    private static IActionResult HandleErrorResponse(List<Error> Errors)
+    {
+        (List<string> errors, ErrorType errorType) = PreperErrorsMessages(Errors);
+
+        var response = ApiResponse.Fail(
+            message: "Operation Failed",
+            errors: errors
+        );
+        // convert ErrorType to corresponding IActionResult
+        return new ObjectResult(response) { StatusCode = (int)errorType };
+    }
+
+
+    private static (List<string> Errors , ErrorType errorType)  PreperErrorsMessages(List<Error> errors)
+    {
+        var ErrorMessages = new List<string>();
+        ErrorType errorType = ErrorType.Validation;
+        foreach (var error in errors)
+        {
+            if ((int)error.ErrorType >= 500)
+            {
+                ErrorMessages.Add("An internal error occurred. Please try again later.");
+                errorType = error.ErrorType; // Set the error type for 500 errors
+            }
+            else
+            {
+                ErrorMessages.Add(error.Message);
+            }
+        }
+
+        return (ErrorMessages , errorType);
+    }
 }
+
+

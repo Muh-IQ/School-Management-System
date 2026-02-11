@@ -1,4 +1,4 @@
-namespace Modules.School.Application.Common.Results;
+namespace Modules.School.Domain.Common.Results;
 
 public class Result<T> : Result
 {
@@ -11,7 +11,7 @@ public class Result<T> : Result
     }
 
     
-      public static Result<T> Success(T value)
+    public static Result<T> Success(T value)
         => new Result<T>(true, value, ErrorType.None, string.Empty);
 
     public static new Result<T> Failure(ErrorType errorType, string errorMessage)

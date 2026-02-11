@@ -1,8 +1,5 @@
-﻿using Modules.School.Domain.Entities;
-using Modules.School.Application.Common.Results;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Modules.School.Domain.Common.Results;
+using Modules.School.Domain.Entities;
 
 namespace Modules.School.Application.IServices
 {
@@ -15,7 +12,7 @@ namespace Modules.School.Application.IServices
 
         Task<Result<IEnumerable<Language>>> GetAllAsync();
 
-        Task<Result<IEnumerable<Language>>> GetAllAsync(int paging=1, int pageSize=10);
+        Task<Result<IEnumerable<Language>>> GetAllAsync(int paging = 1, int pageSize = 10);
 
         Task<Result> UpdateAsync(Language language);
 
