@@ -1,0 +1,52 @@
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Modules.School.Application.Common.DTOs;
+using Modules.School.Application.IServices;
+using Modules.School.WebAPI.Extensions;
+
+namespace Modules.School.WebAPI.Controllers.V1
+{
+    [Route("api/v1/school")]
+    [ApiController]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+
+    public class SchoolController(ISchoolService Service) : ControllerBase
+    {
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        public async Task<IActionResult> CreateSchool(SchoolDTO newSchool)
+        {
+            var s = await Service.CreateAsync(newSchool);
+            return s.ToApiResponse (successStatusCode: 201);
+        }
+
+        [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetSchoolById(Guid id)
+        {
+            return Service.GetByIdAsync(id).GetAwaiter().GetResult().ToApiResponse();
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> DeleteSchool(Guid id)
+        {
+            return Service.DeleteAsync(id).GetAwaiter().GetResult().ToApiResponse(successStatusCode: 204);
+        }
+
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> UpdateSchool(Guid id, SchoolDTO updatedSchool)
+        {
+            var result = await Service.UpdateAsync(id, updatedSchool);
+            return  result.ToApiResponse(successStatusCode: 204);
+        }   
+
+    }
+
+}
