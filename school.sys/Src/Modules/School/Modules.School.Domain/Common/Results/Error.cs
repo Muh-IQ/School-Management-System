@@ -1,4 +1,4 @@
-namespace Modules.School.Application.Common.Results;
+namespace Modules.School.Domain.Common.Results;
 
 
 public class Error

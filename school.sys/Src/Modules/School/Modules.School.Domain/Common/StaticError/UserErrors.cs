@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Modules.School.Application.Common.Results
+namespace Modules.School.Domain.Common.StaticError
 {
     static class UserErrors
     {

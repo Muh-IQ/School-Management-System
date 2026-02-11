@@ -1,4 +1,4 @@
-using Modules.School.Application.Common.Results;
+using Modules.School.Domain.Common.Results;
 
 namespace Modules.School.WebAPI.Extensions;
 
