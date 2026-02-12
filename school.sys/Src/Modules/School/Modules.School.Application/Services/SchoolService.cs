@@ -1,88 +1,61 @@
-﻿using Modules.School.Application.Common.DTOs;
+﻿using Modules.School.Application.Helpers;
 using Modules.School.Application.IServices;
+using Modules.School.Application.Mappers;
 using Modules.School.Domain.Common.Results;
 using Modules.School.Domain.Common.StaticError;
-using Modules.School.Domain.Entities;
+using Modules.School.Domain.DTOs;
 using Modules.School.Domain.IRepositories;
-using System.Text.RegularExpressions;
 
 namespace Modules.School.Application.Services
 {
     public class SchoolService : ISchoolService
     {
         private readonly IGenericRepository<Domain.Entities.School> _Repository;
+        private readonly ISchoolRepository _SchoolRepository;
 
-        public SchoolService(IGenericRepository<Domain.Entities.School> repository)
+        public SchoolService(IGenericRepository<Domain.Entities.School> repository,ISchoolRepository schoolRepository)
         {
             _Repository = repository;
+            _SchoolRepository = schoolRepository;
         }
-        private string GenerateSlug(string Text)
+        private async Task<bool> EmailExists(string Email)
         {
-            if (string.IsNullOrWhiteSpace(Text))
-                return string.Empty;
-            string str = Text.ToLowerInvariant();
-            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
-            str = Regex.Replace(str, @"\s+", "-").Trim();
-            str = Regex.Replace(str, @"-+", "-");
-            str = str.Trim('-');
-            return str;
+            var exists = await _Repository.AnyAsync(s => s.Email == Email);
+            return exists; 
         }
-        private  Domain.Entities.School MapSchoolDTOToEntity(SchoolDTO schoolDTO)
+        private async Task<bool> PhoneExists(string Phone)
         {
-            var s = new Domain.Entities.School
+            var exists = await _Repository.AnyAsync(s => s.Phone == Phone);
+            return exists;
+        }
+        private async Task<Result> ValidateContactUniquenessAsync(string Email,string Phone)
+        {
+            if(await EmailExists(Email))
             {
-                Name = schoolDTO.Name,
-                sanitizeName = GenerateSlug(schoolDTO.Name),
-                Email = schoolDTO.Email,
-                Phone = schoolDTO.Phone,
-                Language = new Domain.Entities.Language
-                {
-                    Code = schoolDTO.LanguageCode,
-                    Name = schoolDTO.LanguageName,
-                    IsActive = true,
-                    IsDeleted = false
-                },
-                Policy = new Domain.Entities.Policy
-                {
-                    Title = schoolDTO.PolicyTitle,
-                    sanitizeName = GenerateSlug(schoolDTO.PolicyTitle),
-                    Description = schoolDTO.PolicyDescription,
-                    PolicyType = schoolDTO.PolicyType,
-                    IsActive = true,
-                    IsDeleted = false
-
-                },
-                IsActive = true,
-                IsDeleted = false,
-                TimeZone = DateTime.UtcNow.ToString("zzz")
-
-
-            };
-            return s;
-        }
-
-        public async Task<Result> CreateAsync(SchoolDTO newSchool)
-        {
-            var exist = await _Repository.AnyAsync(s => s.Email == newSchool.Email
-            || s.Phone == newSchool.Phone);
-
-            if (exist)
-            {
-                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage(ExistsName: newSchool.Name));
+                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage(ExistsEmail: Email));
             }
-
-            var school= MapSchoolDTOToEntity(newSchool);
-            var added = await _Repository.AddAsync(school);
-
-            if (!added)
+            else if(await PhoneExists(Phone))
             {
-                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
+                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage(ExistsPhone: Phone));
             }
 
             return Result.Success();
         }
+        
+        public async Task<Result> CreateAsync(SchoolAddDTO newSchool)
+        {
+            var validationResult = await ValidateContactUniquenessAsync(newSchool.Email, newSchool.Phone);
+            if (!validationResult.IsSuccess)
+                return validationResult;
 
+            var school = SchoolMapper.MapSchoolAddDTOToEntity(newSchool);
+            var added = await _Repository.AddAsync(school);
 
+            if (!added)
+                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
+
+            return Result.Success();
+        }
         public async Task<Result<Domain.Entities.School>> GetByIdAsync(Guid Id)
         {
             var school = await _Repository.GetByIdAsync(Id);
@@ -95,14 +68,14 @@ namespace Modules.School.Application.Services
             return Result<Domain.Entities.School>.Success(school);
         }
 
-        public async Task<Result<IEnumerable<Domain.Entities.School>>> GetAllAsync()
+        public async Task<Result<SchoolDTO>> GetByIdAsDtoAsync(Guid id)
         {
-            var School = await _Repository.GetAllAsync();
-            if (School == null)
+            var dto = await _SchoolRepository.GetByIdAsDtoAsync(id);
+            if (dto is null)
             {
-                return Result<IEnumerable<Domain.Entities.School>>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
+                return Result<SchoolDTO>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
             }
-            return Result<IEnumerable<Domain.Entities.School>>.Success(School);
+            return Result<SchoolDTO>.Success(dto);
         }
 
         public async Task<Result<IEnumerable<Domain.Entities.School>>> GetAllAsync(int pageing = 1, int pageSize = 10)
@@ -115,32 +88,19 @@ namespace Modules.School.Application.Services
             return Result<IEnumerable<Domain.Entities.School>>.Success(School);
         }
 
-        public async Task<Result> UpdateAsync(Guid id, SchoolDTO updatedSchool)
+        public async Task<Result> UpdateAsync(Guid id, SchoolUpdateDTO updatedSchool)
         {
             var exist = await _Repository.GetByIdAsync(id);
-
             if (exist == null)
-            {
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
-            }
 
-            var s = MapSchoolDTOToEntity(updatedSchool);
-
-            exist.Name = s.Name;
-            exist.sanitizeName = s.sanitizeName;
-            exist.Email = s.Email;
-            exist.Phone = s.Phone;
-            exist.Language = s.Language;
-            exist.Policy = s.Policy;
+            SchoolMapper.MapSchoolUpdateDTOToEntity(updatedSchool, exist);
             var updated = await _Repository.UpdateAsync(exist);
 
             if (!updated)
-            {
                 return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
-            }
 
             return Result.Success();
-
         }
 
         public async Task<Result> DeleteAsync(Guid id)
@@ -160,5 +120,14 @@ namespace Modules.School.Application.Services
             return Result.Success();
         }
 
+        public async Task<Result<IEnumerable<SchoolDTO>>> GetAllAsDtoAsync(int paging = 1, int pageSize = 10)
+        {
+            var dtos = await _SchoolRepository.GetAllAsDtoAsync(paging, pageSize);
+            if (dtos == null)
+            {
+                return Result<IEnumerable<SchoolDTO>>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
+            }
+            return Result<IEnumerable<SchoolDTO>>.Success(dtos);
+        }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Modules.School.Application.Common.DTOs
+﻿namespace Modules.School.Domain.DTOs
 {
     public class SchoolDTO
     {
