@@ -71,7 +71,7 @@ namespace Modules.School.Application.Services
                 return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage(ExistsName: newSchool.Name));
             }
 
-            var school=MapSchoolDTOToEntity(newSchool);
+            var school= MapSchoolDTOToEntity(newSchool);
             var added = await _Repository.AddAsync(school);
 
             if (!added)
@@ -83,16 +83,16 @@ namespace Modules.School.Application.Services
         }
 
 
-        public async Task<Result> GetByIdAsync(Guid Id)
+        public async Task<Result<Domain.Entities.School>> GetByIdAsync(Guid Id)
         {
             var school = await _Repository.GetByIdAsync(Id);
 
             if (school == null)
             {
-                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(Id));
+                return Result<Domain.Entities.School>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(Id));
             }
 
-            return Result.Success();
+            return Result<Domain.Entities.School>.Success(school);
         }
 
         public async Task<Result<IEnumerable<Domain.Entities.School>>> GetAllAsync()

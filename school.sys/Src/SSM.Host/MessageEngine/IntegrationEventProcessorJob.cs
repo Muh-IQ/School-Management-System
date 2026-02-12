@@ -15,7 +15,6 @@ namespace SSM.Host.MessageEngine
                 try
                 {
                     using IServiceScope scope = serviceScopeFactory.CreateScope();
-                    // هنا نستخدم IPublisher من MediatR لتوصيل الرسالة للموديول المهتم
                     IPublisher publisher = scope.ServiceProvider.GetRequiredService<IPublisher>();
                     await publisher.Publish(integrationEvent, stoppingToken);
                 }

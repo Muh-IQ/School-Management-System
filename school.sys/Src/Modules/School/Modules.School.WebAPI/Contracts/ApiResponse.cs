@@ -16,7 +16,7 @@ public class ApiResponse
             Errors = errors
         };
 
-    public static ApiResponse Ok(string message = "")
+    public static ApiResponse Ok(string message = "Operation Successed")
         => new ApiResponse
         {
             Success = true,
@@ -28,7 +28,7 @@ public class ApiResponse<T> : ApiResponse
 {
     public T? Data { get; set; }
 
-    public static ApiResponse<T> Ok(T data, string message = "")
+    public static ApiResponse<T> Ok(T data, string message = "Operation Failed")
         => new ApiResponse<T>
         {
             Success = true,

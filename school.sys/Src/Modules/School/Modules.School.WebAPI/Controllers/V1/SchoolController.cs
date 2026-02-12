@@ -20,8 +20,8 @@ namespace Modules.School.WebAPI.Controllers.V1
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateSchool(SchoolDTO newSchool)
         {
-            var s = await Service.CreateAsync(newSchool);
-            return s.ToApiResponse (successStatusCode: 201);
+            var result = await Service.CreateAsync(newSchool);
+            return result.ToApiResponse(successStatusCode: 201);
         }
 
         [HttpGet("{id}")]

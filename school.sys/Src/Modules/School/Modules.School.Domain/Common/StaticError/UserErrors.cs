@@ -55,6 +55,7 @@ namespace Modules.School.Domain.Common.StaticError
             {
                 return $"The operation could not be completed due to a conflict with entity with Name '{ExistsName}'";
             }
+
             return $"The operation could not be completed due to a conflict.";
         }
 

@@ -42,7 +42,7 @@ public static class ResultExtensions
     private static (List<string> Errors , ErrorType errorType)  PreperErrorsMessages(List<Error> errors)
     {
         var ErrorMessages = new List<string>();
-        ErrorType errorType = ErrorType.Validation;
+        ErrorType errorType = ErrorType.None;
         foreach (var error in errors)
         {
             if ((int)error.ErrorType >= 500)
@@ -52,6 +52,10 @@ public static class ResultExtensions
             }
             else
             {
+                if ((int)errorType < 500)
+                {
+                    errorType = error.ErrorType;
+                }
                 ErrorMessages.Add(error.Message);
             }
         }

@@ -4,9 +4,9 @@ namespace Modules.School.WebAPI.Extensions
 {
     public static class SchoolModuleSetup
     {
-        public static IServiceCollection AddSchoolModule(this IServiceCollection services , IConfiguration configuration)
+        public static IServiceCollection AddSchoolModule(this IServiceCollection services)
         {
-            services.AddInfrastructureServices(configuration);
+            services.AddInfrastructureServices();
             services.AddApplicationServices();
             return services;
         }

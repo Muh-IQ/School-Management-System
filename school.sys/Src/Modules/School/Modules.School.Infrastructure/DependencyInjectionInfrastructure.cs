@@ -9,10 +9,10 @@ namespace Modules.School.Infrastructure
 {
     public static class DependencyInjectionInfrastructure
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
             services.AddDbContext<SchoolDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer("Server=.;Database=SchoolManagement;Integrated Security=SSPI;TrustServerCertificate=True;"));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
