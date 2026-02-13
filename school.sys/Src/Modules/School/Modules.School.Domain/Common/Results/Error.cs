@@ -7,7 +7,7 @@ public class Error
     public ErrorType ErrorType { get; private set; }
 
 
-    public string Message { get; private set; }
+    public string Message { get; private set; } = null!;
 
     private Error()
     {
