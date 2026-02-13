@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;
 using Modules.School.Infrastructure.Persistent;
@@ -13,7 +14,23 @@ namespace Modules.School.Infrastructure.Repositories
 {
     public class SchoolRepositories(SchoolDbContext context) : ISchoolRepository
     {
-
+        public async Task<SchoolDTO?> GetByIdAsDtoAsync(Guid id)
+        {
+            return await context.Schools
+                .Where(s => s.Id == id && !s.IsDeleted)
+                .Select(s => new SchoolDTO
+                {
+                    Name = s.Name,
+                    Email = s.Email,
+                    Phone = s.Phone,
+                    LanguageCode = s.Language.Code,
+                    LanguageName = s.Language.Name,
+                    PolicyTitle = s.Policy.Title,
+                    PolicyDescription = s.Policy.Description,
+                    PolicyType = s.Policy.PolicyType
+                })
+                .FirstOrDefaultAsync();
+        }
         public async Task<IEnumerable<Domain.Entities.School>> GetActiveSchoolsAsync()
         {
             return await context.Schools.Where(s=>s.IsActive && !s.IsDeleted).ToListAsync();
@@ -62,6 +79,28 @@ namespace Modules.School.Infrastructure.Repositories
 
             context.Schools.Update(school);
             await context.SaveChangesAsync();
+        }
+
+        public Task<IEnumerable<SchoolDTO>> GetAllAsDtoAsync(int paging = 1, int pageSize = 10)
+        {
+            return context.Schools
+                .Where(s => !s.IsDeleted)
+                .OrderBy(s => s.Name)
+                .Skip((paging - 1) * pageSize)
+                .Take(pageSize)
+                .Select(s => new SchoolDTO
+                {
+                    Name = s.Name,
+                    Email = s.Email,
+                    Phone = s.Phone,
+                    LanguageCode = s.Language.Code,
+                    LanguageName = s.Language.Name,
+                    PolicyTitle = s.Policy.Title,
+                    PolicyDescription = s.Policy.Description,
+                    PolicyType = s.Policy.PolicyType
+                })
+                .ToListAsync()
+                .ContinueWith(t => t.Result.AsEnumerable());
         }
     }
 }

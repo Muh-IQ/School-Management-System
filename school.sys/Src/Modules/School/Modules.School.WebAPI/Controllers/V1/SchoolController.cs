@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Modules.School.Application.Common.DTOs;
+using Modules.School.Domain.DTOs;
 using Modules.School.Application.IServices;
 using Modules.School.WebAPI.Extensions;
 
@@ -18,7 +18,7 @@ namespace Modules.School.WebAPI.Controllers.V1
     {
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateSchool(SchoolDTO newSchool)
+        public async Task<IActionResult> CreateSchool(SchoolAddDTO newSchool)
         {
             var result = await Service.CreateAsync(newSchool);
             return result.ToApiResponse(successStatusCode: 201);
@@ -28,7 +28,8 @@ namespace Modules.School.WebAPI.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetSchoolById(Guid id)
         {
-            return Service.GetByIdAsync(id).GetAwaiter().GetResult().ToApiResponse();
+            var result = await Service.GetByIdAsDtoAsync(id);
+            return result.ToApiResponse();
         }
 
         [HttpDelete("{id}")]
@@ -36,17 +37,24 @@ namespace Modules.School.WebAPI.Controllers.V1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteSchool(Guid id)
         {
-            return Service.DeleteAsync(id).GetAwaiter().GetResult().ToApiResponse(successStatusCode: 204);
+            var result = await Service.DeleteAsync(id);
+            return result.ToApiResponse(successStatusCode: 204);
         }
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> UpdateSchool(Guid id, SchoolDTO updatedSchool)
+        public async Task<IActionResult> UpdateSchool(Guid id, SchoolUpdateDTO updatedSchool)
         {
             var result = await Service.UpdateAsync(id, updatedSchool);
-            return  result.ToApiResponse(successStatusCode: 204);
-        }   
-
+            return result.ToApiResponse(successStatusCode: 204);
+        }
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> ListSchools()
+        {
+            var result = await Service.GetAllAsDtoAsync(1, 10);
+            return result.ToApiResponse();
+        }
     }
 
 }

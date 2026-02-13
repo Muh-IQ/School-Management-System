@@ -45,15 +45,15 @@ namespace Modules.School.Domain.Common.StaticError
                 : $"User with ID '{id}' was not found.";
         }
 
-        public static string ConflictMessage(Guid? ExistsId = null, string? ExistsName = null)
+        public static string ConflictMessage(string? ExistsEmail = null, string? ExistsPhone = null)
         {
-            if (ExistsId != null)
+            if (ExistsEmail != null)
             {
-                return $"The operation could not be completed due to a conflict with entity with ID '{ExistsId}'";
+                return $"The operation could not be completed due to a conflict with entity with email '{ExistsEmail}'";
             }
-            else if (ExistsName != null)
+            else if (ExistsPhone != null)
             {
-                return $"The operation could not be completed due to a conflict with entity with Name '{ExistsName}'";
+                return $"The operation could not be completed due to a conflict with entity with phone '{ExistsPhone}'";
             }
 
             return $"The operation could not be completed due to a conflict.";

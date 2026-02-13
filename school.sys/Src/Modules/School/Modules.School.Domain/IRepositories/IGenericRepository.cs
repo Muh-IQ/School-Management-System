@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq.Expressions;
 
 
-﻿namespace Modules.School.Domain.IRepositories
+namespace Modules.School.Domain.IRepositories
 {
     public interface IGenericRepository<T> where T : class
     {
