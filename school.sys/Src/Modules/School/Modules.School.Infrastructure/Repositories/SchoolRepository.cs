@@ -12,7 +12,7 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Modules.School.Infrastructure.Repositories
 {
-    public class SchoolRepositories(SchoolDbContext context) : ISchoolRepository
+    public class SchoolRepository(SchoolDbContext context) : ISchoolRepository
     {
         public async Task<SchoolDTO?> GetByIdAsDtoAsync(Guid id)
         {

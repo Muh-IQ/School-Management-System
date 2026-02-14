@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.Options;
-using Modules.School.Domain.ThirdParty.Email;
+using Modules.Communication.Domain.ThirdParty.Email;
 using System.Net;
 using System.Net.Mail;
 
-namespace Modules.School.Infrastructure.ThirdParty.Email
+namespace Modules.Communication.Infrastructure.ThirdParty.Email
 {
     internal class EmailService: IEmailService
     {
@@ -16,6 +16,7 @@ namespace Modules.School.Infrastructure.ThirdParty.Email
 
         public async Task SendAsync(EmailMessage message)
         {
+
             using var mail = new MailMessage
             {
                 From = new MailAddress(_settings.SenderEmail, _settings.SenderName),

@@ -1,7 +1,7 @@
-﻿using Modules.School.Domain.ThirdParty.Security;
+﻿using Modules.Communication.Domain.ThirdParty.Security;
 using System.Security.Cryptography;
 
-namespace Modules.School.Infrastructure.ThirdParty.Security
+namespace Modules.Communication.Infrastructure.ThirdParty.Security
 {
     internal class OtpGenerator : IOtpGenerator
     {
