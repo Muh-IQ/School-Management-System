@@ -1,6 +1,7 @@
 using Modules.School.Infrastructure;
 using Modules.School.Infrastructure.Persistent;
 using Modules.School.WebAPI.Extensions;
+using SSM.Host.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,12 @@ if (builder.Environment.IsDevelopment())
     {
         Environment.SetEnvironmentVariable(envName, connString, EnvironmentVariableTarget.Process);
     }
+
+    builder.SetIfNotExists("EmailSettings__SmtpServer", "smtp.gmail.com");
+    builder.SetIfNotExists("EmailSettings__SmtpPort", "587");
+    builder.SetIfNotExists("EmailSettings__SenderEmail", "mohamedajaj0007@gmail.com");
+    builder.SetIfNotExists("EmailSettings__SenderName", "School System");
+    builder.SetIfNotExists("EmailSettings__Password", "ybek fhsl tspb fpdq");
 }
 builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddInfrastructureServices(builder.Configuration);

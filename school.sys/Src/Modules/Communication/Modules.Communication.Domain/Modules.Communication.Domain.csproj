@@ -12,7 +12,6 @@
     <Folder Include="DTOs\" />
     <Folder Include="Entities\" />
     <Folder Include="IRepositories\" />
-    <Folder Include="IThirdPartyServices\" />
   </ItemGroup>
 
 </Project>

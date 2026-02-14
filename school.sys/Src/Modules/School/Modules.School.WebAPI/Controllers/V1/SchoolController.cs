@@ -17,6 +17,7 @@ namespace Modules.School.WebAPI.Controllers.V1
 
     public class SchoolController(ISchoolService Service , ITimeProvider timeProvider) : ControllerBase
     {
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateSchool(SchoolAddDTO newSchool)

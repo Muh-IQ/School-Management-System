@@ -1,5 +1,7 @@
-﻿using Modules.School.Application;
+﻿using Microsoft.Extensions.Configuration;
+using Modules.School.Application;
 using Modules.School.Infrastructure;
+
 namespace Modules.School.WebAPI.Extensions
 {
     public static class SchoolModuleSetup
