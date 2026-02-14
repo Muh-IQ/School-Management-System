@@ -21,12 +21,7 @@ namespace Modules.School.Infrastructure
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ISchoolRepository, SchoolRepository>();
-            services.AddScoped<IEmailService, EmailService>();
-            services.AddScoped<IOtpGenerator, OtpGenerator>();
-            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
-            
-            
             return services;
         }
     }

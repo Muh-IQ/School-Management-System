@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modules.School.Application.IServices;
-using Modules.School.Application.Register;
 using Modules.School.Domain.DTOs;
-using Modules.School.Domain.ThirdParty.Email;
+using Modules.School.Domain.IThirdPartyServices;
 using Modules.School.WebAPI.Extensions;
 
 namespace Modules.School.WebAPI.Controllers.V1
@@ -16,7 +15,7 @@ namespace Modules.School.WebAPI.Controllers.V1
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 
-    public class SchoolController(ISchoolService Service) : ControllerBase
+    public class SchoolController(ISchoolService Service , ITimeProvider timeProvider) : ControllerBase
     {
 
         [HttpPost]
@@ -51,6 +50,8 @@ namespace Modules.School.WebAPI.Controllers.V1
             var result = await Service.UpdateAsync(id, updatedSchool);
             return result.ToApiResponse(successStatusCode: 204);
         }
+
+
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ListSchools()
@@ -58,6 +59,7 @@ namespace Modules.School.WebAPI.Controllers.V1
             var result = await Service.GetAllAsDtoAsync(1, 10);
             return result.ToApiResponse();
         }
+
     }
 
 }
