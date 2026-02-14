@@ -9,14 +9,13 @@ namespace Modules.School.Infrastructure
 {
     public static class DependencyInjectionInfrastructure
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<SchoolDbContext>(options =>
-                options.UseSqlServer("Server=.;Database=SchoolManagement;Integrated Security=SSPI;TrustServerCertificate=True;"));
+            services.AddDbContextPool<SchoolDbContext>(options =>
+                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-
-            return services;
+                return services;
         }
     }
 }

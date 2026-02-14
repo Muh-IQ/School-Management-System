@@ -1,6 +1,21 @@
+using Modules.School.Infrastructure;
+using Modules.School.Infrastructure.Persistent;
 using Modules.School.WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
+if (builder.Environment.IsDevelopment())
+{
+    string envName = "ConnectionStrings__DefaultConnection";
+    string connString = "Server=.;Database=SchoolManagement;Integrated Security=SSPI;TrustServerCertificate=True;";
+
+    if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(envName)))
+    {
+        Environment.SetEnvironmentVariable(envName, connString, EnvironmentVariableTarget.Process);
+    }
+}
+builder.Configuration.AddEnvironmentVariables();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 // Add services to the container.
 builder.Services.AddControllers()
@@ -15,6 +30,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
+    db.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
