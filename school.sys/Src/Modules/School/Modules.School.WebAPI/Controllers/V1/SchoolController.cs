@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Modules.School.Domain.DTOs;
 using Modules.School.Application.IServices;
+using Modules.School.Application.Register;
+using Modules.School.Domain.DTOs;
+using Modules.School.Domain.ThirdParty.Email;
 using Modules.School.WebAPI.Extensions;
 
 namespace Modules.School.WebAPI.Controllers.V1
@@ -16,6 +18,7 @@ namespace Modules.School.WebAPI.Controllers.V1
 
     public class SchoolController(ISchoolService Service) : ControllerBase
     {
+
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateSchool(SchoolAddDTO newSchool)

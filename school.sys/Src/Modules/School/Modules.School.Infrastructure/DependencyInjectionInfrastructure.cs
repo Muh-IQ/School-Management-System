@@ -2,8 +2,13 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Modules.School.Domain.IRepositories;
+using Modules.School.Domain.ThirdParty.Email;
 using Modules.School.Infrastructure.Persistent;
 using Modules.School.Infrastructure.Repositories;
+using Modules.School.Infrastructure.ThirdParty.Email;
+using Microsoft.Extensions.Options;
+using Modules.School.Domain.ThirdParty.Security;
+using Modules.School.Infrastructure.ThirdParty.Security;
 
 namespace Modules.School.Infrastructure
 {
@@ -15,7 +20,14 @@ namespace Modules.School.Infrastructure
                  options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-                return services;
+            services.AddScoped<ISchoolRepository, SchoolRepository>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IOtpGenerator, OtpGenerator>();
+            services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
+            
+            
+            return services;
         }
     }
 }
