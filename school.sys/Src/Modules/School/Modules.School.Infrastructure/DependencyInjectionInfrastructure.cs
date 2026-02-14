@@ -15,7 +15,9 @@ namespace Modules.School.Infrastructure
                  options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-                return services;
+            services.AddScoped<ISchoolRepository, SchoolRepository>();
+
+            return services;
         }
     }
 }

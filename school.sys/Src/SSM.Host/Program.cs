@@ -22,7 +22,7 @@ builder.Services.AddControllers()
     .AddApplicationPart(typeof(Modules.School.WebAPI.Controllers.V1.SchoolController).Assembly);
 
 
-builder.Services.AddSchoolModule(); 
+builder.Services.AddSchoolModule(builder.Configuration); 
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

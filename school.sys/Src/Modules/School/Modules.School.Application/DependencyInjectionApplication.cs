@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Modules.School.Application.IServices;
 using Modules.School.Application.Services;
+using Modules.School.Domain.IThirdPartyServices;
 
 namespace Modules.School.Application
 {
@@ -11,6 +12,8 @@ namespace Modules.School.Application
             services.AddScoped<ISchoolService, SchoolService>();
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IPolicyService, PolicyService>();
+
+            services.AddSingleton<ITimeProvider, Services.TimeProvider>();
             return services;
         }
     }
