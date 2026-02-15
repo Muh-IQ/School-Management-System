@@ -63,7 +63,7 @@ public class CleanArchitectureTests
     [Fact]
     public void Infrastructure_Repositories_Should_Reference_Domain()
     {
-        var result = Types.InAssembly(typeof(Modules.School.Infrastructure.Repositories.SchoolRepositories).Assembly)
+        var result = Types.InAssembly(typeof(Modules.School.Infrastructure.Repositories.SchoolRepository).Assembly)
             .That()
             .ResideInNamespace("Modules.School.Infrastructure.Repositories")
             .Should()

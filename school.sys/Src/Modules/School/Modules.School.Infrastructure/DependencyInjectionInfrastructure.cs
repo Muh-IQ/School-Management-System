@@ -30,7 +30,7 @@ namespace Modules.School.Infrastructure
             }
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<ISchoolRepository, SchoolRepositories>();
+            services.AddScoped<ISchoolRepository, SchoolRepository>();
             return services;
         }
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
