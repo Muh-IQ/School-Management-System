@@ -80,7 +80,6 @@ namespace Modules.School.Infrastructure.Repositories
             context.Schools.Update(school);
             await context.SaveChangesAsync();
         }
-
         public Task<IEnumerable<SchoolDTO>> GetAllAsDtoAsync(int paging = 1, int pageSize = 10)
         {
             return context.Schools
