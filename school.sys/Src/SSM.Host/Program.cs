@@ -58,3 +58,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+// Expose for WebApplicationFactory in integration tests
+public partial class Program { }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +30,7 @@ namespace Modules.School.Domain.Common.StaticError
                 ? "You are not authorized to perform this operation."
                 : $"User '{Id}' is not authorized to perform this operation.";
         }
-
+        
         public static string ForbiddenMessage(string action = "")
         {
             return string.IsNullOrWhiteSpace(action)
@@ -49,7 +49,8 @@ namespace Modules.School.Domain.Common.StaticError
         {
             if (ExistsEmail != null)
             {
-                return $"The operation could not be completed due to a conflict with entity with email '{ExistsEmail}'";
+                // BUG (for practice): message should include the email so API/client can show it. Fix by putting ExistsEmail in the message.
+                return "The operation could not be completed due to a conflict. Email: " + ExistsEmail;
             }
             else if (ExistsPhone != null)
             {

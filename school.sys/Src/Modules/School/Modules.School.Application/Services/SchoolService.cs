@@ -64,7 +64,6 @@ namespace Modules.School.Application.Services
             {
                 return Result<Domain.Entities.School>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(Id));
             }
-
             return Result<Domain.Entities.School>.Success(school);
         }
 
@@ -87,7 +86,6 @@ namespace Modules.School.Application.Services
             }
             return Result<IEnumerable<Domain.Entities.School>>.Success(School);
         }
-
         public async Task<Result> UpdateAsync(Guid id, SchoolUpdateDTO updatedSchool)
         {
             var exist = await _Repository.GetByIdAsync(id);
