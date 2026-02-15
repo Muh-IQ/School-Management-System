@@ -1,5 +1,3 @@
-using Modules.School.Application;
-using Modules.School.Infrastructure;
 using Modules.School.WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
