@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Modules.School.WebAPI.Extensions.ExceptionHandling;
 using Modules.School.WebAPI.Extensions;
 using Modules.School.WebAPI.Contracts;
-namespace Modules.School.WebAPI.Middleware;
+namespace Modules.School.WebAPI.Extensions.Middleware;
 
 /// <summary>
 /// Global exception handler. Catches unhandled system/infrastructure exceptions,

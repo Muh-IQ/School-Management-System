@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Modules.School.Application;
 using Modules.School.Infrastructure;
-using Modules.School.WebAPI.Middleware;
+using Modules.School.WebAPI.Extensions.Middleware;
 
 namespace Modules.School.WebAPI.Extensions;
 
