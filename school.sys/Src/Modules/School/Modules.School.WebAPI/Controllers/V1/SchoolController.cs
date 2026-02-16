@@ -53,7 +53,7 @@ namespace Modules.School.WebAPI.Controllers.V1
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ListSchools()
-        {         
+        {      
             var result = await Service.GetAllAsDtoAsync(1, 10);
             return result.ToApiResponse();
         }
