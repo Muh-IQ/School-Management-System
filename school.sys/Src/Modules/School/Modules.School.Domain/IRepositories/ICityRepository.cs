@@ -1,5 +1,4 @@
-﻿using Modules.School.Domain.Common.Results;
-using Modules.School.Domain.DTOs;
+﻿using Modules.School.Domain.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace Modules.School.Domain.IRepositories
 {
-    public interface ICountryRepository
+    public interface ICityRepository
     {
-        Task<IEnumerable<LocationDTO>> GetAllAsync();
-
+        Task<IEnumerable<LocationDTO>> GetByIdAsync(Guid countryId);
     }
 }

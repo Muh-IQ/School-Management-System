@@ -13,13 +13,13 @@ namespace Modules.School.Application.Services
 {
     public class CountryService(ICountryRepository repository) : ICountryService
     {
-        public async Task<Result<IEnumerable<CountryDTO>>> GetAsync()
+        public async Task<Result<IEnumerable<LocationDTO>>> GetAsync()
         {
-            var result = await repository.GetAsync();
+            var result = await repository.GetAllAsync();
 
             return result.Count() > 0
-                ? Result<IEnumerable<CountryDTO>>.Success(result)
-                : Result<IEnumerable<CountryDTO>>.Failure(ErrorType.NotFound , CountryErrors.NotFoundMessage());
+                ? Result<IEnumerable<LocationDTO>>.Success(result)
+                : Result<IEnumerable<LocationDTO>>.Failure(ErrorType.NotFound , CountryErrors.NotFoundMessage());
         }
     }
 }

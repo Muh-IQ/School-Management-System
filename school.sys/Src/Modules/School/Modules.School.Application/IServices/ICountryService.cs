@@ -12,6 +12,6 @@ namespace Modules.School.Application.IServices;
 
 public interface ICountryService
 {
-    Task<Result<IEnumerable<CountryDTO>>> GetAsync();
+    Task<Result<IEnumerable<LocationDTO>>> GetAsync();
 }
 
