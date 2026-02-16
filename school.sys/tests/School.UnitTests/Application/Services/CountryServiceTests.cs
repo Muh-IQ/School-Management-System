@@ -25,8 +25,8 @@ namespace School.UnitTests.Application.Services
         {
             // Arrange
             _repositoryMock
-                .Setup(r => r.GetAsync())
-                .ReturnsAsync(new List<CountryDTO>());
+                .Setup(r => r.GetAllAsync())
+                .ReturnsAsync(new List<LocationDTO>());
 
             // Act
             var result = await _service.GetAsync();
@@ -40,14 +40,14 @@ namespace School.UnitTests.Application.Services
         public async Task GetAsync_WhenCountriesExist_ShouldReturnSuccess()
         {
             // Arrange
-            var countries = new List<CountryDTO>
+            var countries = new List<LocationDTO>
         {
-            new CountryDTO { Id = Guid.NewGuid(), Name = "Iraq" },
-            new CountryDTO { Id = Guid.NewGuid(), Name = "USA" }
+            new LocationDTO { Id = Guid.NewGuid(), Name = "Iraq" },
+            new LocationDTO { Id = Guid.NewGuid(), Name = "USA" }
         };
 
             _repositoryMock
-                .Setup(r => r.GetAsync())
+                .Setup(r => r.GetAllAsync())
                 .ReturnsAsync(countries);
 
             // Act
