@@ -21,15 +21,21 @@ if (builder.Environment.IsDevelopment())
     builder.SetIfNotExists("EmailSettings__SenderName", "School System");
     builder.SetIfNotExists("EmailSettings__Password", "ybek fhsl tspb fpdq");
 }
-builder.Configuration.AddEnvironmentVariables();
-builder.Services.AddInfrastructureServices(builder.Configuration);
 
-// Add services to the container.
+
+builder.Configuration.AddEnvironmentVariables();
+
+
+// register module's controllers in the host pipeline
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(Modules.School.WebAPI.Controllers.V1.SchoolController).Assembly);
 
 
-builder.Services.AddSchoolModule(builder.Configuration); 
+
+
+// regiseter module's DI services (application, infrastructure, etc) in the host's container
+builder.Services.AddSchoolModule(builder.Configuration);
+// here add module's DI
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -38,7 +44,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+
+// regiseter modules global exception handler middleware in the pipeline.
 app.UseSchoolGlobalExceptionHandler();
+// here add other GlobalException for each module
+
+
+
+
+
 // Configure the HTTP requespipeline.
 if (app.Environment.IsDevelopment())
 {
