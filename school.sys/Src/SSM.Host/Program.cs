@@ -38,13 +38,8 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
-    db.Database.EnsureCreated();
-}
-
-// Configure the HTTP request pipeline.
+app.UseSchoolGlobalExceptionHandler();
+// Configure the HTTP requespipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
