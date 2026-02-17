@@ -11,9 +11,11 @@ namespace Modules.School.Infrastructure.Repositories
 {
     internal class CountryRepository(SchoolDbContext context) : ICountryRepository
     {
-        public async Task<IEnumerable<CountryDTO>> GetAsync()
+        public async Task<IEnumerable<LocationDTO>> GetAllAsync()
         {
-            return context.Countries.Select(c => new CountryDTO
+            return context.Countries
+                .Where(c => c.IsActive)
+                .Select(c => new LocationDTO
             {
                 Id = c.Id,
                 Name = c.Name
