@@ -22,20 +22,10 @@ if (builder.Environment.IsDevelopment())
     builder.SetIfNotExists("EmailSettings__Password", "ybek fhsl tspb fpdq");
 }
 
-
 builder.Configuration.AddEnvironmentVariables();
 
-
-// register module's controllers in the host pipeline
-builder.Services.AddControllers()
-    .AddApplicationPart(typeof(Modules.School.WebAPI.Controllers.V1.SchoolController).Assembly);
-
-
-
-
-// regiseter module's DI services (application, infrastructure, etc) in the host's container
-builder.Services.AddSchoolModule(builder.Configuration);
-// here add module's DI
+// Add services to the container. (School module: controllers, validation filter, DI)
+builder.Services.AddControllers().AddSchoolModule(builder.Configuration);
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
