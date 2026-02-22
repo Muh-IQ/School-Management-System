@@ -32,7 +32,6 @@ namespace Modules.School.WebAPI.Controllers.V1
             var result = await Service.GetByIdAsDtoAsync(id);
             return result.ToApiResponse();
         }
-
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -41,7 +40,6 @@ namespace Modules.School.WebAPI.Controllers.V1
             var result = await Service.DeleteAsync(id);
             return result.ToApiResponse(successStatusCode: 204);
         }
-
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateSchool(Guid id, SchoolUpdateDTO updatedSchool)
