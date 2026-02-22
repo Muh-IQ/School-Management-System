@@ -14,13 +14,11 @@ internal sealed class EnsureCreatedHostedService : IHostedService
     {
         _scopeFactory = scopeFactory;
     }
-
     public async Task StartAsync(CancellationToken cancellationToken)
     {
         using var scope = _scopeFactory.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
         await context.Database.EnsureCreatedAsync(cancellationToken);
     }
-
     public Task StopAsync(CancellationToken cancellationToken) => Task.CompletedTask;
 }

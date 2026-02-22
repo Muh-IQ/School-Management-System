@@ -72,6 +72,56 @@ namespace Modules.School.Infrastructure.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("Areas", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("b0000001-0000-0000-0000-000000000001"),
+                            CityId = new Guid("a0000001-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Karkh"
+                        },
+                        new
+                        {
+                            Id = new Guid("b0000002-0000-0000-0000-000000000002"),
+                            CityId = new Guid("a0000001-0000-0000-0000-000000000001"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Rusafa"
+                        },
+                        new
+                        {
+                            Id = new Guid("b0000003-0000-0000-0000-000000000003"),
+                            CityId = new Guid("a0000002-0000-0000-0000-000000000002"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Al-Fao"
+                        },
+                        new
+                        {
+                            Id = new Guid("b0000004-0000-0000-0000-000000000004"),
+                            CityId = new Guid("a0000002-0000-0000-0000-000000000002"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Shatt Al-Arab"
+                        },
+                        new
+                        {
+                            Id = new Guid("b0000005-0000-0000-0000-000000000005"),
+                            CityId = new Guid("a0000003-0000-0000-0000-000000000003"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Old City"
+                        },
+                        new
+                        {
+                            Id = new Guid("b0000006-0000-0000-0000-000000000006"),
+                            CityId = new Guid("a0000003-0000-0000-0000-000000000003"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Nineveh Plains"
+                        });
                 });
 
             modelBuilder.Entity("Modules.School.Domain.Entities.Place.City", b =>
@@ -99,6 +149,48 @@ namespace Modules.School.Infrastructure.Migrations
                     b.HasIndex("CountryId");
 
                     b.ToTable("Cities", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a0000001-0000-0000-0000-000000000001"),
+                            CountryId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Baghdad"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000002-0000-0000-0000-000000000002"),
+                            CountryId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Basra"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000003-0000-0000-0000-000000000003"),
+                            CountryId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Mosul"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000004-0000-0000-0000-000000000004"),
+                            CountryId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Erbil"
+                        },
+                        new
+                        {
+                            Id = new Guid("a0000005-0000-0000-0000-000000000005"),
+                            CountryId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Kirkuk"
+                        });
                 });
 
             modelBuilder.Entity("Modules.School.Domain.Entities.Place.Country", b =>
@@ -121,6 +213,43 @@ namespace Modules.School.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Countries", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Iraq"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "United States"
+                        },
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "United Kingdom"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Canada"
+                        },
+                        new
+                        {
+                            Id = new Guid("55555555-5555-5555-5555-555555555555"),
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Germany"
+                        });
                 });
 
             modelBuilder.Entity("Modules.School.Domain.Entities.Policy", b =>
@@ -201,6 +330,28 @@ namespace Modules.School.Infrastructure.Migrations
                     b.HasIndex("PolicyId");
 
                     b.ToTable("Schools", (string)null);
+                });
+
+            modelBuilder.Entity("Modules.School.Domain.Entities.Place.Area", b =>
+                {
+                    b.HasOne("Modules.School.Domain.Entities.Place.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("City");
+                });
+
+            modelBuilder.Entity("Modules.School.Domain.Entities.Place.City", b =>
+                {
+                    b.HasOne("Modules.School.Domain.Entities.Place.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("Modules.School.Domain.Entities.School", b =>
