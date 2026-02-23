@@ -1,4 +1,4 @@
-﻿using Modules.School.Domain.Common.Results;
+using Modules.School.Domain.Common.Results;
 using Modules.School.Domain.Entities;
 
 namespace Modules.School.Application.IServices
@@ -7,7 +7,7 @@ namespace Modules.School.Application.IServices
     {
         Task<Result> CreateAsync(Policy policy);
 
-        Task<Result> GetByIdAsync(Guid id);
+        Task<Result<Policy>> GetByIdAsync(Guid id);
 
         Task<Result<IEnumerable<Policy>>> GetAllAsync();
 

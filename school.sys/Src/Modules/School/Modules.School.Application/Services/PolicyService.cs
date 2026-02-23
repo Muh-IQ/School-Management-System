@@ -1,4 +1,4 @@
-﻿using Modules.School.Application.IServices;
+using Modules.School.Application.IServices;
 using Modules.School.Domain.Common.Results;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;
@@ -8,10 +8,12 @@ namespace Modules.School.Application.Services
     public class PolicyService : IPolicyService
     {
         private readonly IGenericRepository<Policy> _Repository;
+        private readonly ISchoolRepository _SchoolRepository;
 
-        public PolicyService(IGenericRepository<Policy> repository)
+        public PolicyService(IGenericRepository<Policy> repository, ISchoolRepository schoolRepository)
         {
             _Repository = repository;
+            _SchoolRepository = schoolRepository;
         }
         public async Task<Result> CreateAsync(Policy policy)
         {
@@ -32,7 +34,7 @@ namespace Modules.School.Application.Services
             return Result.Success();
         }
 
-        public async Task<Result> GetByIdAsync(Guid Id)
+        public async Task<Result<Policy>> GetByIdAsync(Guid Id)
         {
             var policy = await _Repository.GetByIdAsync(Id);
 
@@ -41,7 +43,7 @@ namespace Modules.School.Application.Services
                 return Result<Policy>.Failure(ErrorType.NotFound, "Policy Not Found.");
             }
 
-            return Result.Success();
+            return Result<Policy>.Success(policy);
         }
         public async Task<Result<IEnumerable<Policy>>> GetAllAsync()
         {
@@ -93,8 +95,15 @@ namespace Modules.School.Application.Services
 
             if (policy == null)
             {
-                return Result.Failure(ErrorType.NotFound, $"Policy With ID ;{id} Not Found");
+                return Result.Failure(ErrorType.NotFound, $"Policy With ID {id} Not Found");
             }
+
+            var schoolsUsingPolicy = await _SchoolRepository.GetByPolicyAsync(id);
+            if (schoolsUsingPolicy.Any())
+            {
+                return Result.Failure(ErrorType.Conflict, "Policy is in use by one or more schools and cannot be deleted.");
+            }
+
             var delete = await _Repository.DeleteAsync(policy);
 
             if (!delete)
