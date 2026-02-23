@@ -1,5 +1,6 @@
 ﻿using Modules.School.Domain.DTOs;
 using Modules.School.Application.Helpers;
+using Modules.School.Domain.Entities.Place;
 
 namespace Modules.School.Application.Mappers
 {
@@ -15,7 +16,7 @@ namespace Modules.School.Application.Mappers
             IsActive = true,
             IsDeleted = false
         };
-        private static Domain.Entities.Policy? CreatePolicyIfProvided(SchoolAddDTO dto)
+        private static Domain.Entities.Policy? CreatePolicyIfProvided(SchoolAddCommand dto)
         {
             if (string.IsNullOrWhiteSpace(dto.PolicyTitle) ||
                 string.IsNullOrWhiteSpace(dto.PolicyType))
@@ -32,7 +33,7 @@ namespace Modules.School.Application.Mappers
                 IsDeleted = false
             };
         }
-        public static Domain.Entities.School MapSchoolAddDTOToEntity(SchoolAddDTO dto, Domain.Entities.Policy? policy = null)
+        public static Domain.Entities.School MapSchoolAddDTOToEntity(SchoolAddCommand dto, Domain.Entities.Policy? policy = null)
         {
             return new Domain.Entities.School
             {
@@ -45,11 +46,13 @@ namespace Modules.School.Application.Mappers
                 Policy = CreatePolicyIfProvided(dto) ?? DefaultPolicy,
                 IsActive = true,
                 IsDeleted = false,
-                TimeZone = DateTime.UtcNow.ToString("zzz")
+                TimeZone = DateTime.UtcNow.ToString("zzz"),
+                CountryId = dto.CountryId,
+                
             };
         }
 
-        public static void MapSchoolUpdateDTOToEntity(SchoolUpdateDTO dto, Domain.Entities.School entity)
+        public static void MapSchoolUpdateDTOToEntity(SchoolUpdateCommand dto, Domain.Entities.School entity)
         {
             entity.Name = dto.Name;
             entity.sanitizeName = TextHelper.SlugGenerate(dto.Name);

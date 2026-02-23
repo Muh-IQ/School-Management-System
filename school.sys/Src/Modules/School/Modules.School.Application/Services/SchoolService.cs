@@ -10,22 +10,20 @@ namespace Modules.School.Application.Services
 {
     public class SchoolService : ISchoolService
     {
-        private readonly IGenericRepository<Domain.Entities.School> _Repository;
         private readonly ISchoolRepository _SchoolRepository;
 
-        public SchoolService(IGenericRepository<Domain.Entities.School> repository,ISchoolRepository schoolRepository)
+        public SchoolService(ISchoolRepository repository)
         {
-            _Repository = repository;
-            _SchoolRepository = schoolRepository;
+            _SchoolRepository = repository;
         }
         private async Task<bool> EmailExists(string Email)
         {
-            var exists = await _Repository.AnyAsync(s => s.Email == Email);
+            var exists = await _SchoolRepository.AnyAsync(s => s.Email == Email);
             return exists; 
         }
         private async Task<bool> PhoneExists(string Phone)
         {
-            var exists = await _Repository.AnyAsync(s => s.Phone == Phone);
+            var exists = await _SchoolRepository.AnyAsync(s => s.Phone == Phone);
             return exists;
         }
         private async Task<Result> ValidateContactUniquenessAsync(string Email,string Phone)
@@ -41,15 +39,35 @@ namespace Modules.School.Application.Services
 
             return Result.Success();
         }
-        
-        public async Task<Result> CreateAsync(SchoolAddDTO newSchool)
+
+        public async Task<Result> SoftDeleteAsync(Guid schoolId)
+        {
+            var school = await _SchoolRepository.GetByIdAsync(schoolId);
+
+            if (school == null)
+                return Result<bool>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(schoolId));
+            if (school.IsDeleted)
+                return Result<bool>.Failure(ErrorType.Conflict, UserErrors.ConflictMessage());
+            if (!school.IsActive)
+                return Result<bool>.Failure(ErrorType.Conflict, UserErrors.ConflictMessage());
+
+            school.IsDeleted = true;
+            school.IsActive = false;
+
+            var updated = await _SchoolRepository.UpdateAsync(school);
+            if (!updated)
+                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
+
+            return Result.Success();
+        }
+        public async Task<Result> CreateAsync(SchoolAddCommand newSchool)
         {
             var validationResult = await ValidateContactUniquenessAsync(newSchool.Email, newSchool.Phone);
             if (!validationResult.IsSuccess)
                 return validationResult;
 
             var school = SchoolMapper.MapSchoolAddDTOToEntity(newSchool);
-            var added = await _Repository.AddAsync(school);
+            var added = await _SchoolRepository.AddAsync(school);
 
             if (!added)
                 return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
@@ -58,7 +76,7 @@ namespace Modules.School.Application.Services
         }
         public async Task<Result<Domain.Entities.School>> GetByIdAsync(Guid Id)
         {
-            var school = await _Repository.GetByIdAsync(Id);
+            var school = await _SchoolRepository.GetByIdAsync(Id);
 
             if (school == null)
             {
@@ -67,33 +85,24 @@ namespace Modules.School.Application.Services
             return Result<Domain.Entities.School>.Success(school);
         }
 
-        public async Task<Result<SchoolDTO>> GetByIdAsDtoAsync(Guid id)
-        {
-            var dto = await _SchoolRepository.GetByIdAsDtoAsync(id);
-            if (dto is null)
-            {
-                return Result<SchoolDTO>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
-            }
-            return Result<SchoolDTO>.Success(dto);
-        }
 
-        public async Task<Result<IEnumerable<Domain.Entities.School>>> GetAllAsync(int pageing = 1, int pageSize = 10)
+        public async Task<Result<IEnumerable<Domain.Entities.School>>> GetPagedAsync(int pageing = 1, int pageSize = 10)
         {
-            var School = await _Repository.GetAllAsync(pageing, pageSize);
+            var School = await _SchoolRepository.GetPagedListAsync(pageing, pageSize);
             if (School == null)
             {
                 return Result<IEnumerable<Domain.Entities.School>>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
             }
             return Result<IEnumerable<Domain.Entities.School>>.Success(School);
         }
-        public async Task<Result> UpdateAsync(Guid id, SchoolUpdateDTO updatedSchool)
+        public async Task<Result> UpdateAsync(Guid id, SchoolUpdateCommand updatedSchool)
         {
-            var exist = await _Repository.GetByIdAsync(id);
+            var exist = await _SchoolRepository.GetByIdAsync(id);
             if (exist == null)
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
 
             SchoolMapper.MapSchoolUpdateDTOToEntity(updatedSchool, exist);
-            var updated = await _Repository.UpdateAsync(exist);
+            var updated = await _SchoolRepository.UpdateAsync(exist);
 
             if (!updated)
                 return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
@@ -103,13 +112,13 @@ namespace Modules.School.Application.Services
 
         public async Task<Result> DeleteAsync(Guid id)
         {
-            var school = await _Repository.GetByIdAsync(id);
+            var school = await _SchoolRepository.GetByIdAsync(id);
 
             if (school == null)
             {
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
             }
-            var delete = await _Repository.DeleteAsync(school);
+            var delete = await _SchoolRepository.DeleteAsync(school);
 
             if (!delete)
             {
@@ -118,14 +127,6 @@ namespace Modules.School.Application.Services
             return Result.Success();
         }
 
-        public async Task<Result<IEnumerable<SchoolDTO>>> GetAllAsDtoAsync(int paging = 1, int pageSize = 10)
-        {
-            var dtos = await _SchoolRepository.GetAllAsDtoAsync(paging, pageSize);
-            if (dtos == null)
-            {
-                return Result<IEnumerable<SchoolDTO>>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
-            }
-            return Result<IEnumerable<SchoolDTO>>.Success(dtos);
-        }
+
     }
 }

@@ -26,7 +26,7 @@ public class SchoolServiceTests
     [Fact]
     public async Task CreateAsync_WhenContactIsUnique_ReturnsSuccess()
     {
-        var dto = new SchoolAddDTO
+        var dto = new SchoolAddCommand
         {
             Name = "Test School",
             Email = "school@test.com",
@@ -50,7 +50,7 @@ public class SchoolServiceTests
     [Fact]
     public async Task CreateAsync_WhenEmailExists_ReturnsConflict()
     {
-        var dto = new SchoolAddDTO
+        var dto = new SchoolAddCommand
         {
             Name = "Test School",
             Email = "existing@test.com",
@@ -74,7 +74,7 @@ public class SchoolServiceTests
     [Fact]
     public async Task CreateAsync_WhenPhoneExists_ReturnsConflict()
     {
-        var dto = new SchoolAddDTO
+        var dto = new SchoolAddCommand
         {
             Name = "Test School",
             Email = "new@test.com",
@@ -99,7 +99,7 @@ public class SchoolServiceTests
     [Fact]
     public async Task CreateAsync_WhenAddFails_ReturnsInternalServerError()
     {
-        var dto = new SchoolAddDTO
+        var dto = new SchoolAddCommand
         {
             Name = "Test School",
             Email = "school@test.com",
@@ -149,7 +149,7 @@ public class SchoolServiceTests
     public async Task GetByIdAsDtoAsync_WhenNotFound_ReturnsNotFound()
     {
         var id = Guid.NewGuid();
-        _schoolRepositoryMock.Setup(r => r.GetByIdAsDtoAsync(id)).ReturnsAsync((SchoolDTO?)null);
+        _schoolRepositoryMock.Setup(r => r.GetByIdAsDtoAsync(id)).ReturnsAsync((SchoolDetailsDTO?)null);
 
         var result = await _sut.GetByIdAsDtoAsync(id);
 
@@ -161,7 +161,7 @@ public class SchoolServiceTests
     public async Task UpdateAsync_WhenSchoolNotFound_ReturnsNotFound()
     {
         var id = Guid.NewGuid();
-        var dto = new SchoolUpdateDTO { Name = "New", Email = "e@e.com", Phone = "1", LanguageId = Guid.NewGuid(), PolicyId = Guid.NewGuid() };
+        var dto = new SchoolUpdateCommand { Name = "New", Email = "e@e.com", Phone = "1", LanguageId = Guid.NewGuid(), PolicyId = Guid.NewGuid() };
         _repositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((SchoolEntity?)null);
 
         var result = await _sut.UpdateAsync(id, dto);

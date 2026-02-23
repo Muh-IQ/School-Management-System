@@ -27,6 +27,7 @@ namespace Modules.School.Infrastructure.Persistent
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SchoolDbContext).Assembly);
+            
         }
 
     }

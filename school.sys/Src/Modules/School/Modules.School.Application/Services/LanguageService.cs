@@ -46,7 +46,7 @@ namespace Modules.School.Application.Services
 
         public async Task<Result<IEnumerable<Language>>> GetAllAsync()
         {
-            var lang = await _Repository.GetAllAsync();
+            var lang = await _Repository.GetPagedListAsync();
 
             if (lang == null)
             {
@@ -58,7 +58,7 @@ namespace Modules.School.Application.Services
 
         public async Task<Result<IEnumerable<Language>>> GetAllAsync(int pageing = 1, int pageSize = 10)
         {
-            var lang = await _Repository.GetAllAsync(pageing, pageSize);
+            var lang = await _Repository.GetPagedListAsync(pageing, pageSize);
 
             if (lang == null)
             {

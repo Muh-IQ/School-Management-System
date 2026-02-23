@@ -47,7 +47,7 @@ namespace Modules.School.Application.Services
         }
         public async Task<Result<IEnumerable<Policy>>> GetAllAsync()
         {
-            var policy = await _Repository.GetAllAsync();
+            var policy = await _Repository.GetPagedListAsync();
 
             if (policy == null)
             {
@@ -59,7 +59,7 @@ namespace Modules.School.Application.Services
 
         public async Task<Result<IEnumerable<Policy>>> GetAllAsync(int pageing = 1, int pageSize = 10)
         {
-            var policy = await _Repository.GetAllAsync(pageing, pageSize);
+            var policy = await _Repository.GetPagedListAsync(pageing, pageSize);
 
             if (policy == null)
             {

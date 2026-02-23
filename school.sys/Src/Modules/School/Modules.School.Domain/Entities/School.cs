@@ -1,4 +1,5 @@
 ﻿using Modules.School.Domain.DTOs;
+using Modules.School.Domain.Entities.Place;
 
 namespace Modules.School.Domain.Entities
 {
@@ -13,6 +14,7 @@ namespace Modules.School.Domain.Entities
         public virtual Language Language { get; set; }
         public Guid PolicyId { get; set; }
         public virtual Policy Policy { get; set; }
+
 
     }
 }

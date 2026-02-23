@@ -19,7 +19,7 @@ namespace Modules.School.WebAPI.Controllers.V1
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateSchool(SchoolAddDTO newSchool)
+        public async Task<IActionResult> CreateSchool(SchoolAddCommand newSchool)
         {
             var result = await Service.CreateAsync(newSchool);
             return result.ToApiResponse(successStatusCode: 201);
@@ -42,7 +42,7 @@ namespace Modules.School.WebAPI.Controllers.V1
         }
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> UpdateSchool(Guid id, SchoolUpdateDTO updatedSchool)
+        public async Task<IActionResult> UpdateSchool(Guid id, SchoolUpdateCommand updatedSchool)
         {
             var result = await Service.UpdateAsync(id, updatedSchool);
             return result.ToApiResponse(successStatusCode: 204);

@@ -12,7 +12,7 @@ public class SchoolMapperTests
     public void MapSchoolAddDTOToEntity_WithValidDto_MapsCorrectly()
     {
         var langId = Guid.NewGuid();
-        var dto = new SchoolAddDTO
+        var dto = new SchoolAddCommand
         {
             Name = "My School Name",
             Email = "school@example.com",
@@ -42,7 +42,7 @@ public class SchoolMapperTests
     [Fact]
     public void MapSchoolAddDTOToEntity_WithEmptyPolicy_UsesDefaultPolicy()
     {
-        var dto = new SchoolAddDTO
+        var dto = new SchoolAddCommand
         {
             Name = "School",
             Email = "e@e.com",
@@ -75,7 +75,7 @@ public class SchoolMapperTests
         };
         var langId = Guid.NewGuid();
         var policyId = Guid.NewGuid();
-        var dto = new SchoolUpdateDTO
+        var dto = new SchoolUpdateCommand
         {
             Name = "Updated School",
             Email = "new@e.com",

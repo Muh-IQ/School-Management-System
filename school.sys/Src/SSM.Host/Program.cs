@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 if (builder.Environment.IsDevelopment())
 {
+
     builder.SetIfNotExists("EmailSettings__SmtpServer", "smtp.gmail.com");
     builder.SetIfNotExists("EmailSettings__SmtpPort", "587");
     builder.SetIfNotExists("EmailSettings__SenderEmail", "mohamedajaj0007@gmail.com");
