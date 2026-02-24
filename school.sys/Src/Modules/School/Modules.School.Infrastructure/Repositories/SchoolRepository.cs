@@ -46,11 +46,7 @@ namespace Modules.School.Infrastructure.Repositories
                 .Take(pageSize)
                 .Select(s => new SchoolListItemDTO
                 {
-<<<<<<< HEAD
                     Id = s.Id,  
-=======
-                    Id = s.Id,
->>>>>>> f7f4a76 (Refactor arch)
                     Name = s.Name,
                     LanguageCode = s.Language.Code,
                     PolicyTitle = s.Policy.Title,
