@@ -11,67 +11,23 @@ using System.Threading.Tasks;
 
 namespace Modules.School.Application.QueryServices
 {
-    public class SchoolQueryService(IGenericRepository<Domain.Entities.School> _schoolRepository) :ISchoolQueryService
+    public class SchoolQueryService(ISchoolRepository _schoolRepository) :ISchoolQueryService
     {
-        public async Task<Result<SchoolDetailsDTO?>> GetByIdAsDtoAsync(Guid id)
+        public async Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 10)
         {
-            var school = await _schoolRepository.GetByIdAsync(id);
+            var pagedSchools = await _schoolRepository.GetPagedAsDtoAsync(pageNumber, pageSize);
+
+            return Result<IEnumerable<SchoolListItemDTO>>.Success(pagedSchools);
+        }
+        public async Task<Result<SchoolDetailsDTO>> GetByIdAsDtoAsync(Guid id)
+        {
+            var school = await _schoolRepository.GetByIdAsDtoAsync(id);
             if (school == null)
-            {
-                return Result<SchoolDetailsDTO?>.Failure(ErrorType.NotFound,UserErrors.NotFoundMessage());
-            }
+                return Result<SchoolDetailsDTO>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
+            return Result<SchoolDetailsDTO>.Success(school);
 
-            var schoolDto = new SchoolDetailsDTO
-            {
-                Name = school.Name,
-                Email = school.Email,
-                Phone = school.Phone,
-                LanguageCode = school.Language.Code,
-                LanguageName = school.Language.Name,
-                PolicyTitle = school.Policy.Title,
-                PolicyDescription = school.Policy.Description,
-            };
-
-            return Result<SchoolDetailsDTO?>.Success(schoolDto);
         }
 
-        public async Task<Result<IEnumerable<SchoolDetailsDTO>>> GetPagedAsDtoAsync(int paging = 1, int pageSize = 10)
-        {
-            if (paging < 1) paging = 1;
-            if (pageSize < 1) pageSize = 10;
 
-            try
-            {
-                var schools = await _schoolRepository.GetPagedListAsync(paging, pageSize);
-
-                // استخدم IQueryable من GenericRepo
-                var query =await _schoolRepository.GetPagedListAsync(paging, pageSize)
-                    .Where(s => !s.IsDeleted)
-                    .OrderBy(s => s.Name)
-                    .Skip((paging - 1) * pageSize)
-                    .Take(pageSize)
-                    .Select(s => new SchoolDetailsDTO
-                    {
-                        Name = s.Name,
-                        Email = s.Email,
-                        Phone = s.Phone,
-                        LanguageCode = s.Language.Code,
-                        LanguageName = s.Language.Name,
-                        PolicyTitle = s.Policy.Title,
-                        PolicyDescription = s.Policy.Description,
-                        PolicyType = s.Policy.PolicyType
-                    });
-
-                // AsNoTracking لتقليل استهلاك الذاكرة لأننا قراءة فقط
-                var schools = await query.AsNoTracking().ToListAsync();
-
-                return Result.Success<IEnumerable<SchoolDetailsDTO>>(schools);
-            }
-            catch (Exception ex)
-            {
-                // Logging هنا إذا مطلوب
-                return Result.Failure<IEnumerable<SchoolDetailsDTO>>(ErrorType.InternalServerError, "Failed to get schools.");
-            }
-        }
     }
 }

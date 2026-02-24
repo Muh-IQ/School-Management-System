@@ -42,7 +42,10 @@ namespace Modules.School.Infrastructure.Repositories
         {
             return await _dbSet.FindAsync(id);
         }
-
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _dbSet.AsNoTracking().ToListAsync();
+        }
         public async Task<bool> UpdateAsync(T entity)
         {
             _dbSet.Update(entity);

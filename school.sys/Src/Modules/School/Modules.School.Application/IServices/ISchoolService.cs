@@ -7,13 +7,9 @@ namespace Modules.School.Application.IServices
     {
         Task<Result> CreateAsync(SchoolAddCommand school);
 
-        Task<Result<SchoolDetailsDTO>> GetByIdAsync(Guid id);
-
-        Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 10);
-
         Task<Result> UpdateAsync(Guid Id, SchoolUpdateCommand updatedSchool);
 
-        Task<Result<bool>> SoftDeleteAsync(Guid schoolId);
+        Task<Result> SoftDeleteAsync(Guid schoolId);
 
         Task<Result> SetActiveStatusAsync(Guid schoolId, bool isActive);
 

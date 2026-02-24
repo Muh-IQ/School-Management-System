@@ -11,7 +11,7 @@ namespace Modules.School.Application.IQueryServices
     public interface ISchoolQueryService
     {
         Task<Result<SchoolDetailsDTO?>> GetByIdAsDtoAsync(Guid id);
-        Task<Result<IEnumerable<SchoolDetailsDTO>>> GetPagedAsDtoAsync(int pageNumber = 1, int pageSize = 10);
+        Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 10);
 
 
     }

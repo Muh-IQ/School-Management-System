@@ -29,8 +29,12 @@ namespace Modules.School.Infrastructure
             services.AddScoped<ISchoolRepository, SchoolRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
+<<<<<<< HEAD
             services.AddScoped<IAreaRepository, AreaRepository>();
 
+=======
+            services.AddScoped<IPolicyRepository, PolicyRepository>();
+>>>>>>> f7f4a76 (Refactor arch)
 
             return services;
         }

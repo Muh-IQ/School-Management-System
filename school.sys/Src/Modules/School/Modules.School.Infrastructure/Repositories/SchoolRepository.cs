@@ -24,6 +24,7 @@ namespace Modules.School.Infrastructure.Repositories
                 .Where(s => s.Id == id && !s.IsDeleted)
                 .Select(s => new SchoolDetailsDTO
                 {
+                    Id = s.Id,
                     Name = s.Name,
                     Email = s.Email,
                     Phone = s.Phone,
@@ -31,29 +32,29 @@ namespace Modules.School.Infrastructure.Repositories
                     LanguageName = s.Language.Name,
                     PolicyTitle = s.Policy.Title,
                     PolicyDescription = s.Policy.Description,
-                    PolicyType = s.Policy.PolicyType
+                    PolicyType = s.Policy.PolicyType       
                 })
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<SchoolDetailsDTO>> GetPagedAsDtoAsync(int paging = 1, int pageSize = 10)
+        public async Task<IEnumerable<SchoolListItemDTO>> GetPagedAsDtoAsync(int paging = 1, int pageSize = 10)
         {
             return await _dbSet
                 .Where(s => !s.IsDeleted)
                 .OrderBy(s => s.Name)
                 .Skip((paging - 1) * pageSize)
                 .Take(pageSize)
-                .Select(s => new SchoolDetailsDTO
+                .Select(s => new SchoolListItemDTO
                 {
+<<<<<<< HEAD
                     Id = s.Id,  
+=======
+                    Id = s.Id,
+>>>>>>> f7f4a76 (Refactor arch)
                     Name = s.Name,
-                    Email = s.Email,
-                    Phone = s.Phone,
                     LanguageCode = s.Language.Code,
-                    LanguageName = s.Language.Name,
                     PolicyTitle = s.Policy.Title,
-                    PolicyDescription = s.Policy.Description,
-                    PolicyType = s.Policy.PolicyType
+                   
                 })
                 .ToListAsync();
         }

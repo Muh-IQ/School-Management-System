@@ -1,5 +1,6 @@
 ﻿using Modules.School.Application.IServices;
 using Modules.School.Domain.Common.Results;
+using Modules.School.Domain.Common.StaticError;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;
 
@@ -46,7 +47,7 @@ namespace Modules.School.Application.Services
 
         public async Task<Result<IEnumerable<Language>>> GetAllAsync()
         {
-            var lang = await _Repository.GetPagedListAsync();
+            var lang = await _Repository.GetAllAsync();
 
             if (lang == null)
             {
@@ -56,9 +57,9 @@ namespace Modules.School.Application.Services
             return Result<IEnumerable<Language>>.Success(lang);
         }
 
-        public async Task<Result<IEnumerable<Language>>> GetAllAsync(int pageing = 1, int pageSize = 10)
+        public async Task<Result<IEnumerable<Language>>> GetPagedAsync(int pageing = 1, int pageSize = 10)
         {
-            var lang = await _Repository.GetPagedListAsync(pageing, pageSize);
+            var lang = await _Repository.GetPagedAsync(pageing, pageSize);
 
             if (lang == null)
             {
@@ -86,26 +87,25 @@ namespace Modules.School.Application.Services
 
             return Result.Success();
         }
-
-        public async Task<Result> DeleteAsync(Guid id)
+        public async Task<Result> SoftDeleteAsync(Guid languageId)
         {
-            var lang = await _Repository.GetByIdAsync(id);
+            var language = await _Repository.GetByIdAsync(languageId);
+            if (language == null)
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(languageId));
+            if (language.IsDeleted)
+                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage());
+            if (!language.IsActive)
+                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage());
 
-            if (lang == null)
-            {
-                return Result.Failure(ErrorType.NotFound, $"Language With ID :{id} Not Found");
-            }
-            var delete = await _Repository.DeleteAsync(lang);
+            language.IsDeleted = true;
+            language.IsActive = false;
 
-            if (!delete)
-            {
-                return Result.Failure(ErrorType.InternalServerError, "Delete Failed.");
-            }
-
-
-
+            var updated = await _Repository.UpdateAsync(language);
+            if (!updated)
+                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
 
             return Result.Success();
         }
+
     }
 }

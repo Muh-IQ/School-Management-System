@@ -6,7 +6,7 @@ namespace Modules.School.Domain.IRepositories
     public interface ISchoolRepository : IGenericRepository<Domain.Entities.School>
     {
         Task<SchoolDetailsDTO?> GetByIdAsDtoAsync(Guid id);
-        Task<IEnumerable<SchoolDetailsDTO>> GetPagedAsDtoAsync(int pageNumber = 1, int pageSize = 10);
+        Task<IEnumerable<SchoolListItemDTO>> GetPagedAsDtoAsync(int pageNumber = 1, int pageSize = 10);
         
 
     }

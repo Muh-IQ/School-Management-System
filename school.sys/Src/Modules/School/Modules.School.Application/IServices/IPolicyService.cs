@@ -11,10 +11,10 @@ namespace Modules.School.Application.IServices
 
         Task<Result<IEnumerable<Policy>>> GetAllAsync();
 
-        Task<Result<IEnumerable<Policy>>> GetAllAsync(int paging = 1, int pageSize = 10);
+        Task<Result<IEnumerable<Policy>>> GetPagedAsync(int paging = 1, int pageSize = 10);
 
         Task<Result> UpdateAsync(Policy policy);
 
-        Task<Result> DeleteAsync(Guid Id);
+        Task<Result> SoftDeleteAsync(Guid Id);
     }
 }

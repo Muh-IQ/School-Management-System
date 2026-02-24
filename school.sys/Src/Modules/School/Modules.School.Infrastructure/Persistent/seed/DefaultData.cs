@@ -12,7 +12,8 @@ namespace Modules.School.Infrastructure.Persistent.seed
             Description = "This policy applies to all schools by default.",
             PolicyType = "Master",
             IsActive = true,
-            IsDeleted = false
+            IsDeleted = false,
+            IsDefault = true
         };
 
     }

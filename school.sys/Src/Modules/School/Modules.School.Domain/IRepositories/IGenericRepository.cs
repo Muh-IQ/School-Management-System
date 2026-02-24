@@ -11,6 +11,7 @@ namespace Modules.School.Domain.IRepositories
         Task<IEnumerable<T>> GetPagedAsync(int pageNumber=1, int pageSize=10);
         Task<bool> UpdateAsync(T entity);
         Task<T> GetByAsync(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> GetAllAsync();
 
     }
 }

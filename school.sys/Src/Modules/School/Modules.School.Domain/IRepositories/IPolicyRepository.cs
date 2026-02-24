@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Modules.School.Domain.IRepositories
 {
-    public interface IPolicyRepository
+    public interface IPolicyRepository : IGenericRepository<Policy>
     {
         Task<Guid> GetDefaultPolicyIdAsync();
 
