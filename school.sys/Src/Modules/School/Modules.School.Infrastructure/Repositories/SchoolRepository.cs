@@ -89,6 +89,7 @@ namespace Modules.School.Infrastructure.Repositories
                 .Take(pageSize)
                 .Select(s => new SchoolDTO
                 {
+                    Id = s.Id,  
                     Name = s.Name,
                     Email = s.Email,
                     Phone = s.Phone,
