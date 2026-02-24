@@ -13,14 +13,24 @@ namespace Modules.School.Infrastructure
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<SchoolDbContext>(options =>
-                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            // Register your singleton ConnectionProvider
+            services.AddSingleton<ConnectionProvider>();
+
+            // Use ConnectionProvider to get the connection string for DbContext
+            services.AddDbContext<SchoolDbContext>((serviceProvider, options) =>
+            {
+                var connectionProvider = serviceProvider.GetRequiredService<ConnectionProvider>();
+                options.UseSqlServer(connectionProvider.GetConnectionString());
+            });
+
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ISchoolRepository, SchoolRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IAreaRepository, AreaRepository>();
+
 
             return services;
         }
