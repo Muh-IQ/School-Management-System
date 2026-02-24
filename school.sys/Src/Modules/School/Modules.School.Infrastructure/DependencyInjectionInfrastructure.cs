@@ -42,6 +42,7 @@ namespace Modules.School.Infrastructure
             services.AddScoped<ISchoolRepository, SchoolRepository>();
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IAreaRepository, AreaRepository>();
 
             return services;
         }
