@@ -30,7 +30,6 @@ namespace Modules.School.Infrastructure
             services.AddScoped<ICountryRepository, CountryRepository>();
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IAreaRepository, AreaRepository>();
-            services.AddSingleton<ConnectionProvider>();
 
 
             return services;
