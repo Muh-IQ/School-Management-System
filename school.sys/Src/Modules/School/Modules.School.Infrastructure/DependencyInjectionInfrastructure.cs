@@ -11,31 +11,9 @@ namespace Modules.School.Infrastructure
 {
     public static class DependencyInjectionInfrastructure
     {
-        public static IServiceCollection AddInfrastructureServicesTesting(this IServiceCollection services, IConfiguration? configuration = null)
-        {
-            var useInMemory = configuration?["UseInMemoryDatabase"] == "true";
-
-            if (useInMemory)
-            {
-                var connection = new SqliteConnection("DataSource=:memory:");
-                connection.Open();
-                services.AddSingleton(connection);
-                services.AddDbContext<SchoolDbContext>(options => options.UseSqlite(connection));
-                services.AddHostedService<EnsureCreatedHostedService>();
-            }
-            else
-            {
-                services.AddDbContext<SchoolDbContext>(options =>
-                    options.UseSqlServer("Server=.;Database=SchoolManagement;Integrated Security=SSPI;TrustServerCertificate=True;"));
-            }
-
-            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-            services.AddScoped<ISchoolRepository, SchoolRepository>();
-            return services;
-        }
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContextPool<SchoolDbContext>(options =>
+            services.AddDbContext<SchoolDbContext>(options =>
                  options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));

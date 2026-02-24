@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using Modules.School.Infrastructure;
 using Modules.School.Infrastructure.Persistent;
 using Modules.School.WebAPI.Extensions;
@@ -9,10 +10,10 @@ if (builder.Environment.IsDevelopment())
 {
     string envName = "ConnectionStrings__DefaultConnection";
     string connString = "Server=.;Database=SchoolManagement;Integrated Security=SSPI;TrustServerCertificate=True;";
-
+    var x = Environment.GetEnvironmentVariable(envName);
     if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(envName)))
     {
-        Environment.SetEnvironmentVariable(envName, connString, EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(envName, connString, EnvironmentVariableTarget.User);
     }
 
     builder.SetIfNotExists("EmailSettings__SmtpServer", "smtp.gmail.com");
@@ -23,7 +24,6 @@ if (builder.Environment.IsDevelopment())
 }
 
 builder.Configuration.AddEnvironmentVariables();
-
 // Add services to the container. (School module: controllers, validation filter, DI)
 builder.Services.AddControllers().AddSchoolModule(builder.Configuration);
 
