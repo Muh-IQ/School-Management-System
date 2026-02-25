@@ -13,7 +13,6 @@ namespace Modules.School.Application.Services
     {
         private readonly ISchoolRepository _SchoolRepository;
         private readonly IPolicyRepository _PolicyRepository;
-        private SchoolMapper _Mapper;
         public SchoolService(ISchoolRepository repository, IPolicyRepository policyRepository)
         {
             _SchoolRepository = repository;
@@ -78,10 +77,10 @@ namespace Modules.School.Application.Services
         }
         public async Task<Result> CreateAsync(SchoolAddCommand newSchool)
         {
+            SchoolMapper _Mapper= new SchoolMapper();
             var validationResult = await ValidateContactUniquenessAsync(newSchool.Email, newSchool.Phone);
             if (!validationResult.IsSuccess)
                 return validationResult;
-
             Policy? newPolicy = null;
             Guid policyId;
 
@@ -107,6 +106,7 @@ namespace Modules.School.Application.Services
 
         public async Task<Result> UpdateAsync(Guid id, SchoolUpdateCommand updatedSchool)
         {
+            SchoolMapper _Mapper = new SchoolMapper();
             var exist = await _SchoolRepository.GetByIdAsync(id);
             if (exist == null)
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
