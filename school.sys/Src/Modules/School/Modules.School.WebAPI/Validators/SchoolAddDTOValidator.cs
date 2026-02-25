@@ -3,7 +3,7 @@ using Modules.School.Domain.DTOs;
 
 namespace Modules.School.WebAPI.Validators;
 
-public class SchoolAddDTOValidator : AbstractValidator<SchoolAddDTO>
+public class SchoolAddDTOValidator : AbstractValidator<SchoolAddCommand>
 {
     public SchoolAddDTOValidator()
     {

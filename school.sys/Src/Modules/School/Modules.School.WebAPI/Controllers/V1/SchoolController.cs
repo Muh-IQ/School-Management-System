@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Modules.School.Application.IQueryServices;
 using Modules.School.Application.IServices;
 using Modules.School.Domain.DTOs;
 using Modules.School.WebAPI.Extensions;
@@ -14,12 +15,12 @@ namespace Modules.School.WebAPI.Controllers.V1
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
 
-    public class SchoolController(ISchoolService Service ) : ControllerBase
+    public class SchoolController(ISchoolService Service,ISchoolQueryService queryService ) : ControllerBase
     {
 
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public async Task<IActionResult> CreateSchool(SchoolAddDTO newSchool)
+        public async Task<IActionResult> CreateSchool(SchoolAddCommand newSchool)
         {
             var result = await Service.CreateAsync(newSchool);
             return result.ToApiResponse(successStatusCode: 201);
@@ -29,7 +30,7 @@ namespace Modules.School.WebAPI.Controllers.V1
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetSchoolById(Guid id)
         {
-            var result = await Service.GetByIdAsDtoAsync(id);
+            var result = await queryService.GetByIdAsDtoAsync(id);
             return result.ToApiResponse();
         }
         [HttpDelete("{id}")]
@@ -37,12 +38,12 @@ namespace Modules.School.WebAPI.Controllers.V1
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteSchool(Guid id)
         {
-            var result = await Service.DeleteAsync(id);
+            var result = await Service.SoftDeleteAsync(id);
             return result.ToApiResponse(successStatusCode: 204);
         }
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> UpdateSchool(Guid id, SchoolUpdateDTO updatedSchool)
+        public async Task<IActionResult> UpdateSchool(Guid id, SchoolUpdateCommand updatedSchool)
         {
             var result = await Service.UpdateAsync(id, updatedSchool);
             return result.ToApiResponse(successStatusCode: 204);
@@ -51,8 +52,8 @@ namespace Modules.School.WebAPI.Controllers.V1
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> ListSchools()
-        {      
-            var result = await Service.GetAllAsDtoAsync(1, 10);
+        {
+            var result = await queryService.GetPagedAsync(1, 10);
             return result.ToApiResponse();
         }
 

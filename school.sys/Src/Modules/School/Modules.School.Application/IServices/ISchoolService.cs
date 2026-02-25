@@ -5,16 +5,13 @@ namespace Modules.School.Application.IServices
 {
     public interface ISchoolService
     {
-        Task<Result> CreateAsync(SchoolAddDTO school);
+        Task<Result> CreateAsync(SchoolAddCommand school);
 
-        Task<Result<Domain.Entities.School>> GetByIdAsync(Guid id);
-        Task<Result<SchoolDTO>> GetByIdAsDtoAsync(Guid id);
+        Task<Result> UpdateAsync(Guid Id, SchoolUpdateCommand updatedSchool);
 
-        Task<Result<IEnumerable<Domain.Entities.School>>> GetAllAsync(int paging = 1, int pageSize = 10);
-        Task<Result<IEnumerable<SchoolDTO>>> GetAllAsDtoAsync(int paging = 1, int pageSize = 10);
+        Task<Result> SoftDeleteAsync(Guid schoolId);
 
-        Task<Result> UpdateAsync(Guid Id, SchoolUpdateDTO updatedSchool);
+        Task<Result> SetActiveStatusAsync(Guid schoolId, bool isActive);
 
-        Task<Result> DeleteAsync(Guid Id);
     }
 }

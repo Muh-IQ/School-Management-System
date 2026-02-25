@@ -1,5 +1,6 @@
 using Modules.School.Application.IServices;
 using Modules.School.Domain.Common.Results;
+using Modules.School.Domain.Common.StaticError;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;
 
@@ -21,14 +22,14 @@ namespace Modules.School.Application.Services
 
             if (exist)
             {
-                return Result.Failure(ErrorType.Conflict, "Policy Is Already Exists.");
+                return Result.Failure(ErrorType.Conflict,UserErrors.ConflictMessage());
             }
 
             var added = await _Repository.AddAsync(policy);
 
             if (!added)
             {
-                return Result.Failure(ErrorType.InternalServerError, "Faild To Create Policy.");
+                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
             }
 
             return Result.Success();
@@ -40,7 +41,7 @@ namespace Modules.School.Application.Services
 
             if (policy == null)
             {
-                return Result<Policy>.Failure(ErrorType.NotFound, "Policy Not Found.");
+                return Result<Policy>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
             }
 
             return Result<Policy>.Success(policy);
@@ -51,19 +52,19 @@ namespace Modules.School.Application.Services
 
             if (policy == null)
             {
-                return Result<IEnumerable<Policy>>.Failure(ErrorType.NotFound, "Policy Not Found.");
+                return Result<IEnumerable<Policy>>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
             }
 
             return Result<IEnumerable<Policy>>.Success(policy);
         }
 
-        public async Task<Result<IEnumerable<Policy>>> GetAllAsync(int pageing = 1, int pageSize = 10)
+        public async Task<Result<IEnumerable<Policy>>> GetPagedAsync(int pageing = 1, int pageSize = 10)
         {
-            var policy = await _Repository.GetAllAsync(pageing, pageSize);
+            var policy = await _Repository.GetPagedAsync(pageing, pageSize);
 
             if (policy == null)
             {
-                return Result<IEnumerable<Policy>>.Failure(ErrorType.NotFound, "Policy Not Found");
+                return Result<IEnumerable<Policy>>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
             }
 
             return Result<IEnumerable<Policy>>.Success(policy);
@@ -75,41 +76,37 @@ namespace Modules.School.Application.Services
 
             if (!exist)
             {
-                return Result.Failure(ErrorType.NotFound, $"Policy With ID {policy.Id} Not Found.");
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
             }
 
             var updated = await _Repository.UpdateAsync(policy);
 
             if (!updated)
             {
-                return Result.Failure(ErrorType.InternalServerError, "Updated Failed.");
+                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
             }
 
             return Result.Success();
 
         }
 
-        public async Task<Result> DeleteAsync(Guid id)
+        public async Task<Result> SoftDeleteAsync(Guid Id)
         {
-            var policy = await _Repository.GetByIdAsync(id);
+            var Policy = await _Repository.GetByIdAsync(Id);
+            if (Policy == null)
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(Id));
+            if (Policy.IsDeleted)
+                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage());
+            if (!Policy.IsActive)
+                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage());
 
-            if (policy == null)
-            {
-                return Result.Failure(ErrorType.NotFound, $"Policy With ID {id} Not Found");
-            }
+            Policy.IsDeleted = true;
+            Policy.IsActive = false;
 
-            var schoolsUsingPolicy = await _SchoolRepository.GetByPolicyAsync(id);
-            if (schoolsUsingPolicy.Any())
-            {
-                return Result.Failure(ErrorType.Conflict, "Policy is in use by one or more schools and cannot be deleted.");
-            }
+            var updated = await _Repository.UpdateAsync(Policy);
+            if (!updated)
+                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
 
-            var delete = await _Repository.DeleteAsync(policy);
-
-            if (!delete)
-            {
-                return Result.Failure(ErrorType.InternalServerError, "Delete Failed.");
-            }
             return Result.Success();
         }
 

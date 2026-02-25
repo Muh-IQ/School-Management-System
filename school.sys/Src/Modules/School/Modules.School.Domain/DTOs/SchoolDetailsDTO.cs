@@ -1,6 +1,6 @@
 ﻿namespace Modules.School.Domain.DTOs
 {
-    public class SchoolDTO
+    public class SchoolDetailsDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

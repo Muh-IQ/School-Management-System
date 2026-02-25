@@ -12,10 +12,10 @@ namespace Modules.School.Application.IServices
 
         Task<Result<IEnumerable<Language>>> GetAllAsync();
 
-        Task<Result<IEnumerable<Language>>> GetAllAsync(int paging = 1, int pageSize = 10);
+        Task<Result<IEnumerable<Language>>> GetPagedAsync(int paging = 1, int pageSize = 10);
 
         Task<Result> UpdateAsync(Language language);
 
-        Task<Result> DeleteAsync(Guid Id);
+        Task<Result> SoftDeleteAsync(Guid Id);
     }
 }

@@ -1,6 +1,8 @@
+using Modules.School.Domain.Entities.Place;
+
 namespace Modules.School.Domain.DTOs
 {
-    public class SchoolAddDTO
+    public class SchoolAddCommand
     {
         public string Name { get; set; }
         public string Email { get; set; }

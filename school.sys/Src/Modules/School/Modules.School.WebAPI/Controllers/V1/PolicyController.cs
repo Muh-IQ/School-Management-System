@@ -30,14 +30,7 @@ namespace Modules.School.WebAPI.Controllers.V1
             return result.ToApiResponse();
         }
 
-        [HttpDelete("{id}")]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<IActionResult> DeletePolicy(Guid id)
-        {
-            var result = await Service.DeleteAsync(id);
-            return result.ToApiResponse(successStatusCode: 204);
-        }
+
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -48,12 +41,6 @@ namespace Modules.School.WebAPI.Controllers.V1
             return result.ToApiResponse(successStatusCode: 204);
         }
 
-        [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ListPolicies()
-        {
-            var result = await Service.GetAllAsync(1, 10);
-            return result.ToApiResponse();
-        }
+        
     }
 }

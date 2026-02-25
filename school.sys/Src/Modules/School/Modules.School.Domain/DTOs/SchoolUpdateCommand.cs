@@ -1,6 +1,6 @@
 ﻿namespace Modules.School.Domain.DTOs
 {
-    public class SchoolUpdateDTO
+    public class SchoolUpdateCommand
     {
         public string Name { get; set; }
         public string Email { get; set; }

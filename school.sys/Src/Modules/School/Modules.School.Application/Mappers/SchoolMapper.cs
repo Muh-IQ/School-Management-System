@@ -1,38 +1,25 @@
 ﻿using Modules.School.Domain.DTOs;
 using Modules.School.Application.Helpers;
+using Modules.School.Domain.Entities.Place;
 
 namespace Modules.School.Application.Mappers
 {
-    public static class SchoolMapper
+    public  class SchoolMapper
     {
-        private static readonly Domain.Entities.Policy DefaultPolicy = new Domain.Entities.Policy
+        public  Domain.Entities.Policy MapSchoolAddPolicyoEntityPolicy(string PolicyTitle,string PolicyDescription)
         {
-            Id = Guid.NewGuid(),
-            Title = "Master Policy",
-            sanitizeName = TextHelper.SlugGenerate("Master Policy"),
-            Description = "This policy applies to all schools by default.",
-            PolicyType = "Master",
-            IsActive = true,
-            IsDeleted = false
-        };
-        private static Domain.Entities.Policy? CreatePolicyIfProvided(SchoolAddDTO dto)
-        {
-            if (string.IsNullOrWhiteSpace(dto.PolicyTitle) ||
-                string.IsNullOrWhiteSpace(dto.PolicyType))
-                return null;
-
             return new Domain.Entities.Policy
             {
                 Id = Guid.NewGuid(),
-                Title = dto.PolicyTitle,
-                sanitizeName = TextHelper.SlugGenerate(dto.PolicyTitle),
-                Description = dto.PolicyDescription ?? "",
-                PolicyType = dto.PolicyType,
+                Title = PolicyTitle,
+                sanitizeName = TextHelper.SlugGenerate(PolicyTitle),
+                Description = PolicyDescription,
                 IsActive = true,
-                IsDeleted = false
+                IsDeleted = false,
+                IsDefault = false
             };
         }
-        public static Domain.Entities.School MapSchoolAddDTOToEntity(SchoolAddDTO dto, Domain.Entities.Policy? policy = null)
+        public  Domain.Entities.School MapSchoolAddDTOToEntity(SchoolAddCommand dto, Guid PolicyId )
         {
             return new Domain.Entities.School
             {
@@ -42,14 +29,15 @@ namespace Modules.School.Application.Mappers
                 Email = dto.Email,
                 Phone = dto.Phone,
                 LanguageId = dto.LanguageId,
-                Policy = CreatePolicyIfProvided(dto) ?? DefaultPolicy,
+                PolicyId=PolicyId ,
                 IsActive = true,
                 IsDeleted = false,
-                TimeZone = DateTime.UtcNow.ToString("zzz")
+                TimeZone = DateTime.UtcNow.ToString("zzz"),
+                
             };
         }
 
-        public static void MapSchoolUpdateDTOToEntity(SchoolUpdateDTO dto, Domain.Entities.School entity)
+        public  void MapSchoolUpdateDTOToEntity(SchoolUpdateCommand dto, Domain.Entities.School entity)
         {
             entity.Name = dto.Name;
             entity.sanitizeName = TextHelper.SlugGenerate(dto.Name);
