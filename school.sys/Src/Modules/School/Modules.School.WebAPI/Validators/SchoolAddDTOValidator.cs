@@ -29,9 +29,5 @@ public class SchoolAddDTOValidator : AbstractValidator<SchoolAddCommand>
         RuleFor(x => x.PolicyDescription)
             .MaximumLength(2000).WithMessage("Policy description must not exceed 2000 characters.")
             .When(x => x.PolicyDescription != null);
-
-        RuleFor(x => x.PolicyType)
-            .MaximumLength(100).WithMessage("Policy type must not exceed 100 characters.")
-            .When(x => x.PolicyType != null);
     }
 }

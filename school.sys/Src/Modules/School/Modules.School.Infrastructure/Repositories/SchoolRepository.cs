@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;
@@ -31,8 +31,7 @@ namespace Modules.School.Infrastructure.Repositories
                     LanguageCode = s.Language.Code,
                     LanguageName = s.Language.Name,
                     PolicyTitle = s.Policy.Title,
-                    PolicyDescription = s.Policy.Description,
-                    PolicyType = s.Policy.PolicyType       
+                    PolicyDescription = s.Policy.Description
                 })
                 .FirstOrDefaultAsync();
         }

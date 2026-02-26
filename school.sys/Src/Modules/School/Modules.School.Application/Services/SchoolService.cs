@@ -1,4 +1,4 @@
-﻿using Modules.School.Application.Helpers;
+using Modules.School.Application.Helpers;
 using Modules.School.Application.IServices;
 using Modules.School.Application.Mappers;
 using Modules.School.Domain.Common.Results;
@@ -24,7 +24,6 @@ namespace Modules.School.Application.Services
         private bool PolicyInfoProvided(SchoolAddCommand dto)
         {
             return !string.IsNullOrWhiteSpace(dto.PolicyTitle) &&
-                   !string.IsNullOrWhiteSpace(dto.PolicyType) &&
                    !string.IsNullOrWhiteSpace(dto.PolicyDescription);
         }
         
