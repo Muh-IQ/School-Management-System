@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.Serialization.Formatters;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Modules.School.Domain.IRepositories;
 using Modules.School.Infrastructure.Persistent;
+using System.Linq.Expressions;
 
 namespace Modules.School.Infrastructure.Repositories
 {
@@ -32,7 +26,7 @@ namespace Modules.School.Infrastructure.Repositories
         }
         public async Task<IEnumerable<T>> GetPagedAsync(int pageNumber = 1, int pageSize = 10)
         {
-            return await _dbSet.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return await _dbSet.Skip((pageNumber - 1) * pageSize).Take(pageSize).AsNoTracking().ToListAsync();
         }
         public async Task<T> GetByAsync(Expression<Func<T, bool>> predicate)
         {

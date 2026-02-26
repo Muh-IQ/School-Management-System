@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Modules.School.Application.IQueryServices;
 using Modules.School.Application.IServices;
-using Modules.School.Application.QueryServices;
 using Modules.School.Application.Services;
 using Modules.School.Domain.IThirdPartyServices;
 
@@ -16,7 +14,6 @@ namespace Modules.School.Application
             services.AddScoped<IPolicyService, PolicyService>();
             services.AddScoped<ICountryService, CountryService>();
             
-            services.AddScoped<ISchoolQueryService, SchoolQueryService>();
 
             services.AddSingleton<ITimeProvider, Services.TimeProvider>();
             return services;

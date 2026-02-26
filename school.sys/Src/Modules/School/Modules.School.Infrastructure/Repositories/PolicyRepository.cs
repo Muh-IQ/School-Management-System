@@ -5,7 +5,7 @@ using Modules.School.Infrastructure.Persistent;
 
 namespace Modules.School.Infrastructure.Repositories
 {
-    internal class PolicyRepository :GenericRepository<Policy>,IPolicyRepository
+    internal class PolicyRepository : GenericRepository<Policy>, IPolicyRepository
     {
         public PolicyRepository(SchoolDbContext _context) : base(_context)
         {
@@ -16,6 +16,10 @@ namespace Modules.School.Infrastructure.Repositories
                 .Where(p => p.IsDefault)
                 .Select(p => p.Id)
                 .FirstOrDefaultAsync();
+        }
+        public async Task<Policy> GetDefaultPolicyAsync()
+        {
+            return await _context.Policies.FirstOrDefaultAsync(p => p.IsDefault);
         }
     }
 }
