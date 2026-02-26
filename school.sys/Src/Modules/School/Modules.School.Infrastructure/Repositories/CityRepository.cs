@@ -11,7 +11,7 @@ namespace Modules.School.Infrastructure.Repositories
 {
     internal class CityRepository(SchoolDbContext context) : ICityRepository
     {
-        public async Task<IEnumerable<LocationDTO>> GetByIdAsync(Guid countryId)
+        public async Task<IEnumerable<LocationDTO>> GetAllByIdAsync(Guid countryId)
         {
             return context.Cities
               .Where(c => c.CountryId == countryId && c.IsActive)
