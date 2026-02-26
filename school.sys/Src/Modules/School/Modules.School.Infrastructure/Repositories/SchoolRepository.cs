@@ -32,7 +32,6 @@ namespace Modules.School.Infrastructure.Repositories
                     LanguageName = s.Language.Name,
                     PolicyTitle = s.Policy.Title,
                     PolicyDescription = s.Policy.Description,
-                    PolicyType = s.Policy.PolicyType       
                 })
                 .FirstOrDefaultAsync();
         }

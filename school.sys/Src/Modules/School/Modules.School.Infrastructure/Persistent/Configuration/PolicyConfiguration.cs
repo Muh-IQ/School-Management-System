@@ -19,7 +19,7 @@ namespace Modules.School.Infrastructure.Persistent.Configuration
             builder.Property(p => p.IsDeleted)
                 .HasDefaultValue(false);
 
-            builder.HasData(DefaultData.DefaultPolicy);
+            //builder.HasData(DefaultData.DefaultPolicy);
         }
     }
 }
