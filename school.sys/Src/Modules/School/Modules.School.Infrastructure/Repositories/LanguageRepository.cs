@@ -18,4 +18,31 @@ internal class LanguageRepository(SchoolDbContext context) : ILanguageRepository
             })
             .ToListAsync();
     }
+
+    public async Task<LanguageDTO?> GetByIdAsync(Guid id)
+    {
+        return await context.Languages
+            .Where(l => l.Id == id && l.IsActive && !l.IsDeleted)
+            .Select(l => new LanguageDTO
+            {
+                Id = l.Id,
+                Name = l.Name
+            })
+            .FirstOrDefaultAsync();
+    }
+
+    public async Task<IEnumerable<LanguageDTO>> GetPagedAsync(int pageNumber, int pageSize)
+    {
+        return await context.Languages
+            .Where(l => l.IsActive && !l.IsDeleted)
+            .OrderBy(l => l.Name)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .Select(l => new LanguageDTO
+            {
+                Id = l.Id,
+                Name = l.Name
+            })
+            .ToListAsync();
+    }
 }

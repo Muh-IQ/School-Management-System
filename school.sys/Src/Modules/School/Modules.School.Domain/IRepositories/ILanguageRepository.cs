@@ -5,4 +5,6 @@ namespace Modules.School.Domain.IRepositories;
 public interface ILanguageRepository
 {
     Task<IEnumerable<LanguageDTO>> GetAllAsync();
+    Task<LanguageDTO?> GetByIdAsync(Guid id);
+    Task<IEnumerable<LanguageDTO>> GetPagedAsync(int pageNumber, int pageSize);
 }

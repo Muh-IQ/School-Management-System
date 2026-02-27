@@ -1,4 +1,5 @@
-﻿using Modules.School.Domain.Common.Results;
+using Modules.School.Domain.Common.Results;
+using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
 
 namespace Modules.School.Application.IServices
@@ -8,11 +9,11 @@ namespace Modules.School.Application.IServices
     {
         Task<Result> CreateAsync(Language language);
 
-        Task<Result> GetByIdAsync(Guid id);
+        Task<Result<LanguageDTO>> GetByIdAsync(Guid id);
 
-        Task<Result<IEnumerable<Language>>> GetAllAsync();
+        Task<Result<IEnumerable<LanguageDTO>>> GetAllAsync();
 
-        Task<Result<IEnumerable<Language>>> GetPagedAsync(int paging = 1, int pageSize = 10);
+        Task<Result<IEnumerable<LanguageDTO>>> GetPagedAsync(int paging = 1, int pageSize = 10);
 
         Task<Result> UpdateAsync(Language language);
 
