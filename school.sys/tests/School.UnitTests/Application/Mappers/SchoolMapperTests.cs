@@ -1,96 +1,102 @@
+﻿using System;
 using FluentAssertions;
 using Modules.School.Application.Mappers;
 using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
 using Xunit;
 
-namespace School.UnitTests.Application.Mappers;
-
-public class SchoolMapperTests
+namespace Modules.School.Tests.Mappers
 {
-    //[Fact]
-    //public void MapSchoolAddDTOToEntity_WithValidDto_MapsCorrectly()
-    //{
-    //    var langId = Guid.NewGuid();
-    //    var dto = new SchoolAddCommand
-    //    {
-    //        Name = "My School Name",
-    //        Email = "school@example.com",
-    //        Phone = "+1234567890",
-    //        LanguageId = langId,
-    //        PolicyTitle = "Custom Policy",
-    //        PolicyDescription = "Description",
-    //        PolicyType = "Custom"
-    //    };
+    public class SchoolMapperTests
+    {
+        private readonly SchoolMapper _mapper;
 
-    //    var entity = SchoolMapper.MapSchoolAddDTOToEntity(dto);
+        public SchoolMapperTests()
+        {
+            _mapper = new SchoolMapper();
+        }
 
-    //    entity.Should().NotBeNull();
-    //    entity.Id.Should().NotBe(Guid.Empty);
-    //    entity.Name.Should().Be("My School Name");
-    //    entity.sanitizeName.Should().Be("my-school-name");
-    //    entity.Email.Should().Be("school@example.com");
-    //    entity.Phone.Should().Be("+1234567890");
-    //    entity.LanguageId.Should().Be(langId);
-    //    entity.IsActive.Should().BeTrue();
-    //    entity.IsDeleted.Should().BeFalse();
-    //    entity.Policy.Should().NotBeNull();
-    //    entity.Policy!.Title.Should().Be("Custom Policy");
-    //    entity.Policy.PolicyType.Should().Be("Custom");
-    //}
+        [Fact]
+        public void MapSchoolAddDTOToEntityPolicy_Should_Map_Correctly()
+        {
+            // Arrange
+            string title = "Policy A";
+            string description = "Policy Description";
 
-    //[Fact]
-    //public void MapSchoolAddDTOToEntity_WithEmptyPolicy_UsesDefaultPolicy()
-    //{
-    //    var dto = new SchoolAddCommand
-    //    {
-    //        Name = "School",
-    //        Email = "e@e.com",
-    //        Phone = "1",
-    //        LanguageId = Guid.NewGuid(),
-    //        PolicyTitle = "",
-    //        PolicyDescription = "",
-    //        PolicyType = ""
-    //    };
+            // Act
+            var result = _mapper.MapSchoolAddDTOToEntityPolicy(title, description);
 
-    //    var entity = SchoolMapper.MapSchoolAddDTOToEntity(dto);
+            // Assert
+            result.Should().NotBeNull();
+            result.Title.Should().Be(title);
+            result.Description.Should().Be(description);
+            result.IsActive.Should().BeTrue();
+            result.IsDeleted.Should().BeFalse();
+            result.IsDefault.Should().BeFalse();
+            result.Id.Should().NotBeEmpty();
+        }
 
-    //    entity.Policy.Should().NotBeNull();
-    //    entity.Policy!.Title.Should().Be("Master Policy");
-    //    entity.Policy.PolicyType.Should().Be("Master");
-    //}
+        [Fact]
+        public void MapSchoolAddDTOToEntity_Should_Map_Correctly()
+        {
+            // Arrange
+            var dto = new SchoolAddCommand
+            {
+                Name = "My School",
+                Email = "school@example.com",
+                Phone = "1234567890",
+                LanguageId = Guid.NewGuid() 
+            };
+            var policyId = Guid.NewGuid();
 
-    //[Fact]
-    //public void MapSchoolUpdateDTOToEntity_UpdatesEntityInPlace()
-    //{
-    //    var entity = new Modules.School.Domain.Entities.School
-    //    {
-    //        Id = Guid.NewGuid(),
-    //        Name = "Old Name",
-    //        sanitizeName = "old-name",
-    //        Email = "old@e.com",
-    //        Phone = "111",
-    //        LanguageId = Guid.NewGuid(),
-    //        PolicyId = Guid.NewGuid()
-    //    };
-    //    var langId = Guid.NewGuid();
-    //    var policyId = Guid.NewGuid();
-    //    var dto = new SchoolUpdateCommand
-    //    {
-    //        Name = "Updated School",
-    //        Email = "new@e.com",
-    //        Phone = "+999",
-    //        LanguageId = langId,
-    //        PolicyId = policyId
-    //    };
+            // Act
+            var result = _mapper.MapSchoolAddDTOToEntity(dto, policyId);
 
-    //    MapSchoolUpdateDTOToEntity(dto, entity);
+            // Assert
+            result.Should().NotBeNull();
+            result.Name.Should().Be(dto.Name);
+            result.Email.Should().Be(dto.Email);
+            result.Phone.Should().Be(dto.Phone);
+            result.LanguageId.Should().Be(dto.LanguageId); 
+            result.PolicyId.Should().Be(policyId);
+            result.IsActive.Should().BeTrue();
+            result.IsDeleted.Should().BeFalse();
+            result.Id.Should().NotBeEmpty();
+            result.TimeZone.Should().MatchRegex(@"^[+-][0-1][0-9]:[0-5][0-9]$|^\+2[0-3]:[0-5][0-9]$");
+        }
 
-    //    entity.Name.Should().Be("Updated School");
-    //    entity.sanitizeName.Should().Be("updated-school");
-    //    entity.Email.Should().Be("new@e.com");
-    //    entity.Phone.Should().Be("+999");
-    //    entity.LanguageId.Should().Be(langId);
-    //    entity.PolicyId.Should().Be(policyId);
-    //}
+        [Fact]
+        public void MapSchoolUpdateDTOToEntity_Should_Update_Existing_Entity()
+        {
+            // Arrange
+            var entity = new Domain.Entities.School
+            {
+                Id = Guid.NewGuid(),
+                Name = "Old Name",
+                Email = "old@example.com",
+                Phone = "0000000000",
+                LanguageId = Guid.NewGuid(), 
+                PolicyId = Guid.NewGuid()
+            };
+
+            var updateDto = new SchoolUpdateCommand
+            {
+                Name = "New Name",
+                Email = "new@example.com",
+                Phone = "1111111111",
+                LanguageId = Guid.NewGuid(), 
+                PolicyId = Guid.NewGuid()
+            };
+
+            // Act
+            _mapper.MapSchoolUpdateDTOToEntity(updateDto, entity);
+
+            // Assert
+            entity.Name.Should().Be(updateDto.Name);
+            entity.Email.Should().Be(updateDto.Email);
+            entity.Phone.Should().Be(updateDto.Phone);
+            entity.LanguageId.Should().Be(updateDto.LanguageId); 
+            entity.PolicyId.Should().Be(updateDto.PolicyId);
+        }
+    }
 }
