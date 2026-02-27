@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;

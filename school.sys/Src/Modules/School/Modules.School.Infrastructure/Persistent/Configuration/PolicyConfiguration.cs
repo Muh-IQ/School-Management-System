@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Modules.School.Domain.Entities;
-using Modules.School.Infrastructure.Persistent.seed;
+using Modules.School.Infrastructure.Persistent.Seeds;
 
 namespace Modules.School.Infrastructure.Persistent.Configuration
 {
-    public class PolicyConfiguration: IEntityTypeConfiguration<Policy>
+    public class PolicyConfiguration : IEntityTypeConfiguration<Policy>
     {
         public void Configure(EntityTypeBuilder<Policy> builder)
         {
@@ -19,7 +19,7 @@ namespace Modules.School.Infrastructure.Persistent.Configuration
             builder.Property(p => p.IsDeleted)
                 .HasDefaultValue(false);
 
-            //builder.HasData(DefaultData.DefaultPolicy);
+            builder.HasData(new PolicySeed().GetData());
         }
     }
 }

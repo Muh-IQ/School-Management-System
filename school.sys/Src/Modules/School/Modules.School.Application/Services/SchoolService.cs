@@ -1,4 +1,4 @@
-﻿using Modules.School.Application.Helpers;
+using Modules.School.Application.Helpers;
 using Modules.School.Application.IServices;
 using Modules.School.Application.Mappers;
 using Modules.School.Domain.Common.Results;

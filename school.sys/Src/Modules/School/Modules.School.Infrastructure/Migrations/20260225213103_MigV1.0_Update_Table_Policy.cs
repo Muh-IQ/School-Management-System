@@ -38,6 +38,7 @@ namespace Modules.School.Infrastructure.Migrations
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
+                
         }
 
         /// <inheritdoc />

@@ -1,4 +1,4 @@
-﻿namespace Modules.School.Domain.DTOs
+namespace Modules.School.Domain.DTOs
 {
     public class SchoolDetailsDTO
     {
@@ -10,7 +10,5 @@
         public string LanguageName { get; set; }
         public string PolicyTitle { get; set; }
         public string PolicyDescription { get; set; }
-        public string PolicyType { get; set; }
-
     }
 }
