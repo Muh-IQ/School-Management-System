@@ -28,7 +28,7 @@ namespace Modules.School.Application.Services
         }
 
         public Task RemoveAsync(string key)
-        {
+    {
             _memoryCache.Remove(key);
             return Task.CompletedTask;
         }
