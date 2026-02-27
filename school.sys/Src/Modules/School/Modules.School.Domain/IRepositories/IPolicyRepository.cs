@@ -10,6 +10,6 @@ namespace Modules.School.Domain.IRepositories
     public interface IPolicyRepository : IGenericRepository<Policy>
     {
         Task<Guid> GetDefaultPolicyIdAsync();
-
+        Task<Policy> GetDefaultPolicyAsync();
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Modules.School.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class RemovePolicyType : Migration
+    public partial class MigV10_Update_Table_Policy : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,21 +38,12 @@ namespace Modules.School.Infrastructure.Migrations
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
-
-            migrationBuilder.InsertData(
-                table: "Policies",
-                columns: new[] { "Id", "Description", "IsActive", "IsDefault", "Title", "sanitizeName" },
-                values: new object[] { new Guid("12112121-2121-2121-2121-121212121212"), "This policy applies to all schools by default.", true, true, "Master Policy", "master-policy" });
+                
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Policies",
-                keyColumn: "Id",
-                keyValue: new Guid("12112121-2121-2121-2121-121212121212"));
-
             migrationBuilder.DropColumn(
                 name: "IsDefault",
                 table: "Policies");

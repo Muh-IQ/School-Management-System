@@ -10,10 +10,10 @@ public class PolicySeed : IEntitySeed<Policy>
     [
         new Policy
         {
-            Id = MasterPolicyId,
-            Title = "Master Policy",
-            sanitizeName = "master-policy",
-            Description = "This policy applies to all schools by default.",
+            Id=MasterPolicyId,
+            Title = "General School Policy",
+            Description = "This policy defines the general operational and behavioral guidelines applicable to all schools unless otherwise specified.",
+            sanitizeName = "general-school-policy",
             IsActive = true,
             IsDeleted = false,
             IsDefault = true

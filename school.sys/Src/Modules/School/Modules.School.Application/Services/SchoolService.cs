@@ -13,20 +13,29 @@ namespace Modules.School.Application.Services
     {
         private readonly ISchoolRepository _SchoolRepository;
         private readonly IPolicyRepository _PolicyRepository;
-        public SchoolService(ISchoolRepository repository, IPolicyRepository policyRepository)
+        private readonly IGenericRepository<Language> _LanguageRepository;
+        public SchoolService(ISchoolRepository repository, IPolicyRepository policyRepository, IGenericRepository<Language> languageRepository)
         {
             _SchoolRepository = repository;
             _PolicyRepository = policyRepository;
+            _LanguageRepository = languageRepository;
         }
-       
+
         /////////////////////////
 
-        private bool PolicyInfoProvided(SchoolAddCommand dto)
+        private Result ValidatePolicyInfo(SchoolAddCommand dto)
         {
-            return !string.IsNullOrWhiteSpace(dto.PolicyTitle) &&
-                   !string.IsNullOrWhiteSpace(dto.PolicyDescription);
+            bool hasTitle = !string.IsNullOrWhiteSpace(dto.PolicyTitle);
+            bool hasDescription = !string.IsNullOrWhiteSpace(dto.PolicyDescription);
+
+            if (hasTitle != hasDescription)
+            {
+                return Result.Failure(ErrorType.BadRequest, "Both PolicyTitle and PolicyDescription should be provided together or both should be null/empty.");
+            }
+
+            return Result.Success();
         }
-        
+
         private async Task<bool> EmailExists(string Email)
         {
             var exists = await _SchoolRepository.AnyAsync(s => s.Email == Email);
@@ -50,12 +59,17 @@ namespace Modules.School.Application.Services
 
             return Result.Success();
         }
+        private async Task<bool> LanguageExists(Guid id)
+        {
+            var exists = await _LanguageRepository.AnyAsync(l => l.Id == id);
+            return exists;
+        }
 
         ///////////////////
 
 
 
-        public async Task<Result> SoftDeleteAsync(Guid schoolId)
+        public async Task<Result> DeleteAsync(Guid schoolId)
         {
             var school = await _SchoolRepository.GetByIdAsync(schoolId);
             if (school == null)
@@ -76,16 +90,29 @@ namespace Modules.School.Application.Services
         }
         public async Task<Result> CreateAsync(SchoolAddCommand newSchool)
         {
-            SchoolMapper _Mapper= new SchoolMapper();
-            var validationResult = await ValidateContactUniquenessAsync(newSchool.Email, newSchool.Phone);
+            if (!await LanguageExists(newSchool.LanguageId))
+                return Result.Failure(ErrorType.BadRequest, UserErrors.BadRequestMessage());
+
+            SchoolMapper mapper = new SchoolMapper();
+            
+            var validationResult = await ValidateContactUniquenessAsync(newSchool.Email,newSchool.Phone);
+
             if (!validationResult.IsSuccess)
                 return validationResult;
-            Policy? newPolicy = null;
-            Guid policyId;
 
-            if (PolicyInfoProvided(newSchool))
+            var policyValidation = ValidatePolicyInfo(newSchool);
+
+            if (!policyValidation.IsSuccess)
+                return policyValidation;
+
+            Guid policyId;
+            bool hasPolicy =!string.IsNullOrWhiteSpace(newSchool.PolicyTitle);
+
+            if (hasPolicy)
             {
-                newPolicy =_Mapper.MapSchoolAddPolicyoEntityPolicy(newPolicy.Title, newPolicy.Description);
+                var newPolicy = mapper.MapSchoolAddDTOToEntityPolicy(newSchool.PolicyTitle,newSchool.PolicyDescription);
+                newPolicy.sanitizeName=TextHelper.SlugGenerate(newSchool.Name);
+
                 await _PolicyRepository.AddAsync(newPolicy);
                 policyId = newPolicy.Id;
             }
@@ -93,12 +120,14 @@ namespace Modules.School.Application.Services
             {
                 policyId = await _PolicyRepository.GetDefaultPolicyIdAsync();
             }
-            var school =_Mapper.MapSchoolAddDTOToEntity(newSchool, policyId);
+
+            var school = mapper.MapSchoolAddDTOToEntity(newSchool, policyId);
+            school.sanitizeName=TextHelper.SlugGenerate(school.Name);
 
             var added = await _SchoolRepository.AddAsync(school);
 
             if (!added)
-                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
+                return Result.Failure(ErrorType.InternalServerError,UserErrors.InternalServerErrorMessage());
 
             return Result.Success();
         }
@@ -131,6 +160,23 @@ namespace Modules.School.Application.Services
             if (!updated)
                 return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
             return Result.Success();
+        }
+
+
+
+        public async Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 10)
+        {
+            var pagedSchools = await _SchoolRepository.GetPagedAsDtoAsync(pageNumber, pageSize);
+
+            return Result<IEnumerable<SchoolListItemDTO>>.Success(pagedSchools);
+        }
+        public async Task<Result<SchoolDetailsDTO>> GetByIdAsync(Guid id)
+        {
+            var school = await _SchoolRepository.GetByIdAsDtoAsync(id);
+            if (school == null)
+                return Result<SchoolDetailsDTO>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
+            return Result<SchoolDetailsDTO>.Success(school);
+
         }
     }
 }

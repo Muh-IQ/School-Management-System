@@ -12,8 +12,8 @@ using Modules.School.Infrastructure.Persistent;
 namespace Modules.School.Infrastructure.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20260226081508_RemovePolicyType")]
-    partial class RemovePolicyType
+    [Migration("20260227073217_add policy seed")]
+    partial class addpolicyseed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -294,12 +294,12 @@ namespace Modules.School.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("12112121-2121-2121-2121-121212121212"),
-                            Description = "This policy applies to all schools by default.",
+                            Description = "This policy defines the general operational and behavioral guidelines applicable to all schools unless otherwise specified.",
                             IsActive = true,
                             IsDefault = true,
                             IsDeleted = false,
-                            Title = "Master Policy",
-                            sanitizeName = "master-policy"
+                            Title = "General School Policy",
+                            sanitizeName = "general-school-policy"
                         });
                 });
 
