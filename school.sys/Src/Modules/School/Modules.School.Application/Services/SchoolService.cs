@@ -14,11 +14,14 @@ namespace Modules.School.Application.Services
         private readonly ISchoolRepository _SchoolRepository;
         private readonly IPolicyRepository _PolicyRepository;
         private readonly IGenericRepository<Language> _LanguageRepository;
-        public SchoolService(ISchoolRepository repository, IPolicyRepository policyRepository, IGenericRepository<Language> languageRepository)
+        private readonly ICacheService _cacheService;
+        public SchoolService(ISchoolRepository repository, IPolicyRepository policyRepository,
+            IGenericRepository<Language> languageRepository, ICacheService cacheService)
         {
             _SchoolRepository = repository;
             _PolicyRepository = policyRepository;
             _LanguageRepository = languageRepository;
+            this._cacheService = cacheService;
         }
 
         /////////////////////////
@@ -162,14 +165,21 @@ namespace Modules.School.Application.Services
             return Result.Success();
         }
 
-
-
         public async Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 10)
         {
-            var pagedSchools = await _SchoolRepository.GetPagedAsDtoAsync(pageNumber, pageSize);
 
-            return Result<IEnumerable<SchoolListItemDTO>>.Success(pagedSchools);
+            string cacheKey = $"schools_{pageNumber}_{pageSize}";
+
+            var data = await _cacheService.GetOrCreateAsync(
+                cacheKey,
+                () => _SchoolRepository.GetPagedAsDtoAsync(pageNumber, pageSize),
+                TimeSpan.FromMinutes(15)
+            );
+
+            return Result<IEnumerable<SchoolListItemDTO>>.Success(data);
         }
+
+
         public async Task<Result<SchoolDetailsDTO>> GetByIdAsync(Guid id)
         {
             var school = await _SchoolRepository.GetByIdAsDtoAsync(id);
