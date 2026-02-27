@@ -13,7 +13,8 @@ namespace Modules.School.Application
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IPolicyService, PolicyService>();
             services.AddScoped<ICountryService, CountryService>();
-            
+            services.AddScoped<ICityService, CityService>();
+
 
             services.AddSingleton<ITimeProvider, Services.TimeProvider>();
             return services;
