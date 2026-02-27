@@ -1,0 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using Modules.School.Domain.DTOs;
+using Modules.School.Domain.IRepositories;
+using Modules.School.Infrastructure.Persistent;
+
+namespace Modules.School.Infrastructure.Repositories;
+
+internal class LanguageRepository(SchoolDbContext context) : ILanguageRepository
+{
+    public async Task<IEnumerable<LanguageDTO>> GetAllAsync()
+    {
+        return await context.Languages
+            .Where(l => l.IsActive && !l.IsDeleted)
+            .Select(l => new LanguageDTO
+            {
+                Id = l.Id,
+                Name = l.Name
+            })
+            .ToListAsync();
+    }
+}
