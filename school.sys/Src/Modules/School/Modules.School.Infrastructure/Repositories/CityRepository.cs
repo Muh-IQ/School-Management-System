@@ -1,4 +1,5 @@
-﻿using Modules.School.Domain.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using Modules.School.Domain.DTOs;
 using Modules.School.Domain.IRepositories;
 using Modules.School.Infrastructure.Persistent;
 using System;
@@ -13,13 +14,13 @@ namespace Modules.School.Infrastructure.Repositories
     {
         public async Task<IEnumerable<LocationDTO>> GetAllByIdAsync(Guid countryId)
         {
-            return context.Cities
+            return await context.Cities
               .Where(c => c.CountryId == countryId && c.IsActive)
               .Select(c => new LocationDTO
               {
                   Id = c.Id,
                   Name = c.Name
-              }).ToList();
+              }).ToListAsync();
         }
     }
 }

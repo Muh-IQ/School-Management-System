@@ -91,7 +91,7 @@ namespace Modules.School.Application.Services
         public async Task<Result> CreateAsync(SchoolAddCommand newSchool)
         {
             if (!await LanguageExists(newSchool.LanguageId))
-                return Result.Failure(ErrorType.BadRequest, UserErrors.BadRequestMessage());
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
 
             SchoolMapper mapper = new SchoolMapper();
             
