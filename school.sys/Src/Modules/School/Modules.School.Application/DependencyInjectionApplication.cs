@@ -9,12 +9,16 @@ namespace Modules.School.Application
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
+            services.AddMemoryCache();
+
+
             services.AddScoped<ISchoolService, SchoolService>();
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IPolicyService, PolicyService>();
             services.AddScoped<ICountryService, CountryService>();
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IAreaService, AreaService>();
+            services.AddScoped<ICacheService, MemoryCacheService>();
 
             services.AddSingleton<ITimeProvider, Services.TimeProvider>();
             return services;
