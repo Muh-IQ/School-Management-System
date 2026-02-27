@@ -12,14 +12,21 @@ namespace Modules.School.WebAPI.Controllers.V1
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public class CountryController(ICountryService service) : ControllerBase
+    public class LocationController(ICountryService _countryService,ICityService _cityService) : ControllerBase
     {
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetAllCountryAsync()
         {
-            var result = await service.GetAsync();
+            var result = await _countryService.GetAsync();
+            return result.ToApiResponse();
+        }
+        [HttpGet("{countryId}/city")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllCityWithIdAsync(Guid countryId)
+        {
+            var result = await _cityService.GetAllByIdAsync(countryId);
             return result.ToApiResponse();
         }
     }

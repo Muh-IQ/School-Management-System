@@ -1,122 +1,187 @@
 ﻿using FluentAssertions;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using Modules.School.Domain.DTOs;
+using Modules.School.Domain.Entities;
+using Modules.School.Domain.Entities.Place;
+using Modules.School.Infrastructure.Persistent;
 using Modules.School.WebAPI.Contracts;
 using System.Net;
 using System.Net.Http.Json;
 using Xunit;
 namespace School.IntegrationTests.Api.School_Module;
-//public class SchoolControllerTests
-//    : IClassFixture<SchoolWebApplicationFactory>
-//{
+public class SchoolControllerTests
+    : IClassFixture<SchoolWebApplicationFactory>
+{
 
-//    [Fact]
-//    public async Task CreateSchool_Should_Return201_With_SuccessResponse()
-//    {
-//        // Arrange
-//        using var factory = new SchoolWebApplicationFactory();
-//        var client = factory.CreateClient();
+    [Fact]
+    public async Task CreateSchool_Should_Return201_With_SuccessResponse()
+    {
+        // Arrange
+        using var factory = new SchoolWebApplicationFactory();
+        var client = factory.CreateClient();
 
-//        var dto = new SchoolAddDTO
-//        {
-//            Name = "Test School",
-//            Email = "test@test.com",
-//            Phone = "123456",
-//            LanguageId = Guid.NewGuid(),
-//            PolicyTitle = "Policy",
-//            PolicyDescription = "Description",
-//            PolicyType = "General"
-//        };
+        Guid languageId = Guid.NewGuid();
+        using (var scope = factory.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider
+                .GetRequiredService<SchoolDbContext>();
 
-//        // Act
-//        var response = await client.PostAsJsonAsync("/api/v1/school", dto);
+            context.Languages.Add(new Language
+            {
+                Id = languageId,
+                Name = "English",
+                Code = "en",
+                IsActive = true,
+                IsDeleted = false
 
-//        // Assert status code
-//        response.StatusCode.Should().Be(HttpStatusCode.Created);
+            });
 
-//        var apiResponse = await response.Content
-//            .ReadFromJsonAsync<ApiResponse>();
 
-//        apiResponse.Should().NotBeNull();
-//        apiResponse!.Success.Should().BeTrue();
-//        apiResponse.Message.Should().Be("Operation Successed"); // based on your ApiResponse.Ok()
-//    }
+            await context.SaveChangesAsync();
+        }
 
-//    [Fact]
-//    public async Task CreateSchool_Should_Return201_When_DataIsValid()
-//    {
-//        using var factory = new SchoolWebApplicationFactory();
-//        var client = factory.CreateClient();
+        var dto = new SchoolAddCommand
+        {
+            Name = "Test School",
+            Email = "test@test.com",
+            Phone = "123456",
+            LanguageId = languageId,
+            PolicyTitle = "Policy",
+            PolicyDescription = "Description",
+        };
 
-//        var dto = new SchoolAddDTO
-//        {
-//            Name = "Test School",
-//            Email = "test@test.com",
-//            Phone = "123456",
-//            LanguageId = Guid.NewGuid(),
-//            PolicyTitle = "Policy",
-//            PolicyDescription = "Description",
-//            PolicyType = "General"
-//        };
+        // Act
+        var response = await client.PostAsJsonAsync("/api/v1/school", dto);
 
-//        var response = await client.PostAsJsonAsync("/api/v1/school", dto);
+        // Assert status code
+        response.StatusCode.Should().Be(HttpStatusCode.Created);
 
-//        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        var apiResponse = await response.Content
+            .ReadFromJsonAsync<ApiResponse>();
 
-//        var body = await response.Content.ReadFromJsonAsync<ApiResponse>();
-//        body!.Success.Should().BeTrue();
-//    }
+        apiResponse.Should().NotBeNull();
+        apiResponse!.Success.Should().BeTrue();
+        apiResponse.Message.Should().Be("Operation Successed"); // based on your ApiResponse.Ok()
+    }
 
-//    [Fact]
-//    public async Task CreateSchool_Should_Return400_When_ValidationFails()
-//    {
-//        using var factory = new SchoolWebApplicationFactory();
-//        var client = factory.CreateClient();
+    [Fact]
+    public async Task CreateSchool_Should_Return201_When_DataIsValid()
+    {
+        using var factory = new SchoolWebApplicationFactory();
+        var client = factory.CreateClient();
 
-//        var dto = new SchoolAddDTO
-//        {
-//            Name = "", // invalid
-//            Email = "invalid-email",
-//            Phone = "",
-//            LanguageId = Guid.Empty
-//        };
+        Guid languageId = Guid.NewGuid();
+        using (var scope = factory.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider
+                .GetRequiredService<SchoolDbContext>();
 
-//        var response = await client.PostAsJsonAsync("/api/v1/school", dto);
+            context.Languages.Add(new Language
+            {
+                Id = languageId,
+                Name = "English",
+                Code = "en",
+                IsActive = true,
+                IsDeleted = false
 
-//        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+            });
 
-//        var body = await response.Content.ReadFromJsonAsync<ApiResponse>();
 
-//        body!.Success.Should().BeFalse();
-//        body.Message.Should().Be("Validation Error");
-//        body.Errors.Should().NotBeNull();
-//        body.Errors!.Count.Should().BeGreaterThan(0);
-//    }
+            await context.SaveChangesAsync();
+        }
 
-//    [Fact]
-//    public async Task CreateSchool_Should_Return409_When_Duplicate()
-//    {
-//        using var factory = new SchoolWebApplicationFactory();
-//        var client = factory.CreateClient();
+        var dto = new SchoolAddCommand
+        {
+            Name = "Test School",
+            Email = "test@test.com",
+            Phone = "123456",
+            LanguageId = languageId,
+            PolicyTitle = "Policy",
+            PolicyDescription = "Description",
+        };
 
-//        var dto = new SchoolAddDTO
-//        {
-//            Name = "Duplicate",
-//            Email = "dup@test.com",
-//            Phone = "123",
-//            LanguageId = Guid.NewGuid()
-//        };
+        var response = await client.PostAsJsonAsync("/api/v1/school", dto);
 
-//        // First creation
-//        await client.PostAsJsonAsync("/api/v1/school", dto);
+        response.StatusCode.Should().Be(HttpStatusCode.Created);
 
-//        // Second creation (should fail if domain prevents duplicates)
-//        var response = await client.PostAsJsonAsync("/api/v1/school", dto);
+        var body = await response.Content.ReadFromJsonAsync<ApiResponse>();
+        body!.Success.Should().BeTrue();
+    }
 
-//        response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+    [Fact]
+    public async Task CreateSchool_Should_Return400_When_ValidationFails()
+    {
+        using var factory = new SchoolWebApplicationFactory();
+        var client = factory.CreateClient();
 
-//        var body = await response.Content.ReadFromJsonAsync<ApiResponse>();
-//        body!.Success.Should().BeFalse();
-//        body.Message.Should().Be("Operation Failed");
-//    }
-//}
+        var dto = new SchoolAddCommand
+        {
+            Name = "", // invalid
+            Email = "invalid-email",
+            Phone = "",
+            LanguageId = Guid.Empty
+        };
+
+        var response = await client.PostAsJsonAsync("/api/v1/school", dto);
+
+        response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+
+        var body = await response.Content.ReadFromJsonAsync<ApiResponse>();
+
+        body!.Success.Should().BeFalse();
+        body.Message.Should().Be("Validation Error");
+        body.Errors.Should().NotBeNull();
+        body.Errors!.Count.Should().BeGreaterThan(0);
+    }
+
+    [Fact]
+    public async Task CreateSchool_Should_Return409_When_Duplicate()
+    {
+        using var factory = new SchoolWebApplicationFactory();
+        var client = factory.CreateClient();
+
+        Guid languageId = Guid.NewGuid();
+        using (var scope = factory.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider
+                .GetRequiredService<SchoolDbContext>();
+
+            context.Languages.Add(new Language
+            { 
+                Id = languageId,
+                Name="English",
+                Code="en",
+                IsActive=true,
+                IsDeleted=false
+                    
+            });
+
+
+            await context.SaveChangesAsync();
+        }
+
+        var dto = new SchoolAddCommand
+        {
+            Name = "Duplicate",
+            Email = "dup@test.com",
+            Phone = "123",
+            LanguageId =languageId,
+            PolicyTitle="",
+            PolicyDescription = "",
+
+        };
+
+        // First creation
+        await client.PostAsJsonAsync("/api/v1/school", dto);
+
+        // Second creation (should fail if domain prevents duplicates)
+        var response = await client.PostAsJsonAsync("/api/v1/school", dto);
+
+        response.StatusCode.Should().Be(HttpStatusCode.Conflict);
+
+        var body = await response.Content.ReadFromJsonAsync<ApiResponse>();
+        body!.Success.Should().BeFalse();
+        body.Message.Should().Be("Operation Failed");
+    }
+}
