@@ -5,6 +5,6 @@ namespace Modules.School.Application.IServices
 {
     public interface IAreaService
     {
-        Task<Result<IEnumerable<LocationDTO>>> GetAllByIdAsync(Guid cityId);
+        Task<Result<IEnumerable<LocationDTO>>> GetAllByIdAsync(Guid countryId, Guid cityId);
     }
 }

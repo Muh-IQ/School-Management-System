@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Modules.School.Application.IServices;
 using Modules.School.Application.Services;
 using Modules.School.Domain.Common.Results;
 using Modules.School.Domain.DTOs;
@@ -18,6 +19,8 @@ public class SchoolServiceTests
     private readonly Mock<IPolicyRepository> _policyRepositoryMock;
 
     private readonly Mock<IGenericRepository<LanguageEntity>> _languageRepositoryMock;
+    private readonly Mock<ICacheService> _cacheService;
+
     private readonly SchoolService _sut;
 
     public SchoolServiceTests()
@@ -25,7 +28,9 @@ public class SchoolServiceTests
         _schoolRepositoryMock = new Mock<ISchoolRepository>();
         _policyRepositoryMock = new Mock<IPolicyRepository>();
         _languageRepositoryMock = new Mock<IGenericRepository<LanguageEntity>>();
-        _sut = new SchoolService(_schoolRepositoryMock.Object,_policyRepositoryMock.Object, _languageRepositoryMock.Object);
+        _cacheService = new Mock<ICacheService>();
+        _sut = new SchoolService(_schoolRepositoryMock.Object,_policyRepositoryMock.Object,
+            _languageRepositoryMock.Object,_cacheService.Object);
     }
     
     ///////////////

@@ -12,7 +12,8 @@ namespace Modules.School.WebAPI.Controllers.V1
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-    public class LocationController(ICountryService _countryService,ICityService _cityService) : ControllerBase
+    public class LocationController(ICountryService _countryService,ICityService _cityService
+        ,IAreaService _areaService) : ControllerBase
     {
 
         [HttpGet]
@@ -27,6 +28,14 @@ namespace Modules.School.WebAPI.Controllers.V1
         public async Task<IActionResult> GetAllCityWithIdAsync(Guid countryId)
         {
             var result = await _cityService.GetAllByIdAsync(countryId);
+            return result.ToApiResponse();
+        }
+
+        [HttpGet("{countryId}/city/{cityId}/area")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllAreaWithIdAsync(Guid countryId, Guid cityId)
+        {
+            var result = await _areaService.GetAllByIdAsync(countryId,cityId);
             return result.ToApiResponse();
         }
     }
