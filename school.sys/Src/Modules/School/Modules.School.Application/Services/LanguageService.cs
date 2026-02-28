@@ -1,7 +1,6 @@
-using Modules.School.Application.IServices;
+﻿using Modules.School.Application.IServices;
 using Modules.School.Domain.Common.Results;
 using Modules.School.Domain.Common.StaticError;
-using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;
 
@@ -9,115 +8,82 @@ namespace Modules.School.Application.Services
 {
     public class LanguageService : ILanguageService
     {
-        private const int MaxPageSize = 100;
         private readonly IGenericRepository<Language> _Repository;
-        private readonly ILanguageRepository _LanguageRepository;
-        private readonly IGenericRepository<Domain.Entities.School> _SchoolRepository;
 
-        public LanguageService(
-            IGenericRepository<Language> repository,
-            ILanguageRepository languageRepository,
-            IGenericRepository<Domain.Entities.School> schoolRepository)
+        public LanguageService(IGenericRepository<Language> repository)
         {
             _Repository = repository;
-            _LanguageRepository = languageRepository;
-            _SchoolRepository = schoolRepository;
         }
-
         public async Task<Result> CreateAsync(Language language)
         {
-            if (language == null)
-                return Result.Failure(ErrorType.BadRequest, UserErrors.BadRequestMessage());
+            var exist = await _Repository.AnyAsync(s => s.Name == language.Name);
 
-            if (string.IsNullOrWhiteSpace(language.Name))
-                return Result.Failure(ErrorType.Validation, LanguageErrors.NameRequired());
-
-            if (string.IsNullOrWhiteSpace(language.Code))
-                return Result.Failure(ErrorType.Validation, LanguageErrors.CodeRequired());
-
-            var nameExists = await _Repository.AnyAsync(l => l.Name == language.Name.Trim());
-            if (nameExists)
-                return Result.Failure(ErrorType.Conflict, LanguageErrors.NameAlreadyExists());
-
-            var codeExists = await _Repository.AnyAsync(l => l.Code == language.Code.Trim());
-            if (codeExists)
-                return Result.Failure(ErrorType.Conflict, LanguageErrors.CodeAlreadyExists());
-
-            if (language.Id == Guid.Empty)
-                language.Id = Guid.NewGuid();
-            language.Name = language.Name.Trim();
-            language.Code = language.Code.Trim();
-            language.IsActive = true;
-            language.IsDeleted = false;
+            if (exist)
+            {
+                return Result.Failure(ErrorType.Conflict, "Language Already Exists.");
+            }
 
             var added = await _Repository.AddAsync(language);
+
             if (!added)
-                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
+            {
+                return Result.Failure(ErrorType.InternalServerError, "Faild To Create Language.");
+            }
 
             return Result.Success();
         }
 
-        public async Task<Result<LanguageDTO>> GetByIdAsync(Guid id)
+        public async Task<Result> GetByIdAsync(Guid Id)
         {
-            var lang = await _LanguageRepository.GetByIdAsync(id);
+            var lang = await _Repository.GetByIdAsync(Id);
+
             if (lang == null)
-                return Result<LanguageDTO>.Failure(ErrorType.NotFound, LanguageErrors.NotFoundMessage(id));
-            return Result<LanguageDTO>.Success(lang);
-        }
-        public async Task<Result<IEnumerable<LanguageDTO>>> GetAllAsync()
-        {
-            var lang = await _LanguageRepository.GetAllAsync();
-            if (lang == null)
-                return Result<IEnumerable<LanguageDTO>>.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
-            return Result<IEnumerable<LanguageDTO>>.Success(lang);
+            {
+                return Result.Failure(ErrorType.NotFound, "Language Not Found.");
+            }
+
+            return Result.Success();
         }
 
-        public async Task<Result<IEnumerable<LanguageDTO>>> GetPagedAsync(int paging = 1, int pageSize = 10)
+        public async Task<Result<IEnumerable<Language>>> GetAllAsync()
         {
-            if (paging < 1 || pageSize < 1 || pageSize > MaxPageSize)
-                return Result<IEnumerable<LanguageDTO>>.Failure(ErrorType.Validation, LanguageErrors.InvalidPaging());
+            var lang = await _Repository.GetAllAsync();
 
-            var lang = await _LanguageRepository.GetPagedAsync(paging, pageSize);
             if (lang == null)
-                return Result<IEnumerable<LanguageDTO>>.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
-            return Result<IEnumerable<LanguageDTO>>.Success(lang);
+            {
+                return Result<IEnumerable<Language>>.Failure(ErrorType.NotFound, "Schools Not Found.");
+            }
+
+            return Result<IEnumerable<Language>>.Success(lang);
+        }
+
+        public async Task<Result<IEnumerable<Language>>> GetPagedAsync(int pageing = 1, int pageSize = 10)
+        {
+            var lang = await _Repository.GetPagedAsync(pageing, pageSize);
+
+            if (lang == null)
+            {
+                return Result<IEnumerable<Language>>.Failure(ErrorType.NotFound, "Language Not Found");
+            }
+
+            return Result<IEnumerable<Language>>.Success(lang);
         }
 
         public async Task<Result> UpdateAsync(Language language)
         {
-            if (language == null)
-                return Result.Failure(ErrorType.BadRequest, UserErrors.BadRequestMessage());
+            var exist = await _Repository.AnyAsync(s => s.Id == language.Id);
 
-            if (language.Id == Guid.Empty)
-                return Result.Failure(ErrorType.Validation, LanguageErrors.NotFoundMessage(language.Id));
+            if (!exist)
+            {
+                return Result.Failure(ErrorType.NotFound, $"Language With ID {language.Id} Not Found.");
+            }
 
-            if (string.IsNullOrWhiteSpace(language.Name))
-                return Result.Failure(ErrorType.Validation, LanguageErrors.NameRequired());
+            var updated = await _Repository.UpdateAsync(language);
 
-            if (string.IsNullOrWhiteSpace(language.Code))
-                return Result.Failure(ErrorType.Validation, LanguageErrors.CodeRequired());
-
-            var existing = await _Repository.GetByIdAsync(language.Id);
-            if (existing == null)
-                return Result.Failure(ErrorType.NotFound, LanguageErrors.NotFoundMessage(language.Id));
-
-            if (existing.IsDeleted)
-                return Result.Failure(ErrorType.Conflict, LanguageErrors.CannotUpdateDeleted());
-
-            var nameExists = await _Repository.AnyAsync(l => l.Name == language.Name.Trim() && l.Id != language.Id);
-            if (nameExists)
-                return Result.Failure(ErrorType.Conflict, LanguageErrors.NameAlreadyExists());
-
-            var codeExists = await _Repository.AnyAsync(l => l.Code == language.Code.Trim() && l.Id != language.Id);
-            if (codeExists)
-                return Result.Failure(ErrorType.Conflict, LanguageErrors.CodeAlreadyExists());
-
-            existing.Name = language.Name.Trim();
-            existing.Code = language.Code.Trim();
-
-            var updated = await _Repository.UpdateAsync(existing);
             if (!updated)
-                return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
+            {
+                return Result.Failure(ErrorType.InternalServerError, "Updated Failed.");
+            }
 
             return Result.Success();
         }
@@ -125,17 +91,11 @@ namespace Modules.School.Application.Services
         {
             var language = await _Repository.GetByIdAsync(languageId);
             if (language == null)
-                return Result.Failure(ErrorType.NotFound, LanguageErrors.NotFoundMessage(languageId));
-
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(languageId));
             if (language.IsDeleted)
-                return Result.Failure(ErrorType.Conflict, LanguageErrors.AlreadyDeleted());
-
+                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage());
             if (!language.IsActive)
                 return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage());
-
-            var inUseBySchool = await _SchoolRepository.AnyAsync(s => s.LanguageId == languageId && !s.IsDeleted);
-            if (inUseBySchool)
-                return Result.Failure(ErrorType.Conflict, LanguageErrors.CannotDeleteInUse());
 
             language.IsDeleted = true;
             language.IsActive = false;
@@ -146,5 +106,6 @@ namespace Modules.School.Application.Services
 
             return Result.Success();
         }
+
     }
 }

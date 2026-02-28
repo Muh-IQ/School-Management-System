@@ -31,7 +31,7 @@ namespace Modules.School.Application.Services
             {
                 return Result.Failure(ErrorType.InternalServerError, UserErrors.InternalServerErrorMessage());
             }
-            
+
             return Result.Success();
         }
 
