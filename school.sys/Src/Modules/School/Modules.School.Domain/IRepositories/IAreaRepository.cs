@@ -9,6 +9,6 @@ namespace Modules.School.Domain.IRepositories
 {
     public interface IAreaRepository
     {
-        Task<IEnumerable<LocationDTO>> GetByIdAsync(Guid cityId);
+        Task<IEnumerable<LocationDTO>> GetByIdAsync(Guid countryId, Guid cityId);
     }
 }

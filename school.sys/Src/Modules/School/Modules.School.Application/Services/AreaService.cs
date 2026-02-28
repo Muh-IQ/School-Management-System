@@ -8,13 +8,13 @@ namespace Modules.School.Application.Services
 {
     public class AreaService(IAreaRepository _areaRepository) : IAreaService
     {
-        public async Task<Result<IEnumerable<LocationDTO>>> GetAllByIdAsync(Guid cityId)
+        public async Task<Result<IEnumerable<LocationDTO>>> GetAllByIdAsync(Guid countryId,Guid cityId)
         {
             if (cityId == Guid.Empty)
             {
                 return Result<IEnumerable<LocationDTO>>.Failure(ErrorType.Validation, UserErrors.ValidationMessage("cityID"));
             }
-            var areas = await _areaRepository.GetByIdAsync(cityId);
+            var areas = await _areaRepository.GetByIdAsync(countryId,cityId);
 
             if (!areas.Any())
             {

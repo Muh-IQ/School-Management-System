@@ -141,4 +141,73 @@ public class LocationControllerTests
 
     }
 
+    //////Area/////
+    [Fact]
+    public async Task Areas_GetAsync_Should_Return200_With_Data()
+    {
+        using var factory = new SchoolWebApplicationFactory();
+        var client = factory.CreateClient();
+        var countryId = Guid.NewGuid();
+        var cityId = Guid.NewGuid();
+
+        using (var scope = factory.Services.CreateScope())
+        {
+            var context = scope.ServiceProvider.GetRequiredService<SchoolDbContext>();
+
+            context.Countries.Add(new Country
+            {
+                Id = countryId,
+                Name = "Iraq",
+                IsActive = true
+            });
+
+            context.Cities.Add(new City
+            {
+                Id = cityId,
+                Name = "Baghdad",
+                CountryId = countryId,
+                IsActive = true
+            });
+
+
+            context.Areas.Add(new Area
+            {
+                Id = Guid.NewGuid(),
+                Name = "Mansur",
+                CityId = cityId,
+                IsActive=true,
+                IsDeleted=false
+                
+            });
+
+            await context.SaveChangesAsync();
+        }
+
+        var response = await client.GetAsync($"/api/v1/country/{countryId}/city/{cityId}/area");
+
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+        var body = await response.Content.ReadFromJsonAsync<ApiResponse<IEnumerable<LocationDTO>>>();
+        body.Should().NotBeNull();
+        body!.Success.Should().BeTrue();
+        body.Data.Should().NotBeNull();
+        body.Data!.Count().Should().Be(1);
+    }
+    [Fact]
+    public async Task GetAsync_Should_Return404_When_NoArea()
+    {
+        using var factory = new SchoolWebApplicationFactory();
+        var client = factory.CreateClient();
+        var countryId = Guid.NewGuid();
+        var cityId = Guid.NewGuid();
+
+        var response = await client.GetAsync($"/api/v1/country/{countryId}/city/{cityId}/area");
+
+        response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+
+        var body = await response.Content.ReadFromJsonAsync<ApiResponse>();
+        body!.Success.Should().BeFalse();
+        body.Message.Should().Be("Operation Failed");
+
+    }
 }

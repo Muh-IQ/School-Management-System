@@ -23,15 +23,17 @@ namespace School.UnitTests.Application.Services
         [Fact]
         public async Task GetAllByIdAsync_Should_Return_Failure_When_CityId_Is_Empty()
         {
+
             // Arrange
             var cityId = Guid.Empty;
+            var countryId = Guid.NewGuid();
 
             // Act
-            var result = await _service.GetAllByIdAsync(cityId);
+            var result = await _service.GetAllByIdAsync(countryId,cityId);
 
             // Assert
             result.IsSuccess.Should().BeFalse();
-            _repoMock.Verify(x => x.GetByIdAsync(It.IsAny<Guid>()), Times.Never);
+            _repoMock.Verify(x => x.GetByIdAsync(It.IsAny<Guid>(),It.IsAny<Guid>()), Times.Never);
         }
 
         [Fact]
@@ -39,17 +41,19 @@ namespace School.UnitTests.Application.Services
         {
             // Arrange
             var cityId = Guid.NewGuid();
+            var countryId = Guid.NewGuid();
+
 
             _repoMock
-                .Setup(x => x.GetByIdAsync(cityId))
+                .Setup(x => x.GetByIdAsync(countryId, cityId))
                 .ReturnsAsync(new List<LocationDTO>());
 
             // Act
-            var result = await _service.GetAllByIdAsync(cityId);
+            var result = await _service.GetAllByIdAsync(countryId, cityId);
 
             // Assert
             result.IsSuccess.Should().BeFalse();
-            _repoMock.Verify(x => x.GetByIdAsync(cityId), Times.Once);
+            _repoMock.Verify(x => x.GetByIdAsync(countryId, cityId), Times.Once);
         }
 
         [Fact]
@@ -57,6 +61,7 @@ namespace School.UnitTests.Application.Services
         {
             // Arrange
             var cityId = Guid.NewGuid();
+            var countryId = Guid.NewGuid();
 
             var data = new List<LocationDTO>
         {
@@ -65,16 +70,16 @@ namespace School.UnitTests.Application.Services
         };
 
             _repoMock
-                .Setup(x => x.GetByIdAsync(cityId))
+                .Setup(x => x.GetByIdAsync(countryId, cityId))
                 .ReturnsAsync(data);
 
             // Act
-            var result = await _service.GetAllByIdAsync(cityId);
+            var result = await _service.GetAllByIdAsync(countryId, cityId);
 
             // Assert
             result.IsSuccess.Should().BeTrue();
             result.Value.Should().HaveCount(2);
-            _repoMock.Verify(x => x.GetByIdAsync(cityId), Times.Once);
+            _repoMock.Verify(x => x.GetByIdAsync(countryId, cityId), Times.Once);
         }
     }
 }
