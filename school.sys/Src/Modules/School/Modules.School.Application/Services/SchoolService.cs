@@ -66,9 +66,6 @@ namespace Modules.School.Application.Services
         }
 
         ///////////////////
-
-
-
         public async Task<Result> DeleteAsync(Guid schoolId)
         {
             var school = await _SchoolRepository.GetByIdAsync(schoolId);
