@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Modules.School.Infrastructure.Persistent;
 
@@ -11,9 +12,11 @@ using Modules.School.Infrastructure.Persistent;
 namespace Modules.School.Infrastructure.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    partial class SchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260302133118_MigV1.3_Add_CreateAt_UpdateAt_To_All_Entities")]
+    partial class MigV13_Add_CreateAt_UpdateAt_To_All_Entities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -5044,14 +5047,6 @@ namespace Modules.School.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("AreaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CityId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("CountryId")
-                        .HasColumnType("uniqueidentifier");
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
@@ -5088,12 +5083,6 @@ namespace Modules.School.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AreaId");
-
-                    b.HasIndex("CityId");
-
-                    b.HasIndex("CountryId");
-
                     b.HasIndex("LanguageId");
 
                     b.HasIndex("PolicyId");
@@ -5125,24 +5114,6 @@ namespace Modules.School.Infrastructure.Migrations
 
             modelBuilder.Entity("Modules.School.Domain.Entities.School", b =>
                 {
-                    b.HasOne("Modules.School.Domain.Entities.Place.Area", "Area")
-                        .WithMany()
-                        .HasForeignKey("AreaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Modules.School.Domain.Entities.Place.City", "City")
-                        .WithMany()
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Modules.School.Domain.Entities.Place.Country", "Country")
-                        .WithMany()
-                        .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Modules.School.Domain.Entities.Language", "Language")
                         .WithMany()
                         .HasForeignKey("LanguageId")
@@ -5154,12 +5125,6 @@ namespace Modules.School.Infrastructure.Migrations
                         .HasForeignKey("PolicyId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Area");
-
-                    b.Navigation("City");
-
-                    b.Navigation("Country");
 
                     b.Navigation("Language");
 

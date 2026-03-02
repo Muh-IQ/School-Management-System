@@ -173,6 +173,8 @@ namespace Modules.School.Application.Services
 
 
             _Mapper.MapSchoolUpdateDTOToEntity(updatedSchool, exist);
+            exist.sanitizeName=TextHelper.SlugGenerate(exist.Name);
+
             var updated = await _SchoolRepository.UpdateAsync(exist);
 
             if (!updated)
