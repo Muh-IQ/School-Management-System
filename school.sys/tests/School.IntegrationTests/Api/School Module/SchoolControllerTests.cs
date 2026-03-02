@@ -22,6 +22,9 @@ public class SchoolControllerTests
         var client = factory.CreateClient();
 
         Guid languageId = Guid.NewGuid();
+        Guid countryId = Guid.NewGuid();
+        Guid cityId = Guid.NewGuid();
+        Guid areaId = Guid.NewGuid();
         using (var scope = factory.Services.CreateScope())
         {
             var context = scope.ServiceProvider
@@ -36,7 +39,29 @@ public class SchoolControllerTests
                 IsDeleted = false
 
             });
-
+            context.Countries.Add(new Country
+            {
+                Id = countryId,
+                Name = "Test Country",
+                IsActive = true,
+                IsDeleted = false
+            });
+            context.Cities.Add(new City
+            {
+                Id = cityId,
+                Name = "Test City",
+                CountryId = countryId,
+                IsActive = true,
+                IsDeleted = false
+            });
+            context.Areas.Add(new Area
+            {
+                Id = areaId,
+                Name = "Test Area",
+                CityId = cityId,
+                IsActive = true,
+                IsDeleted = false
+            });
 
             await context.SaveChangesAsync();
         }
@@ -47,6 +72,9 @@ public class SchoolControllerTests
             Email = "test@test.com",
             Phone = "123456",
             LanguageId = languageId,
+            CountryId = countryId,
+            CityId = cityId,
+            AreaId = areaId,
             PolicyTitle = "Policy",
             PolicyDescription = "Description",
         };
@@ -72,6 +100,9 @@ public class SchoolControllerTests
         var client = factory.CreateClient();
 
         Guid languageId = Guid.NewGuid();
+        Guid countryId = Guid.NewGuid();
+        Guid cityId = Guid.NewGuid();
+        Guid areaId = Guid.NewGuid();
         using (var scope = factory.Services.CreateScope())
         {
             var context = scope.ServiceProvider
@@ -86,7 +117,29 @@ public class SchoolControllerTests
                 IsDeleted = false
 
             });
-
+            context.Countries.Add(new Country
+            {
+                Id = countryId,
+                Name = "Test Country",
+                IsActive = true,
+                IsDeleted = false
+            });
+            context.Cities.Add(new City
+            {
+                Id = cityId,
+                Name = "Test City",
+                CountryId = countryId,
+                IsActive = true,
+                IsDeleted = false
+            });
+            context.Areas.Add(new Area
+            {
+                Id = areaId,
+                Name = "Test Area",
+                CityId = cityId,
+                IsActive = true,
+                IsDeleted = false
+            });
 
             await context.SaveChangesAsync();
         }
@@ -97,6 +150,9 @@ public class SchoolControllerTests
             Email = "test@test.com",
             Phone = "123456",
             LanguageId = languageId,
+            CountryId = countryId,
+            CityId = cityId,
+            AreaId = areaId,
             PolicyTitle = "Policy",
             PolicyDescription = "Description",
         };
@@ -142,6 +198,9 @@ public class SchoolControllerTests
         var client = factory.CreateClient();
 
         Guid languageId = Guid.NewGuid();
+        Guid countryId = Guid.NewGuid();
+        Guid cityId = Guid.NewGuid();
+        Guid areaId = Guid.NewGuid();
         using (var scope = factory.Services.CreateScope())
         {
             var context = scope.ServiceProvider
@@ -156,7 +215,29 @@ public class SchoolControllerTests
                 IsDeleted=false
                     
             });
-
+            context.Countries.Add(new Country
+            {
+                Id = countryId,
+                Name = "Test Country",
+                IsActive = true,
+                IsDeleted = false
+            });
+            context.Cities.Add(new City
+            {
+                Id = cityId,
+                Name = "Test City",
+                CountryId = countryId,
+                IsActive = true,
+                IsDeleted = false
+            });
+            context.Areas.Add(new Area
+            {
+                Id = areaId,
+                Name = "Test Area",
+                CityId = cityId,
+                IsActive = true,
+                IsDeleted = false
+            });
 
             await context.SaveChangesAsync();
         }
@@ -167,7 +248,10 @@ public class SchoolControllerTests
             Email = "dup@test.com",
             Phone = "123",
             LanguageId =languageId,
-            PolicyTitle="",
+            CountryId = countryId,
+            CityId = cityId,
+            AreaId = areaId,
+            PolicyTitle ="",
             PolicyDescription = "",
 
         };

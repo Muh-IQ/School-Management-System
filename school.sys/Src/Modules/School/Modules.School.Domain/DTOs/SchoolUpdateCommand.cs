@@ -6,6 +6,10 @@
         public string Email { get; set; }
         public string Phone { get; set; }
         public Guid LanguageId { get; set; }
+        public Guid CountryId { get; set; }
+        public Guid CityId { get; set; }
+        public Guid AreaId { get; set; }
         public Guid PolicyId { get; set; }
+        
     }
 }

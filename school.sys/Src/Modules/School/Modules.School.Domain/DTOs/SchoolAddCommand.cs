@@ -10,5 +10,8 @@ namespace Modules.School.Domain.DTOs
         public Guid LanguageId { get; set; }
         public string? PolicyTitle { get; set; }
         public string? PolicyDescription { get; set; }
+        public Guid CountryId { get; set; }
+        public Guid CityId { get; set; }
+        public Guid AreaId { get; set; }
     }
 }
