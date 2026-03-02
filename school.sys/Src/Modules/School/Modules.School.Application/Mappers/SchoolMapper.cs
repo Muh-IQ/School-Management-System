@@ -13,7 +13,9 @@ namespace Modules.School.Application.Mappers
                 Description = PolicyDescription,
                 IsActive = true,
                 IsDeleted = false,
-                IsDefault = false
+                IsDefault = false,
+                CreateAt=DateTime.Now,
+                UpdateAt=DateTime.Now
             };
         }
         public  Domain.Entities.School MapSchoolAddDTOToEntity(SchoolAddCommand dto, Guid policyId )
@@ -28,8 +30,8 @@ namespace Modules.School.Application.Mappers
                 PolicyId=policyId ,
                 IsActive = true,
                 IsDeleted = false,
-                TimeZone = DateTime.UtcNow.ToString("zzz"),
-                
+                CreateAt = DateTime.Now,
+                UpdateAt = DateTime.Now 
             };
         }
 
@@ -40,6 +42,7 @@ namespace Modules.School.Application.Mappers
             entity.Phone = dto.Phone;
             entity.LanguageId = dto.LanguageId;
             entity.PolicyId = dto.PolicyId;
+            entity.UpdateAt = DateTime.Now;
         }
 
         

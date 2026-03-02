@@ -34,12 +34,15 @@ namespace Modules.School.Tests.Mappers
             result.IsDeleted.Should().BeFalse();
             result.IsDefault.Should().BeFalse();
             result.Id.Should().NotBeEmpty();
+            result.CreateAt.Should().BeOnOrBefore(DateTime.Now);
         }
 
         [Fact]
         public void MapSchoolAddDTOToEntity_Should_Map_Correctly()
         {
             // Arrange
+            var before = DateTime.Now;
+
             var dto = new SchoolAddCommand
             {
                 Name = "My School",
@@ -51,6 +54,8 @@ namespace Modules.School.Tests.Mappers
 
             // Act
             var result = _mapper.MapSchoolAddDTOToEntity(dto, policyId);
+            var after = DateTime.Now;
+
 
             // Assert
             result.Should().NotBeNull();
@@ -62,7 +67,11 @@ namespace Modules.School.Tests.Mappers
             result.IsActive.Should().BeTrue();
             result.IsDeleted.Should().BeFalse();
             result.Id.Should().NotBeEmpty();
-            result.TimeZone.Should().MatchRegex(@"^[+-][0-1][0-9]:[0-5][0-9]$|^\+2[0-3]:[0-5][0-9]$");
+            result.CreateAt.Should().BeOnOrAfter(before);
+            result.CreateAt.Should().BeOnOrBefore(after);
+
+            result.UpdateAt.Should().BeOnOrAfter(before);
+            result.UpdateAt.Should().BeOnOrBefore(after);
         }
 
         [Fact]
@@ -97,6 +106,7 @@ namespace Modules.School.Tests.Mappers
             entity.Phone.Should().Be(updateDto.Phone);
             entity.LanguageId.Should().Be(updateDto.LanguageId); 
             entity.PolicyId.Should().Be(updateDto.PolicyId);
+            entity.UpdateAt.Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
         }
     }
 }

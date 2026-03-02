@@ -140,6 +140,8 @@ namespace Modules.School.Application.Services
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
 
             _Mapper.MapSchoolUpdateDTOToEntity(updatedSchool, exist);
+            exist.sanitizeName=TextHelper.SlugGenerate(exist.Name);
+
             var updated = await _SchoolRepository.UpdateAsync(exist);
 
             if (!updated)
