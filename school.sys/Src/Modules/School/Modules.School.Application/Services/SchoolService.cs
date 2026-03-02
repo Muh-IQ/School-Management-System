@@ -5,6 +5,7 @@ using Modules.School.Domain.Common.Results;
 using Modules.School.Domain.Common.StaticError;
 using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
+using Modules.School.Domain.Entities.Place;
 using Modules.School.Domain.IRepositories;
 
 namespace Modules.School.Application.Services
@@ -15,13 +16,21 @@ namespace Modules.School.Application.Services
         private readonly IPolicyRepository _PolicyRepository;
         private readonly IGenericRepository<Language> _LanguageRepository;
         private readonly ICacheService _cacheService;
+        private readonly IGenericRepository<Country> _CountryRepository;
+        private readonly IGenericRepository<City> _CityRepository;
+        private readonly IGenericRepository<Area> _AreaRepository;
         public SchoolService(ISchoolRepository repository, IPolicyRepository policyRepository,
-            IGenericRepository<Language> languageRepository, ICacheService cacheService)
+            IGenericRepository<Language> languageRepository, ICacheService cacheService,
+            IGenericRepository<Country> countryRepository, IGenericRepository<City> cityRepository,
+            IGenericRepository<Area> areaRepository)
         {
             _SchoolRepository = repository;
             _PolicyRepository = policyRepository;
             _LanguageRepository = languageRepository;
             this._cacheService = cacheService;
+            _CountryRepository = countryRepository;
+            _CityRepository = cityRepository;
+            _AreaRepository = areaRepository;
         }
 
         /////////////////////////
@@ -68,6 +77,17 @@ namespace Modules.School.Application.Services
             return exists;
         }
 
+        private async Task<Result> CheckLocation(Guid CountryId,Guid CityId,Guid AreaId)
+        {
+            if(!await _CountryRepository.AnyAsync(c => c.Id == CountryId))
+                return Result.Failure(ErrorType.NotFound, CountryErrors.NotFoundMessage(CountryId));
+            if(!await _CityRepository.AnyAsync(c => c.CountryId == CountryId && c.Id == CityId ))
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(CityId));
+            if(!await _AreaRepository.AnyAsync(a => a.CityId == CityId && a.Id == AreaId))
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(AreaId));
+            return Result.Success();
+        }
+
         ///////////////////
         public async Task<Result> DeleteAsync(Guid schoolId)
         {
@@ -92,6 +112,10 @@ namespace Modules.School.Application.Services
         {
             if (!await LanguageExists(newSchool.LanguageId))
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
+
+            var locationValidation = await CheckLocation(newSchool.CountryId, newSchool.CityId, newSchool.AreaId);
+            if (!locationValidation.IsSuccess)
+                return locationValidation;
 
             SchoolMapper mapper = new SchoolMapper();
             
@@ -134,10 +158,19 @@ namespace Modules.School.Application.Services
 
         public async Task<Result> UpdateAsync(Guid id, SchoolUpdateCommand updatedSchool)
         {
-            SchoolMapper _Mapper = new SchoolMapper();
             var exist = await _SchoolRepository.GetByIdAsync(id);
             if (exist == null)
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
+
+            if (!await LanguageExists(updatedSchool.LanguageId))
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
+
+            var locationValidation = await CheckLocation(updatedSchool.CountryId, updatedSchool.CityId, updatedSchool.AreaId);
+            if (!locationValidation.IsSuccess)
+                return locationValidation;
+
+            SchoolMapper _Mapper = new SchoolMapper();
+
 
             _Mapper.MapSchoolUpdateDTOToEntity(updatedSchool, exist);
             var updated = await _SchoolRepository.UpdateAsync(exist);
