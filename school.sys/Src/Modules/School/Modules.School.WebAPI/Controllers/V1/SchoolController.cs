@@ -50,9 +50,9 @@ namespace Modules.School.WebAPI.Controllers.V1
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> ListSchools(int PageNum,int PageSize)
+        public async Task<IActionResult> ListSchools([FromQuery] PaginationQuery paginationQuery)
         {
-            var result = await Service.GetPagedAsync(PageNum,PageSize);
+            var result = await Service.GetPagedAsync(paginationQuery.PageNumber, paginationQuery.PageSize);
             return result.ToApiResponse();
         }
 

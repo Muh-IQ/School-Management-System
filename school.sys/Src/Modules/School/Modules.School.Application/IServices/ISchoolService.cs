@@ -15,7 +15,7 @@ namespace Modules.School.Application.IServices
 
 
         Task<Result<SchoolDetailsDTO?>> GetByIdAsync(Guid id);
-        Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 10);
+        Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 100);
 
     }
 }

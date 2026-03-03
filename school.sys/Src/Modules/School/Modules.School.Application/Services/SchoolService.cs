@@ -197,7 +197,7 @@ namespace Modules.School.Application.Services
             return Result.Success();
         }
 
-        public async Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 10)
+        public async Task<Result<IEnumerable<SchoolListItemDTO>>> GetPagedAsync(int pageNumber = 1, int pageSize = 100)
         {
 
             string cacheKey = $"schools_{pageNumber}_{pageSize}";
