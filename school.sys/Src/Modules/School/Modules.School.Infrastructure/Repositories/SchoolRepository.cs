@@ -36,7 +36,7 @@ namespace Modules.School.Infrastructure.Repositories
                 .FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<SchoolListItemDTO>> GetPagedAsDtoAsync(int paging = 1, int pageSize = 10)
+        public async Task<IEnumerable<SchoolListItemDTO>> GetPagedAsDtoAsync(int paging =1, int pageSize =10)
         {
             return await _dbSet
                 .Where(s => !s.IsDeleted)
@@ -49,6 +49,8 @@ namespace Modules.School.Infrastructure.Repositories
                     Name = s.Name,
                     LanguageCode = s.Language.Code,
                     PolicyTitle = s.Policy.Title,
+                    CountryName= s.Country.Name,
+                    sanitizeName= s.sanitizeName
                    
                 })
                 .ToListAsync();
