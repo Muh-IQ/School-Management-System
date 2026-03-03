@@ -6,6 +6,7 @@ using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.Entities.Place;
 using Modules.School.Domain.IRepositories;
+using Modules.School.Domain.IThirdPartyServices;
 using Moq;
 using System.Linq.Expressions;
 using Xunit;
@@ -24,6 +25,8 @@ public class SchoolServiceTests
     private readonly Mock<IGenericRepository<City>> _cityRepositoryMock;
     private readonly Mock<IGenericRepository<Area>> _areaRepositoryMock;
 
+    private readonly Mock<ITimeProvider> _timeProviderMock;
+
     private readonly Mock<ICacheService> _cacheService;
 
     private readonly SchoolService _sut;
@@ -37,9 +40,10 @@ public class SchoolServiceTests
         _countryRepositoryMock = new Mock<IGenericRepository<Country>>();
         _cityRepositoryMock = new Mock<IGenericRepository<City>>();
         _areaRepositoryMock = new Mock<IGenericRepository<Area>>();
+        _timeProviderMock = new Mock<ITimeProvider>();
         _sut = new SchoolService(_schoolRepositoryMock.Object,_policyRepositoryMock.Object,
             _languageRepositoryMock.Object,_cacheService.Object,_countryRepositoryMock.Object,
-            _cityRepositoryMock.Object,_areaRepositoryMock.Object);
+            _cityRepositoryMock.Object,_areaRepositoryMock.Object,_timeProviderMock.Object);
     }
     
     ///////////////
