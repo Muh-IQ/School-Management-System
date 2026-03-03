@@ -1,14 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Modules.School.Domain.DTOs;
-using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;
 using Modules.School.Infrastructure.Persistent;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Modules.School.Infrastructure.Repositories
 {
@@ -24,13 +17,9 @@ namespace Modules.School.Infrastructure.Repositories
                 .Where(s => s.Id == id && !s.IsDeleted)
                 .Select(s => new SchoolDetailsDTO
                 {
-                    Id = s.Id,
-                    Name = s.Name,
                     Email = s.Email,
                     Phone = s.Phone,
-                    LanguageCode = s.Language.Code,
                     LanguageName = s.Language.Name,
-                    PolicyTitle = s.Policy.Title,
                     PolicyDescription = s.Policy.Description,
                 })
                 .FirstOrDefaultAsync();
