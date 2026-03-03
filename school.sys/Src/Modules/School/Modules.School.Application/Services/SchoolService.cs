@@ -140,7 +140,7 @@ namespace Modules.School.Application.Services
                 var newPolicy = mapper.MapSchoolAddDTOToEntityPolicy(newSchool.PolicyTitle,newSchool.PolicyDescription);
                 newPolicy.sanitizeName=TextHelper.SlugGenerate(newSchool.Name);
                 newPolicy.CreateAt=_timeProvider.UtcNow;
-                newPolicy.UpdateAt=_timeProvider.UtcNow;
+                newPolicy.UpdateAt = null;
 
                 await _PolicyRepository.AddAsync(newPolicy);
                 policyId = newPolicy.Id;
@@ -153,7 +153,7 @@ namespace Modules.School.Application.Services
             var school = mapper.MapSchoolAddDTOToEntity(newSchool, policyId);
             school.sanitizeName=TextHelper.SlugGenerate(school.Name);
             school.CreateAt=_timeProvider.UtcNow;
-            school.UpdateAt=_timeProvider.UtcNow;
+            school.UpdateAt=null;
             var added = await _SchoolRepository.AddAsync(school);
 
             if (!added)
