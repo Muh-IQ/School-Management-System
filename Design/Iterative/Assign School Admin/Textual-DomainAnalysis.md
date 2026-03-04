@@ -1,15 +1,10 @@
-# Textual Analysis: Create School (Tenant)
+# Textual Analysis: assign school to school admin (Tenant)
 
 
 ### Candidate Classes (Nouns)
-- School
-- SchoolSettings (optional, for Language, Time zone, Policies)
-- contactInfo
-- Policies
-- Language
+- SchoolAdmin
 
 ### Candidate Operations (Verbs)
-- Create
-- checksOptionalSettingsIsProvided
-- ApplyDefaultSettings
-- exists(Validation)
+- checkEmailPhoneNumberAlreadyExist
+- checkSchoolAlreadyAssign
+- assign-School-To-SchoolAdmin

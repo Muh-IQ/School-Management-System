@@ -27,7 +27,10 @@ namespace Modules.School.Application.Mappers
                 Email = dto.Email,
                 Phone = dto.Phone,
                 LanguageId = dto.LanguageId,
-                PolicyId=policyId ,
+                CountryId = dto.CountryId,
+                CityId = dto.CityId,
+                AreaId = dto.AreaId,
+                PolicyId =policyId ,
                 IsActive = true,
                 IsDeleted = false,
                 CreateAt = DateTime.Now,
@@ -41,6 +44,9 @@ namespace Modules.School.Application.Mappers
             entity.Email = dto.Email;
             entity.Phone = dto.Phone;
             entity.LanguageId = dto.LanguageId;
+            entity.CountryId = dto.CountryId;
+            entity.CityId = dto.CityId;
+            entity.AreaId = dto.AreaId;
             entity.PolicyId = dto.PolicyId;
             entity.UpdateAt = DateTime.Now;
         }

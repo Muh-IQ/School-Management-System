@@ -4,6 +4,7 @@ using Modules.School.Application.Services;
 using Modules.School.Domain.Common.Results;
 using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
+using Modules.School.Domain.Entities.Place;
 using Modules.School.Domain.IRepositories;
 using Moq;
 using System.Linq.Expressions;
@@ -19,6 +20,10 @@ public class SchoolServiceTests
     private readonly Mock<IPolicyRepository> _policyRepositoryMock;
 
     private readonly Mock<IGenericRepository<LanguageEntity>> _languageRepositoryMock;
+    private readonly Mock<IGenericRepository<Country>> _countryRepositoryMock;
+    private readonly Mock<IGenericRepository<City>> _cityRepositoryMock;
+    private readonly Mock<IGenericRepository<Area>> _areaRepositoryMock;
+
     private readonly Mock<ICacheService> _cacheService;
 
     private readonly SchoolService _sut;
@@ -29,8 +34,12 @@ public class SchoolServiceTests
         _policyRepositoryMock = new Mock<IPolicyRepository>();
         _languageRepositoryMock = new Mock<IGenericRepository<LanguageEntity>>();
         _cacheService = new Mock<ICacheService>();
+        _countryRepositoryMock = new Mock<IGenericRepository<Country>>();
+        _cityRepositoryMock = new Mock<IGenericRepository<City>>();
+        _areaRepositoryMock = new Mock<IGenericRepository<Area>>();
         _sut = new SchoolService(_schoolRepositoryMock.Object,_policyRepositoryMock.Object,
-            _languageRepositoryMock.Object,_cacheService.Object);
+            _languageRepositoryMock.Object,_cacheService.Object,_countryRepositoryMock.Object,
+            _cityRepositoryMock.Object,_areaRepositoryMock.Object);
     }
     
     ///////////////
@@ -44,12 +53,24 @@ public class SchoolServiceTests
             Email = "school@test.com",
             Phone = "+1234567890",
             LanguageId = Guid.NewGuid(),
+            CountryId = Guid.NewGuid(),
+            CityId = Guid.NewGuid(),
+            AreaId = Guid.NewGuid(),
             PolicyTitle = "Policy",
             PolicyDescription = "Description"
         };
 
         _languageRepositoryMock
             .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Language, bool>>>()))
+            .ReturnsAsync(true);
+        _countryRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Country, bool>>>()))
+            .ReturnsAsync(true);
+        _cityRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<City, bool>>>()))
+            .ReturnsAsync(true);
+        _areaRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Area, bool>>>()))
             .ReturnsAsync(true);
 
         _schoolRepositoryMock
@@ -82,6 +103,9 @@ public class SchoolServiceTests
             Email = "school@test.com",
             Phone = "+1234567890",
             LanguageId = Guid.NewGuid(),
+            CountryId=Guid.NewGuid(),
+            CityId=Guid.NewGuid(),
+            AreaId=Guid.NewGuid(),
             PolicyTitle = null,
             PolicyDescription = null
         };
@@ -90,6 +114,15 @@ public class SchoolServiceTests
 
         _languageRepositoryMock
             .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Language, bool>>>()))
+            .ReturnsAsync(true);
+        _countryRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Country, bool>>>()))
+            .ReturnsAsync(true);
+        _cityRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<City, bool>>>()))
+            .ReturnsAsync(true);
+        _areaRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Area, bool>>>()))
             .ReturnsAsync(true);
 
         _schoolRepositoryMock
@@ -129,12 +162,24 @@ public class SchoolServiceTests
             Email = "school@test.com",
             Phone = "+1234567890",
             LanguageId = Guid.NewGuid(),
+            CountryId = Guid.NewGuid(),
+            CityId = Guid.NewGuid(),
+            AreaId = Guid.NewGuid(),
             PolicyTitle = title,
             PolicyDescription = description
         };
 
         _languageRepositoryMock
             .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Language, bool>>>()))
+            .ReturnsAsync(true);
+        _countryRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Country, bool>>>()))
+            .ReturnsAsync(true);
+        _cityRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<City, bool>>>()))
+            .ReturnsAsync(true);
+        _areaRepositoryMock
+            .Setup(r => r.AnyAsync(It.IsAny<Expression<Func<Area, bool>>>()))
             .ReturnsAsync(true);
 
         // Email + Phone are unique

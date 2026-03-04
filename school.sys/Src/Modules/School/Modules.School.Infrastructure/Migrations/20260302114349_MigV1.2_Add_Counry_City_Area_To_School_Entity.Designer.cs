@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Modules.School.Infrastructure.Persistent;
 
@@ -11,9 +12,11 @@ using Modules.School.Infrastructure.Persistent;
 namespace Modules.School.Infrastructure.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    partial class SchoolDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260302114349_MigV1.2_Add_Counry_City_Area_To_School_Entity")]
+    partial class MigV12_Add_Counry_City_Area_To_School_Entity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,9 +36,6 @@ namespace Modules.School.Infrastructure.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -47,9 +47,6 @@ namespace Modules.School.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.ToTable("Languages", (string)null);
@@ -59,801 +56,641 @@ namespace Modules.School.Infrastructure.Migrations
                         {
                             Id = new Guid("d0000001-0000-0000-0000-000000000001"),
                             Code = "en",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "English",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "English"
                         },
                         new
                         {
                             Id = new Guid("d0000002-0000-0000-0000-000000000002"),
                             Code = "ar",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Arabic",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Arabic"
                         },
                         new
                         {
                             Id = new Guid("d0000003-0000-0000-0000-000000000003"),
                             Code = "fr",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "French",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "French"
                         },
                         new
                         {
                             Id = new Guid("d0000004-0000-0000-0000-000000000004"),
                             Code = "es",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Spanish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Spanish"
                         },
                         new
                         {
                             Id = new Guid("d0000005-0000-0000-0000-000000000005"),
                             Code = "zh",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Chinese (Mandarin)",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Chinese (Mandarin)"
                         },
                         new
                         {
                             Id = new Guid("d0000006-0000-0000-0000-000000000006"),
                             Code = "hi",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hindi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hindi"
                         },
                         new
                         {
                             Id = new Guid("d0000007-0000-0000-0000-000000000007"),
                             Code = "pt",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Portuguese",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Portuguese"
                         },
                         new
                         {
                             Id = new Guid("d0000008-0000-0000-0000-000000000008"),
                             Code = "bn",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bengali",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bengali"
                         },
                         new
                         {
                             Id = new Guid("d0000009-0000-0000-0000-000000000009"),
                             Code = "ru",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Russian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Russian"
                         },
                         new
                         {
                             Id = new Guid("d000000a-0000-0000-0000-00000000000a"),
                             Code = "ja",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Japanese",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Japanese"
                         },
                         new
                         {
                             Id = new Guid("d000000b-0000-0000-0000-00000000000b"),
                             Code = "de",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "German",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "German"
                         },
                         new
                         {
                             Id = new Guid("d000000c-0000-0000-0000-00000000000c"),
                             Code = "ko",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Korean",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Korean"
                         },
                         new
                         {
                             Id = new Guid("d000000d-0000-0000-0000-00000000000d"),
                             Code = "it",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Italian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Italian"
                         },
                         new
                         {
                             Id = new Guid("d000000e-0000-0000-0000-00000000000e"),
                             Code = "tr",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Turkish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Turkish"
                         },
                         new
                         {
                             Id = new Guid("d000000f-0000-0000-0000-00000000000f"),
                             Code = "vi",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Vietnamese",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Vietnamese"
                         },
                         new
                         {
                             Id = new Guid("d0000010-0000-0000-0000-000000000010"),
                             Code = "fa",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Persian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Persian"
                         },
                         new
                         {
                             Id = new Guid("d0000011-0000-0000-0000-000000000011"),
                             Code = "ur",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Urdu",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Urdu"
                         },
                         new
                         {
                             Id = new Guid("d0000012-0000-0000-0000-000000000012"),
                             Code = "id",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Indonesian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Indonesian"
                         },
                         new
                         {
                             Id = new Guid("d0000013-0000-0000-0000-000000000013"),
                             Code = "nl",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Dutch",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Dutch"
                         },
                         new
                         {
                             Id = new Guid("d0000014-0000-0000-0000-000000000014"),
                             Code = "pl",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Polish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Polish"
                         },
                         new
                         {
                             Id = new Guid("d0000015-0000-0000-0000-000000000015"),
                             Code = "th",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Thai",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Thai"
                         },
                         new
                         {
                             Id = new Guid("d0000016-0000-0000-0000-000000000016"),
                             Code = "el",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Greek",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Greek"
                         },
                         new
                         {
                             Id = new Guid("d0000017-0000-0000-0000-000000000017"),
                             Code = "sv",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Swedish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Swedish"
                         },
                         new
                         {
                             Id = new Guid("d0000018-0000-0000-0000-000000000018"),
                             Code = "ro",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Romanian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Romanian"
                         },
                         new
                         {
                             Id = new Guid("d0000019-0000-0000-0000-000000000019"),
                             Code = "cs",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Czech",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Czech"
                         },
                         new
                         {
                             Id = new Guid("d000001a-0000-0000-0000-00000000001a"),
                             Code = "hu",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hungarian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hungarian"
                         },
                         new
                         {
                             Id = new Guid("d000001b-0000-0000-0000-00000000001b"),
                             Code = "he",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hebrew",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hebrew"
                         },
                         new
                         {
                             Id = new Guid("d000001c-0000-0000-0000-00000000001c"),
                             Code = "uk",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Ukrainian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Ukrainian"
                         },
                         new
                         {
                             Id = new Guid("d000001d-0000-0000-0000-00000000001d"),
                             Code = "ms",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Malay",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Malay"
                         },
                         new
                         {
                             Id = new Guid("d000001e-0000-0000-0000-00000000001e"),
                             Code = "sw",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Swahili",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Swahili"
                         },
                         new
                         {
                             Id = new Guid("d000001f-0000-0000-0000-00000000001f"),
                             Code = "ta",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tamil",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tamil"
                         },
                         new
                         {
                             Id = new Guid("d0000020-0000-0000-0000-000000000020"),
                             Code = "ku",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kurdish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kurdish"
                         },
                         new
                         {
                             Id = new Guid("d0000021-0000-0000-0000-000000000021"),
                             Code = "da",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Danish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Danish"
                         },
                         new
                         {
                             Id = new Guid("d0000022-0000-0000-0000-000000000022"),
                             Code = "no",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Norwegian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Norwegian"
                         },
                         new
                         {
                             Id = new Guid("d0000023-0000-0000-0000-000000000023"),
                             Code = "fi",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Finnish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Finnish"
                         },
                         new
                         {
                             Id = new Guid("d0000024-0000-0000-0000-000000000024"),
                             Code = "sk",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Slovak",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Slovak"
                         },
                         new
                         {
                             Id = new Guid("d0000025-0000-0000-0000-000000000025"),
                             Code = "bg",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bulgarian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bulgarian"
                         },
                         new
                         {
                             Id = new Guid("d0000026-0000-0000-0000-000000000026"),
                             Code = "hr",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Croatian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Croatian"
                         },
                         new
                         {
                             Id = new Guid("d0000027-0000-0000-0000-000000000027"),
                             Code = "sr",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Serbian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Serbian"
                         },
                         new
                         {
                             Id = new Guid("d0000028-0000-0000-0000-000000000028"),
                             Code = "ca",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Catalan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Catalan"
                         },
                         new
                         {
                             Id = new Guid("d0000029-0000-0000-0000-000000000029"),
                             Code = "af",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Afrikaans",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Afrikaans"
                         },
                         new
                         {
                             Id = new Guid("d000002a-0000-0000-0000-00000000002a"),
                             Code = "ne",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Nepali",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Nepali"
                         },
                         new
                         {
                             Id = new Guid("d000002b-0000-0000-0000-00000000002b"),
                             Code = "si",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sinhala",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sinhala"
                         },
                         new
                         {
                             Id = new Guid("d000002c-0000-0000-0000-00000000002c"),
                             Code = "mr",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Marathi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Marathi"
                         },
                         new
                         {
                             Id = new Guid("d000002d-0000-0000-0000-00000000002d"),
                             Code = "pa",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Punjabi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Punjabi"
                         },
                         new
                         {
                             Id = new Guid("d000002e-0000-0000-0000-00000000002e"),
                             Code = "gu",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Gujarati",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Gujarati"
                         },
                         new
                         {
                             Id = new Guid("d000002f-0000-0000-0000-00000000002f"),
                             Code = "am",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Amharic",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Amharic"
                         },
                         new
                         {
                             Id = new Guid("d0000030-0000-0000-0000-000000000030"),
                             Code = "ha",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hausa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hausa"
                         },
                         new
                         {
                             Id = new Guid("d0000031-0000-0000-0000-000000000031"),
                             Code = "yo",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Yoruba",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Yoruba"
                         },
                         new
                         {
                             Id = new Guid("d0000032-0000-0000-0000-000000000032"),
                             Code = "so",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Somali",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Somali"
                         },
                         new
                         {
                             Id = new Guid("d0000033-0000-0000-0000-000000000033"),
                             Code = "lt",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Lithuanian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Lithuanian"
                         },
                         new
                         {
                             Id = new Guid("d0000034-0000-0000-0000-000000000034"),
                             Code = "lv",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Latvian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Latvian"
                         },
                         new
                         {
                             Id = new Guid("d0000035-0000-0000-0000-000000000035"),
                             Code = "et",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Estonian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Estonian"
                         },
                         new
                         {
                             Id = new Guid("d0000036-0000-0000-0000-000000000036"),
                             Code = "sl",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Slovenian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Slovenian"
                         },
                         new
                         {
                             Id = new Guid("d0000037-0000-0000-0000-000000000037"),
                             Code = "sq",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Albanian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Albanian"
                         },
                         new
                         {
                             Id = new Guid("d0000038-0000-0000-0000-000000000038"),
                             Code = "mk",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Macedonian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Macedonian"
                         },
                         new
                         {
                             Id = new Guid("d0000039-0000-0000-0000-000000000039"),
                             Code = "hy",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Armenian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Armenian"
                         },
                         new
                         {
                             Id = new Guid("d000003a-0000-0000-0000-00000000003a"),
                             Code = "ka",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Georgian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Georgian"
                         },
                         new
                         {
                             Id = new Guid("d000003b-0000-0000-0000-00000000003b"),
                             Code = "kk",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kazakh",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kazakh"
                         },
                         new
                         {
                             Id = new Guid("d000003c-0000-0000-0000-00000000003c"),
                             Code = "uz",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Uzbek",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Uzbek"
                         },
                         new
                         {
                             Id = new Guid("d000003d-0000-0000-0000-00000000003d"),
                             Code = "az",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Azerbaijani",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Azerbaijani"
                         },
                         new
                         {
                             Id = new Guid("d000003e-0000-0000-0000-00000000003e"),
                             Code = "ky",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kyrgyz",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kyrgyz"
                         },
                         new
                         {
                             Id = new Guid("d000003f-0000-0000-0000-00000000003f"),
                             Code = "tk",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Turkmen",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Turkmen"
                         },
                         new
                         {
                             Id = new Guid("d0000040-0000-0000-0000-000000000040"),
                             Code = "tg",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tajik",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tajik"
                         },
                         new
                         {
                             Id = new Guid("d0000041-0000-0000-0000-000000000041"),
                             Code = "mn",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mongolian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mongolian"
                         },
                         new
                         {
                             Id = new Guid("d0000042-0000-0000-0000-000000000042"),
                             Code = "my",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Burmese",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Burmese"
                         },
                         new
                         {
                             Id = new Guid("d0000043-0000-0000-0000-000000000043"),
                             Code = "km",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Khmer",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Khmer"
                         },
                         new
                         {
                             Id = new Guid("d0000044-0000-0000-0000-000000000044"),
                             Code = "lo",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Lao",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Lao"
                         },
                         new
                         {
                             Id = new Guid("d0000045-0000-0000-0000-000000000045"),
                             Code = "tl",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tagalog",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tagalog"
                         },
                         new
                         {
                             Id = new Guid("d0000046-0000-0000-0000-000000000046"),
                             Code = "is",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Icelandic",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Icelandic"
                         },
                         new
                         {
                             Id = new Guid("d0000047-0000-0000-0000-000000000047"),
                             Code = "mt",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Maltese",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Maltese"
                         },
                         new
                         {
                             Id = new Guid("d0000048-0000-0000-0000-000000000048"),
                             Code = "cy",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Welsh",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Welsh"
                         },
                         new
                         {
                             Id = new Guid("d0000049-0000-0000-0000-000000000049"),
                             Code = "ga",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Irish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Irish"
                         },
                         new
                         {
                             Id = new Guid("d000004a-0000-0000-0000-00000000004a"),
                             Code = "gd",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Scottish Gaelic",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Scottish Gaelic"
                         },
                         new
                         {
                             Id = new Guid("d000004b-0000-0000-0000-00000000004b"),
                             Code = "eu",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Basque",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Basque"
                         },
                         new
                         {
                             Id = new Guid("d000004c-0000-0000-0000-00000000004c"),
                             Code = "gl",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Galician",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Galician"
                         },
                         new
                         {
                             Id = new Guid("d000004d-0000-0000-0000-00000000004d"),
                             Code = "bs",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bosnian",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bosnian"
                         },
                         new
                         {
                             Id = new Guid("d000004e-0000-0000-0000-00000000004e"),
                             Code = "lb",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Luxembourgish",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Luxembourgish"
                         },
                         new
                         {
                             Id = new Guid("d000004f-0000-0000-0000-00000000004f"),
                             Code = "ps",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Pashto",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Pashto"
                         },
                         new
                         {
                             Id = new Guid("d0000050-0000-0000-0000-000000000050"),
                             Code = "sd",
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sindhi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sindhi"
                         });
                 });
 
@@ -866,9 +703,6 @@ namespace Modules.School.Infrastructure.Migrations
                     b.Property<Guid>("CityId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -879,9 +713,6 @@ namespace Modules.School.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -894,1591 +725,1273 @@ namespace Modules.School.Infrastructure.Migrations
                         {
                             Id = new Guid("00000001-0001-0001-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Karkh",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Karkh"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0002-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Rusafa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Rusafa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0003-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Karrada",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Karrada"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0004-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Adhamiyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Adhamiyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0005-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mansour",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mansour"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0006-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sadr City",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sadr City"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0007-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Dora",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Dora"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0008-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Ghazaliya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Ghazaliya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0009-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Amiriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Amiriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0010-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Zayouna",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Zayouna"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0011-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Palestine Street",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Palestine Street"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0012-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hurriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hurriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0013-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bayaa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bayaa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0014-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Shaab",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Shaab"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0015-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Jadiriyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Jadiriyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0016-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Shurja",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Shurja"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0017-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Fadhil",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Fadhil"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0018-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sheikh Omar",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sheikh Omar"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0019-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Jesr Diyala",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Jesr Diyala"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0020-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Abu Disher",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Abu Disher"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0021-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Yarmouk",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Yarmouk"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0022-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Hebnaa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Hebnaa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0023-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Mahmudiyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Mahmudiyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0024-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bab Al Moatham",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bab Al Moatham"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0025-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bab Al Sharqi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bab Al Sharqi"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0026-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Fathel",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Fathel"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0027-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Ubedy",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Ubedy"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0028-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Washash",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Washash"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0029-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Wazireya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Wazireya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0030-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hayy Ur",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hayy Ur"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0031-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hayy Al Jamiya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hayy Al Jamiya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0032-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Adel",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Adel"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0033-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Khadhraa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Khadhraa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0034-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hayy Al Jihad",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hayy Al Jihad"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0035-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hayy Al Aamel",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hayy Al Aamel"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0036-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hayy Aoor",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hayy Aoor"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0037-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hayy Al Shurtta",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hayy Al Shurtta"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0038-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Iskan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Iskan"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0039-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Gazaliyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Gazaliyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0040-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Salam",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Salam"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0041-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Intisar",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Intisar"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0042-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Baladiyat",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Baladiyat"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0043-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Dawoodi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Dawoodi"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0044-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Dhuhbaat",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Dhuhbaat"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0045-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Elwiya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Elwiya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0046-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Khansaa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Khansaa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0047-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Latifiya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Latifiya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0048-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Haifa Street",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Haifa Street"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0049-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Maidan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Maidan"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0050-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sinaa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sinaa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0051-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Karama",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Karama"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0052-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Waziriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Waziriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0053-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Mustansiriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Mustansiriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0054-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Khaleej",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Khaleej"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0055-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Khilani",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Khilani"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0056-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Amil",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Amil"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0057-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Hurriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Hurriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0058-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Harthiya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Harthiya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0059-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Qahira",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Qahira"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0060-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Rasheed",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Rasheed"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0061-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Nidal",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Nidal"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0062-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shorja",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shorja"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0063-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Mansour",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Mansour"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0064-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shaab",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shaab"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0065-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Hurriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Hurriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0066-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shurta",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shurta"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0067-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Baladiyat",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Baladiyat"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0068-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Mansour",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Mansour"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0069-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Adel",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Adel"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0070-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Kadhraa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Kadhraa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0071-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Zaafaran",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Zaafaran"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0072-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Khalis",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Khalis"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0073-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Rasheed",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Rasheed"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0074-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Jadriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Jadriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0075-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Maamil",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Maamil"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0076-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Hurriyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Hurriyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0077-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Rashid",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Rashid"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0078-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Mansour",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Mansour"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0079-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shaab",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shaab"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0080-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Kadisiya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Kadisiya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0081-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Ameen",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Ameen"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0082-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Salam",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Salam"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0083-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Waziriyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Waziriyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0084-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Rashidiyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Rashidiyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0085-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Mutanabbi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Mutanabbi"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0086-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shurta",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shurta"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0087-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Adel",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Adel"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0088-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Khadhraa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Khadhraa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0089-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Qahira",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Qahira"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0090-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Hurriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Hurriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0091-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Karama",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Karama"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0092-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Maidan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Maidan"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0093-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shaab",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shaab"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0094-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Baladiyat",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Baladiyat"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0095-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Jadriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Jadriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0096-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Amiriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Amiriya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0097-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Dora",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Dora"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0098-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Sadr City",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Sadr City"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0099-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Karrada",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Karrada"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0100-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Rusafa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Rusafa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0101-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Rashid",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Rashid"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0102-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Hurriyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Hurriyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0103-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shaab",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shaab"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0104-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Mansour",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Mansour"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0105-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Kadisiya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Kadisiya"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0106-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Ameen",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Ameen"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0107-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Salam",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Salam"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0108-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Waziriyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Waziriyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0109-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Rashidiyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Rashidiyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0110-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Mutanabbi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Mutanabbi"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0111-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shurta",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shurta"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0112-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Adel",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Adel"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0113-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Khadhraa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Khadhraa"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0114-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Qahira",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Qahira"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0115-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Hurriyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Hurriyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0116-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Karama",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Karama"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0117-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Maidan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Maidan"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0118-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Shaab",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Shaab"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0119-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Baladiyat",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Baladiyat"
                         },
                         new
                         {
                             Id = new Guid("00000001-0001-0120-0000-000000000000"),
                             CityId = new Guid("00000001-0001-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Al Jadriya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Al Jadriya"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0001-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Georgetown",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Georgetown"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0002-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Capitol Hill",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Capitol Hill"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0003-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Dupont Circle",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Dupont Circle"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0004-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Adams Morgan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Adams Morgan"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0005-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Columbia Heights",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Columbia Heights"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0006-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Navy Yard",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Navy Yard"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0007-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Foggy Bottom",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Foggy Bottom"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0008-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Shaw",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Shaw"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0009-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Brookland",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Brookland"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0010-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tenleytown",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tenleytown"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0011-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Anacostia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Anacostia"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0012-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Petworth",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Petworth"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0013-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Cleveland Park",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Cleveland Park"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0014-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Woodley Park",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Woodley Park"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0015-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mount Pleasant",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mount Pleasant"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0016-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Trinidad",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Trinidad"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0017-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Eckington",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Eckington"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0018-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bloomingdale",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bloomingdale"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0019-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kalorama",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kalorama"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0020-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Logan Circle",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Logan Circle"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0021-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "NoMa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "NoMa"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0022-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "H Street Corridor",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "H Street Corridor"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0023-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Southwest Waterfront",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Southwest Waterfront"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0024-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "The Wharf",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "The Wharf"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0025-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "West End",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "West End"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0026-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Glover Park",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Glover Park"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0027-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Friendship Heights",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Friendship Heights"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0028-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Brightwood",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Brightwood"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0029-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Congress Heights",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Congress Heights"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0030-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Deanwood",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Deanwood"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0031-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hillcrest",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hillcrest"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0032-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Fort Totten",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Fort Totten"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0033-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Takoma",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Takoma"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0034-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Michigan Park",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Michigan Park"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0035-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bellevue",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bellevue"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0036-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Chevy Chase",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Chevy Chase"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0037-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "North Cleveland Park",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "North Cleveland Park"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0038-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "American University Park",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "American University Park"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0039-0000-000000000000"),
                             CityId = new Guid("00000002-0047-0000-0000-000000000000"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Forest Hills",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Forest Hills"
                         });
                 });
 
@@ -2491,9 +2004,6 @@ namespace Modules.School.Infrastructure.Migrations
                     b.Property<Guid>("CountryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -2504,9 +2014,6 @@ namespace Modules.School.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(75)
                         .HasColumnType("nvarchar(75)");
-
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -2519,681 +2026,545 @@ namespace Modules.School.Infrastructure.Migrations
                         {
                             Id = new Guid("00000001-0001-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Baghdad",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Baghdad"
                         },
                         new
                         {
                             Id = new Guid("00000001-0002-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Basra",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Basra"
                         },
                         new
                         {
                             Id = new Guid("00000001-0003-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mosul",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mosul"
                         },
                         new
                         {
                             Id = new Guid("00000001-0004-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Erbil",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Erbil"
                         },
                         new
                         {
                             Id = new Guid("00000001-0005-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kirkuk",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kirkuk"
                         },
                         new
                         {
                             Id = new Guid("00000001-0006-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Najaf",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Najaf"
                         },
                         new
                         {
                             Id = new Guid("00000001-0007-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Karbala",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Karbala"
                         },
                         new
                         {
                             Id = new Guid("00000001-0008-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sulaymaniyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sulaymaniyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0009-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Dohuk",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Dohuk"
                         },
                         new
                         {
                             Id = new Guid("00000001-0010-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Diyala",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Diyala"
                         },
                         new
                         {
                             Id = new Guid("00000001-0011-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Babil",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Babil"
                         },
                         new
                         {
                             Id = new Guid("00000001-0012-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Anbar",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Anbar"
                         },
                         new
                         {
                             Id = new Guid("00000001-0013-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Wasit",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Wasit"
                         },
                         new
                         {
                             Id = new Guid("00000001-0014-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Dhi Qar",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Dhi Qar"
                         },
                         new
                         {
                             Id = new Guid("00000001-0015-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Maysan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Maysan"
                         },
                         new
                         {
                             Id = new Guid("00000001-0016-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Qadisiyah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Qadisiyah"
                         },
                         new
                         {
                             Id = new Guid("00000001-0017-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Salah al-Din",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Salah al-Din"
                         },
                         new
                         {
                             Id = new Guid("00000001-0018-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Nineveh",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Nineveh"
                         },
                         new
                         {
                             Id = new Guid("00000002-0001-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Alabama",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Alabama"
                         },
                         new
                         {
                             Id = new Guid("00000002-0002-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Alaska",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Alaska"
                         },
                         new
                         {
                             Id = new Guid("00000002-0003-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Arizona",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Arizona"
                         },
                         new
                         {
                             Id = new Guid("00000002-0004-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Arkansas",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Arkansas"
                         },
                         new
                         {
                             Id = new Guid("00000002-0005-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "California",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "California"
                         },
                         new
                         {
                             Id = new Guid("00000002-0006-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Colorado",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Colorado"
                         },
                         new
                         {
                             Id = new Guid("00000002-0007-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Connecticut",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Connecticut"
                         },
                         new
                         {
                             Id = new Guid("00000002-0008-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Delaware",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Delaware"
                         },
                         new
                         {
                             Id = new Guid("00000002-0009-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Florida",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Florida"
                         },
                         new
                         {
                             Id = new Guid("00000002-0010-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Georgia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Georgia"
                         },
                         new
                         {
                             Id = new Guid("00000002-0011-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hawaii",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hawaii"
                         },
                         new
                         {
                             Id = new Guid("00000002-0012-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Idaho",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Idaho"
                         },
                         new
                         {
                             Id = new Guid("00000002-0013-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Illinois",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Illinois"
                         },
                         new
                         {
                             Id = new Guid("00000002-0014-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Indiana",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Indiana"
                         },
                         new
                         {
                             Id = new Guid("00000002-0015-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Iowa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Iowa"
                         },
                         new
                         {
                             Id = new Guid("00000002-0016-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kansas",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kansas"
                         },
                         new
                         {
                             Id = new Guid("00000002-0017-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kentucky",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kentucky"
                         },
                         new
                         {
                             Id = new Guid("00000002-0018-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Louisiana",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Louisiana"
                         },
                         new
                         {
                             Id = new Guid("00000002-0019-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Maine",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Maine"
                         },
                         new
                         {
                             Id = new Guid("00000002-0020-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Maryland",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Maryland"
                         },
                         new
                         {
                             Id = new Guid("00000002-0021-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Massachusetts",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Massachusetts"
                         },
                         new
                         {
                             Id = new Guid("00000002-0022-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Michigan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Michigan"
                         },
                         new
                         {
                             Id = new Guid("00000002-0023-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Minnesota",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Minnesota"
                         },
                         new
                         {
                             Id = new Guid("00000002-0024-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mississippi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mississippi"
                         },
                         new
                         {
                             Id = new Guid("00000002-0025-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Missouri",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Missouri"
                         },
                         new
                         {
                             Id = new Guid("00000002-0026-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Montana",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Montana"
                         },
                         new
                         {
                             Id = new Guid("00000002-0027-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Nebraska",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Nebraska"
                         },
                         new
                         {
                             Id = new Guid("00000002-0028-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Nevada",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Nevada"
                         },
                         new
                         {
                             Id = new Guid("00000002-0029-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "New Hampshire",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "New Hampshire"
                         },
                         new
                         {
                             Id = new Guid("00000002-0030-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "New Jersey",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "New Jersey"
                         },
                         new
                         {
                             Id = new Guid("00000002-0031-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "New Mexico",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "New Mexico"
                         },
                         new
                         {
                             Id = new Guid("00000002-0032-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "New York",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "New York"
                         },
                         new
                         {
                             Id = new Guid("00000002-0033-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "North Carolina",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "North Carolina"
                         },
                         new
                         {
                             Id = new Guid("00000002-0034-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "North Dakota",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "North Dakota"
                         },
                         new
                         {
                             Id = new Guid("00000002-0035-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Ohio",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Ohio"
                         },
                         new
                         {
                             Id = new Guid("00000002-0036-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Oklahoma",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Oklahoma"
                         },
                         new
                         {
                             Id = new Guid("00000002-0037-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Oregon",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Oregon"
                         },
                         new
                         {
                             Id = new Guid("00000002-0038-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Pennsylvania",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Pennsylvania"
                         },
                         new
                         {
                             Id = new Guid("00000002-0039-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Rhode Island",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Rhode Island"
                         },
                         new
                         {
                             Id = new Guid("00000002-0040-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "South Carolina",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "South Carolina"
                         },
                         new
                         {
                             Id = new Guid("00000002-0041-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "South Dakota",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "South Dakota"
                         },
                         new
                         {
                             Id = new Guid("00000002-0042-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tennessee",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tennessee"
                         },
                         new
                         {
                             Id = new Guid("00000002-0043-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Texas",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Texas"
                         },
                         new
                         {
                             Id = new Guid("00000002-0044-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Utah",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Utah"
                         },
                         new
                         {
                             Id = new Guid("00000002-0045-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Vermont",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Vermont"
                         },
                         new
                         {
                             Id = new Guid("00000002-0046-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Virginia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Virginia"
                         },
                         new
                         {
                             Id = new Guid("00000002-0047-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Washington",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Washington"
                         },
                         new
                         {
                             Id = new Guid("00000002-0048-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "West Virginia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "West Virginia"
                         },
                         new
                         {
                             Id = new Guid("00000002-0049-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Wisconsin",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Wisconsin"
                         },
                         new
                         {
                             Id = new Guid("00000002-0050-0000-0000-000000000000"),
                             CountryId = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Wyoming",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Wyoming"
                         });
                 });
 
@@ -3202,9 +2573,6 @@ namespace Modules.School.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -3217,9 +2585,6 @@ namespace Modules.School.Infrastructure.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
                     b.ToTable("Countries", (string)null);
@@ -3228,1757 +2593,1367 @@ namespace Modules.School.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000001"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Afghanistan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Afghanistan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000002"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Albania",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Albania"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000003"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Algeria",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Algeria"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000004"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Andorra",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Andorra"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000005"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Angola",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Angola"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000006"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Antigua and Barbuda",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Antigua and Barbuda"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000007"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Argentina",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Argentina"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000008"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Armenia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Armenia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000009"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Australia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Australia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000010"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Austria",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Austria"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000011"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Azerbaijan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Azerbaijan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000012"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bahamas",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bahamas"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000013"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bahrain",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bahrain"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000014"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bangladesh",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bangladesh"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000015"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Barbados",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Barbados"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000016"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Belarus",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Belarus"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000017"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Belgium",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Belgium"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000018"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Belize",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Belize"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000019"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Benin",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Benin"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000020"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bhutan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bhutan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000021"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bolivia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bolivia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000022"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bosnia and Herzegovina",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bosnia and Herzegovina"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000023"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Botswana",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Botswana"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000024"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Brazil",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Brazil"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000025"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Brunei",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Brunei"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000026"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Bulgaria",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Bulgaria"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000027"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Burkina Faso",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Burkina Faso"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000028"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Burundi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Burundi"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000029"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Cabo Verde",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Cabo Verde"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000030"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Cambodia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Cambodia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000031"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Cameroon",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Cameroon"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000032"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Canada",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Canada"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000033"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Central African Republic",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Central African Republic"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000034"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Chad",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Chad"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000035"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Chile",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Chile"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000036"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "China",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "China"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000037"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Colombia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Colombia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000038"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Comoros",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Comoros"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000039"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Congo",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Congo"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000040"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Costa Rica",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Costa Rica"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000041"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Croatia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Croatia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000042"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Cuba",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Cuba"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000043"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Cyprus",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Cyprus"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000044"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Czech Republic",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Czech Republic"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000045"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Denmark",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Denmark"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000046"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Djibouti",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Djibouti"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000047"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Dominica",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Dominica"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000048"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Dominican Republic",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Dominican Republic"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000049"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Ecuador",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Ecuador"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000050"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Egypt",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Egypt"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000051"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "El Salvador",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "El Salvador"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000052"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Equatorial Guinea",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Equatorial Guinea"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000053"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Eritrea",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Eritrea"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000054"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Estonia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Estonia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000055"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Eswatini",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Eswatini"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000056"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Ethiopia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Ethiopia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000057"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Fiji",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Fiji"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000058"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Finland",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Finland"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000059"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "France",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "France"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000060"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Gabon",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Gabon"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000061"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Gambia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Gambia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000062"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Georgia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Georgia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000063"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Germany",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Germany"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000064"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Ghana",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Ghana"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000065"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Greece",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Greece"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000066"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Grenada",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Grenada"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000067"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Guatemala",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Guatemala"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000068"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Guinea",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Guinea"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000069"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Guinea-Bissau",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Guinea-Bissau"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000070"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Guyana",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Guyana"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000071"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Haiti",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Haiti"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000072"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Honduras",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Honduras"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000073"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Hungary",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Hungary"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000074"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Iceland",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Iceland"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000075"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "India",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "India"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000076"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Indonesia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Indonesia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000077"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Iran",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Iran"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000078"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Iraq",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Iraq"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000079"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Ireland",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Ireland"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000080"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Israel",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Israel"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000081"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Italy",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Italy"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000082"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Jamaica",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Jamaica"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000083"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Japan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Japan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000084"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Jordan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Jordan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000085"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kazakhstan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kazakhstan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000086"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kenya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kenya"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000087"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kiribati",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kiribati"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000088"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kuwait",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kuwait"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000089"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kyrgyzstan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kyrgyzstan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000090"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Laos",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Laos"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000091"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Latvia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Latvia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000092"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Lebanon",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Lebanon"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000093"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Lesotho",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Lesotho"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000094"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Liberia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Liberia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000095"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Libya",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Libya"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000096"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Liechtenstein",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Liechtenstein"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000097"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Lithuania",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Lithuania"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000098"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Luxembourg",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Luxembourg"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000099"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Madagascar",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Madagascar"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000100"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Malawi",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Malawi"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000101"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Malaysia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Malaysia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000102"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Maldives",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Maldives"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000103"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mali",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mali"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000104"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Malta",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Malta"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000105"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Marshall Islands",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Marshall Islands"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000106"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mauritania",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mauritania"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000107"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mauritius",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mauritius"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000108"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mexico",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mexico"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000109"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Micronesia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Micronesia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000110"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Moldova",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Moldova"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000111"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Monaco",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Monaco"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000112"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mongolia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mongolia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000113"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Montenegro",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Montenegro"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000114"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Morocco",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Morocco"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000115"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Mozambique",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Mozambique"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000116"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Myanmar",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Myanmar"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000117"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Namibia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Namibia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000118"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Nauru",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Nauru"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000119"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Nepal",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Nepal"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000120"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Netherlands",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Netherlands"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000121"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "New Zealand",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "New Zealand"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000122"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Nicaragua",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Nicaragua"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000123"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Niger",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Niger"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000124"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Nigeria",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Nigeria"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000125"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "North Korea",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "North Korea"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000126"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "North Macedonia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "North Macedonia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000127"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Norway",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Norway"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000128"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Oman",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Oman"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000129"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Pakistan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Pakistan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000130"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Palau",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Palau"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000131"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Palestine",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Palestine"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000132"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Panama",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Panama"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000133"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Papua New Guinea",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Papua New Guinea"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000134"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Paraguay",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Paraguay"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000135"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Peru",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Peru"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000136"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Philippines",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Philippines"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000137"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Poland",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Poland"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000138"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Portugal",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Portugal"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000139"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Qatar",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Qatar"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000140"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Romania",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Romania"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000141"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Russia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Russia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000142"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Rwanda",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Rwanda"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000143"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Saint Kitts and Nevis",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Saint Kitts and Nevis"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000144"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Saint Lucia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Saint Lucia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000145"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Saint Vincent and the Grenadines",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Saint Vincent and the Grenadines"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000146"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Samoa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Samoa"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000147"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "San Marino",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "San Marino"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000148"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sao Tome and Principe",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sao Tome and Principe"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000149"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Saudi Arabia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Saudi Arabia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000150"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Senegal",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Senegal"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000151"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Serbia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Serbia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000152"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Seychelles",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Seychelles"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000153"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sierra Leone",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sierra Leone"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000154"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Singapore",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Singapore"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000155"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Slovakia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Slovakia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000156"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Slovenia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Slovenia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000157"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Solomon Islands",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Solomon Islands"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000158"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Somalia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Somalia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000159"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "South Africa",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "South Africa"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000160"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "South Korea",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "South Korea"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000161"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "South Sudan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "South Sudan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000162"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Spain",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Spain"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000163"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sri Lanka",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sri Lanka"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000164"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sudan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sudan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000165"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Suriname",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Suriname"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000166"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Sweden",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Sweden"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000167"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Switzerland",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Switzerland"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000168"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Syria",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Syria"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000169"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tajikistan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tajikistan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000170"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tanzania",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tanzania"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000171"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Thailand",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Thailand"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000172"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Timor-Leste",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Timor-Leste"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000173"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Togo",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Togo"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000174"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tonga",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tonga"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000175"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Trinidad and Tobago",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Trinidad and Tobago"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000176"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tunisia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tunisia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000177"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Turkey",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Turkey"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000178"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Turkmenistan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Turkmenistan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000179"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Tuvalu",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Tuvalu"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000180"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Uganda",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Uganda"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000181"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Ukraine",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Ukraine"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000182"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "United Arab Emirates",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "United Arab Emirates"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000183"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "United Kingdom",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "United Kingdom"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000184"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "United States",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "United States"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000185"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Uruguay",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Uruguay"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000186"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Uzbekistan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Uzbekistan"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000187"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Vanuatu",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Vanuatu"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000188"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Vatican City",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Vatican City"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000189"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Venezuela",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Venezuela"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000190"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Vietnam",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Vietnam"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000191"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Yemen",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Yemen"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000192"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Zambia",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Zambia"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000193"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Zimbabwe",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Zimbabwe"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000194"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Kosovo",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Kosovo"
                         },
                         new
                         {
                             Id = new Guid("00000000-0000-0000-0000-000000000195"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsActive = true,
                             IsDeleted = false,
-                            Name = "Taiwan",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Name = "Taiwan"
                         });
                 });
 
@@ -4987,9 +3962,6 @@ namespace Modules.School.Infrastructure.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -5012,9 +3984,6 @@ namespace Modules.School.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("sanitizeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -5027,13 +3996,11 @@ namespace Modules.School.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("12112121-2121-2121-2121-121212121212"),
-                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Description = "This policy defines the general operational and behavioral guidelines applicable to all schools unless otherwise specified.",
                             IsActive = true,
                             IsDefault = true,
                             IsDeleted = false,
                             Title = "General School Policy",
-                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             sanitizeName = "general-school-policy"
                         });
                 });
@@ -5052,8 +4019,6 @@ namespace Modules.School.Infrastructure.Migrations
 
                     b.Property<Guid>("CountryId")
                         .HasColumnType("uniqueidentifier");
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -5079,8 +4044,9 @@ namespace Modules.School.Infrastructure.Migrations
                     b.Property<Guid>("PolicyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("UpdateAt")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("TimeZone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("sanitizeName")
                         .IsRequired()

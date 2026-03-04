@@ -13,7 +13,12 @@ namespace Modules.School.Domain.Entities
         public virtual Language Language { get; set; }
         public Guid PolicyId { get; set; }
         public virtual Policy Policy { get; set; }
-
+        public Guid CountryId { get; set; }
+        public virtual Country Country { get; set; }
+        public Guid CityId { get; set; }
+        public virtual City City { get; set; }
+        public Guid AreaId { get; set; }
+        public virtual Area Area { get; set; }
 
     }
 }
