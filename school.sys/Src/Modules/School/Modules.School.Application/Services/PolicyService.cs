@@ -3,6 +3,7 @@ using Modules.School.Domain.Common.Results;
 using Modules.School.Domain.Common.StaticError;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.IRepositories;
+using Modules.School.Domain.IThirdPartyServices;
 
 namespace Modules.School.Application.Services
 {
@@ -10,11 +11,13 @@ namespace Modules.School.Application.Services
     {
         private readonly IGenericRepository<Policy> _Repository;
         private readonly ISchoolRepository _SchoolRepository;
+        private readonly ITimeProvider _TimeProvider;
 
-        public PolicyService(IGenericRepository<Policy> repository, ISchoolRepository schoolRepository)
+        public PolicyService(IGenericRepository<Policy> repository, ISchoolRepository schoolRepository, ITimeProvider timeProvider)
         {
             _Repository = repository;
             _SchoolRepository = schoolRepository;
+            _TimeProvider = timeProvider;
         }
         public async Task<Result> CreateAsync(Policy policy)
         {
@@ -24,7 +27,8 @@ namespace Modules.School.Application.Services
             {
                 return Result.Failure(ErrorType.Conflict,UserErrors.ConflictMessage());
             }
-
+            policy.CreateAt = _TimeProvider.UtcNow;
+            policy.UpdateAt = _TimeProvider.UtcNow;
             var added = await _Repository.AddAsync(policy);
 
             if (!added)
@@ -78,6 +82,8 @@ namespace Modules.School.Application.Services
             {
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
             }
+
+            policy.UpdateAt = _TimeProvider.UtcNow; 
 
             var updated = await _Repository.UpdateAsync(policy);
 

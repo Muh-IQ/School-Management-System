@@ -7,6 +7,7 @@ using Modules.School.Domain.DTOs;
 using Modules.School.Domain.Entities;
 using Modules.School.Domain.Entities.Place;
 using Modules.School.Domain.IRepositories;
+using Modules.School.Domain.IThirdPartyServices;
 
 namespace Modules.School.Application.Services
 {
@@ -19,10 +20,11 @@ namespace Modules.School.Application.Services
         private readonly IGenericRepository<Country> _CountryRepository;
         private readonly IGenericRepository<City> _CityRepository;
         private readonly IGenericRepository<Area> _AreaRepository;
+        private readonly ITimeProvider _timeProvider;
         public SchoolService(ISchoolRepository repository, IPolicyRepository policyRepository,
             IGenericRepository<Language> languageRepository, ICacheService cacheService,
             IGenericRepository<Country> countryRepository, IGenericRepository<City> cityRepository,
-            IGenericRepository<Area> areaRepository)
+            IGenericRepository<Area> areaRepository, ITimeProvider timeProvider)
         {
             _SchoolRepository = repository;
             _PolicyRepository = policyRepository;
@@ -31,6 +33,7 @@ namespace Modules.School.Application.Services
             _CountryRepository = countryRepository;
             _CityRepository = cityRepository;
             _AreaRepository = areaRepository;
+            _timeProvider = timeProvider;
         }
 
         /////////////////////////
@@ -136,6 +139,8 @@ namespace Modules.School.Application.Services
             {
                 var newPolicy = mapper.MapSchoolAddDTOToEntityPolicy(newSchool.PolicyTitle,newSchool.PolicyDescription);
                 newPolicy.sanitizeName=TextHelper.SlugGenerate(newSchool.Name);
+                newPolicy.CreateAt=_timeProvider.UtcNow;
+                newPolicy.UpdateAt = null;
 
                 await _PolicyRepository.AddAsync(newPolicy);
                 policyId = newPolicy.Id;
@@ -147,7 +152,8 @@ namespace Modules.School.Application.Services
 
             var school = mapper.MapSchoolAddDTOToEntity(newSchool, policyId);
             school.sanitizeName=TextHelper.SlugGenerate(school.Name);
-
+            school.CreateAt=_timeProvider.UtcNow;
+            school.UpdateAt=null;
             var added = await _SchoolRepository.AddAsync(school);
 
             if (!added)
@@ -174,7 +180,7 @@ namespace Modules.School.Application.Services
 
             _Mapper.MapSchoolUpdateDTOToEntity(updatedSchool, exist);
             exist.sanitizeName=TextHelper.SlugGenerate(exist.Name);
-
+            exist.UpdateAt=_timeProvider.UtcNow;
             var updated = await _SchoolRepository.UpdateAsync(exist);
 
             if (!updated)

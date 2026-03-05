@@ -14,8 +14,7 @@ namespace Modules.School.Application.Mappers
                 IsActive = true,
                 IsDeleted = false,
                 IsDefault = false,
-                CreateAt=DateTime.Now,
-                UpdateAt=DateTime.Now
+
             };
         }
         public  Domain.Entities.School MapSchoolAddDTOToEntity(SchoolAddCommand dto, Guid policyId )
@@ -33,8 +32,7 @@ namespace Modules.School.Application.Mappers
                 PolicyId =policyId ,
                 IsActive = true,
                 IsDeleted = false,
-                CreateAt = DateTime.Now,
-                UpdateAt = DateTime.Now 
+
             };
         }
 
@@ -48,7 +46,6 @@ namespace Modules.School.Application.Mappers
             entity.CityId = dto.CityId;
             entity.AreaId = dto.AreaId;
             entity.PolicyId = dto.PolicyId;
-            entity.UpdateAt = DateTime.Now;
         }
 
         
