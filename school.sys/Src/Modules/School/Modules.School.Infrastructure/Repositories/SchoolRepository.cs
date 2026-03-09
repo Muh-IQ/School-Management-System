@@ -44,5 +44,11 @@ namespace Modules.School.Infrastructure.Repositories
                 })
                 .ToListAsync();
         }
+        public async Task<Domain.Entities.School?> GetWithPolicyAsync(Guid id)
+        {
+            return await _dbSet
+                .Include(s => s.Policy)
+                .FirstOrDefaultAsync(s => s.Id == id && !s.IsDeleted);
+        }
     }
 }

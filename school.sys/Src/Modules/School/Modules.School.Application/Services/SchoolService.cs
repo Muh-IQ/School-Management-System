@@ -38,10 +38,10 @@ namespace Modules.School.Application.Services
 
         /////////////////////////
 
-        private Result ValidatePolicyInfo(SchoolAddCommand dto)
+        private Result ValidatePolicyInfo(string policyTitle, string policyDescription)
         {
-            bool hasTitle = !string.IsNullOrWhiteSpace(dto.PolicyTitle);
-            bool hasDescription = !string.IsNullOrWhiteSpace(dto.PolicyDescription);
+            bool hasTitle = !string.IsNullOrWhiteSpace(policyTitle);
+            bool hasDescription = !string.IsNullOrWhiteSpace(policyDescription);
 
             if (hasTitle != hasDescription)
             {
@@ -91,6 +91,24 @@ namespace Modules.School.Application.Services
             return Result.Success();
         }
 
+        private  bool IsSchoolDataUnchanged(SchoolUpdateCommand schoolUpdateCommand,Domain.Entities.School school)
+        {
+            return
+                school.Email == schoolUpdateCommand.Email &&
+                school.Phone == schoolUpdateCommand.Phone &&
+                school.Name == schoolUpdateCommand.Name &&
+                school.LanguageId == schoolUpdateCommand.LanguageId &&
+                school.CountryId == schoolUpdateCommand.CountryId &&
+                school.CityId == schoolUpdateCommand.CityId &&
+                school.AreaId == schoolUpdateCommand.AreaId;
+        }
+        private bool IsPolicyDataUnchanged(SchoolUpdateCommand schoolUpdateCommand, Domain.Entities.Policy policy)
+        {
+            return
+                policy.Title == schoolUpdateCommand.PolicyTitle &&
+                policy.Description == schoolUpdateCommand.PolicyDescription;
+        }
+
         ///////////////////
         public async Task<Result> DeleteAsync(Guid schoolId)
         {
@@ -127,7 +145,7 @@ namespace Modules.School.Application.Services
             if (!validationResult.IsSuccess)
                 return validationResult;
 
-            var policyValidation = ValidatePolicyInfo(newSchool);
+            var policyValidation = ValidatePolicyInfo(newSchool.PolicyTitle, newSchool.PolicyDescription);
 
             if (!policyValidation.IsSuccess)
                 return policyValidation;
@@ -164,23 +182,74 @@ namespace Modules.School.Application.Services
 
         public async Task<Result> UpdateAsync(Guid id, SchoolUpdateCommand updatedSchool)
         {
-            var exist = await _SchoolRepository.GetByIdAsync(id);
-            if (exist == null)
-                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
+            //check policy info
+            if (string.IsNullOrEmpty(updatedSchool.PolicyTitle) || string.IsNullOrEmpty(updatedSchool.PolicyDescription))
+            {
+                return Result.Failure(ErrorType.BadRequest, "Both PolicyTitle and PolicyDescription should be provided together.");
+            }
 
+            //check contact
+            var validationResult = await ValidateContactUniquenessAsync(updatedSchool.Email, updatedSchool.Phone);
+            if (!validationResult.IsSuccess)
+                return validationResult;
+
+
+            //check language
             if (!await LanguageExists(updatedSchool.LanguageId))
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
 
+            //check location
             var locationValidation = await CheckLocation(updatedSchool.CountryId, updatedSchool.CityId, updatedSchool.AreaId);
             if (!locationValidation.IsSuccess)
                 return locationValidation;
 
+
+            var exist = await _SchoolRepository.GetWithPolicyAsync(id);
+
+            //check school
+            if (exist == null)
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
+
+            if(IsSchoolDataUnchanged(updatedSchool, exist) && IsPolicyDataUnchanged(updatedSchool,exist.Policy))
+            {
+                return Result.Success();
+            }
+
+            Policy UpdatePolicy;
             SchoolMapper _Mapper = new SchoolMapper();
 
+            if (IsPolicyDataUnchanged(updatedSchool,exist.Policy))
+            {
+                    UpdatePolicy = exist.Policy;
+            }
+            else if(exist.PolicyId == await _PolicyRepository.GetDefaultPolicyIdAsync())
+            {
+                exist.UpdateAt = _timeProvider.UtcNow;
+                UpdatePolicy = _Mapper.MapSchoolAddDTOToEntityPolicy(updatedSchool.PolicyTitle, updatedSchool.PolicyDescription);
+                UpdatePolicy.sanitizeName = TextHelper.SlugGenerate(updatedSchool.PolicyTitle);
+                UpdatePolicy.CreateAt = _timeProvider.UtcNow;
+                UpdatePolicy.UpdateAt = null;
+                await _PolicyRepository.AddAsync(UpdatePolicy);
 
-            _Mapper.MapSchoolUpdateDTOToEntity(updatedSchool, exist);
+            }
+            else
+            {
+                UpdatePolicy = exist.Policy;
+                UpdatePolicy.Title = updatedSchool.PolicyTitle;
+                UpdatePolicy.Description = updatedSchool.PolicyDescription;
+                UpdatePolicy.sanitizeName = TextHelper.SlugGenerate(updatedSchool.PolicyTitle);
+                UpdatePolicy.UpdateAt= _timeProvider.UtcNow;
+
+            }
+
+            if(!IsSchoolDataUnchanged(updatedSchool,exist))
+            {
+                exist.UpdateAt = _timeProvider.UtcNow;
+            }
+
+            _Mapper.MapSchoolUpdateDTOToEntity(updatedSchool, exist, UpdatePolicy);
+
             exist.sanitizeName=TextHelper.SlugGenerate(exist.Name);
-            exist.UpdateAt=_timeProvider.UtcNow;
             var updated = await _SchoolRepository.UpdateAsync(exist);
 
             if (!updated)

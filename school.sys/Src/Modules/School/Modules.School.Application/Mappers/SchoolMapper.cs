@@ -36,7 +36,7 @@ namespace Modules.School.Application.Mappers
             };
         }
 
-        public  void MapSchoolUpdateDTOToEntity(SchoolUpdateCommand dto, Domain.Entities.School entity)
+        public  void MapSchoolUpdateDTOToEntity(SchoolUpdateCommand dto, Domain.Entities.School entity, Domain.Entities.Policy policy)
         {
             entity.Name = dto.Name;
             entity.Email = dto.Email;
@@ -45,7 +45,7 @@ namespace Modules.School.Application.Mappers
             entity.CountryId = dto.CountryId;
             entity.CityId = dto.CityId;
             entity.AreaId = dto.AreaId;
-            entity.PolicyId = dto.PolicyId;
+            entity.PolicyId = policy.Id;
         }
 
         

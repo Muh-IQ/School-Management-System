@@ -22,7 +22,9 @@ public class SchoolUpdateDTOValidator : AbstractValidator<SchoolUpdateCommand>
         RuleFor(x => x.LanguageId)
             .NotEmpty().WithMessage("Language is required.");
 
-        RuleFor(x => x.PolicyId)
-            .NotEmpty().WithMessage("Policy is required.");
+        RuleFor(x => x.PolicyTitle)
+            .NotEmpty().WithMessage("Policy title is required.");
+        RuleFor(x => x.PolicyDescription)
+            .NotEmpty().WithMessage("Policy description is required.");
     }
 }
