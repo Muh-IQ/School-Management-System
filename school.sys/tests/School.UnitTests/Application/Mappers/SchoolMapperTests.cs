@@ -88,18 +88,26 @@ namespace Modules.School.Tests.Mappers
                 Email = "new@example.com",
                 Phone = "1111111111",
                 LanguageId = Guid.NewGuid(), 
-                PolicyId = Guid.NewGuid()
+            };
+            var policy = new Domain.Entities.Policy
+            {
+                Id = Guid.NewGuid(),
+                Title = "New Policy",
+                Description = "New Policy Description",
+                IsActive = true,
+                IsDeleted = false,
+                IsDefault = false
             };
 
             // Act
-            _mapper.MapSchoolUpdateDTOToEntity(updateDto, entity);
+            _mapper.MapSchoolUpdateDTOToEntity(updateDto, entity, policy);
 
             // Assert
             entity.Name.Should().Be(updateDto.Name);
             entity.Email.Should().Be(updateDto.Email);
             entity.Phone.Should().Be(updateDto.Phone);
-            entity.LanguageId.Should().Be(updateDto.LanguageId); 
-            entity.PolicyId.Should().Be(updateDto.PolicyId);
+            entity.LanguageId.Should().Be(updateDto.LanguageId);
+            entity.PolicyId.Should().Be(policy.Id);
         }
     }
 }

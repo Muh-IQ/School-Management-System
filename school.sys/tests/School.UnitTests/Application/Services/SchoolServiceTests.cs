@@ -332,7 +332,7 @@ public class SchoolServiceTests
     public async Task UpdateAsync_WhenSchoolNotFound_ReturnsNotFound()
     {
         var id = Guid.NewGuid();
-        var dto = new SchoolUpdateCommand { Name = "New", Email = "e@e.com", Phone = "1", LanguageId = Guid.NewGuid(), PolicyId = Guid.NewGuid() };
+        var dto = new SchoolUpdateCommand { Name = "New", Email = "e@e.com", Phone = "1", LanguageId = Guid.NewGuid(), PolicyTitle="New Policy", PolicyDescription="New Policy Description" };
         _schoolRepositoryMock.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((SchoolEntity?)null);
 
         var result = await _sut.UpdateAsync(id, dto);
