@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="iacZExMPeDlFftCIuYGA" name="Page-1">
-        <mxGraphModel dx="2116" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+        <mxGraphModel dx="1519" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -16,7 +16,7 @@
                 <mxCell id="82" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;TimeZone: string&lt;/span&gt;" style="html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="2" vertex="1">
                     <mxGeometry y="90" width="330" height="30" as="geometry"/>
                 </mxCell>
-                <mxCell id="98" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;ContactInfo: ContactsInfo&amp;nbsp;&lt;/span&gt;" style="html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" vertex="1" parent="2">
+                <mxCell id="98" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;ContactInfo: ContactsInfo&amp;nbsp;&lt;/span&gt;" style="html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="2" vertex="1">
                     <mxGeometry y="120" width="330" height="30" as="geometry"/>
                 </mxCell>
                 <mxCell id="79" value="SchoolSetting: SchoolSettings&amp;nbsp;" style="html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="2" vertex="1">
@@ -49,10 +49,10 @@
                 <mxCell id="78" value="Create(&lt;span style=&quot;color: rgb(0, 0, 0); text-decoration-line: underline;&quot;&gt;Language&lt;/span&gt;): bool" style="html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="29" vertex="1">
                     <mxGeometry y="120" width="140" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="95" value="has(Language):bool" style="html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" vertex="1" parent="29">
+                <mxCell id="95" value="has(Language):bool" style="html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="29" vertex="1">
                     <mxGeometry y="140" width="140" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="96" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Default() : Language&lt;/span&gt;" style="html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" vertex="1" parent="29">
+                <mxCell id="96" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Default() : Language&lt;/span&gt;" style="html=1;strokeColor=default;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="29" vertex="1">
                     <mxGeometry y="160" width="140" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="37" value="School" style="swimlane;fontStyle=4;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
@@ -118,10 +118,10 @@
                 <mxCell id="72" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Create(&lt;span style=&quot;color: rgb(0, 0, 0); text-decoration-line: underline;&quot;&gt;Policy&lt;/span&gt;): bool&lt;/span&gt;" style="html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="67" vertex="1">
                     <mxGeometry y="188" width="140" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="100" value="&lt;span style=&quot;color: rgb(0, 0, 0); text-decoration-line: underline;&quot;&gt;has(Policy):bool&lt;/span&gt;" style="html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" vertex="1" parent="67">
+                <mxCell id="100" value="&lt;span style=&quot;color: rgb(0, 0, 0); text-decoration-line: underline;&quot;&gt;has(Policy):bool&lt;/span&gt;" style="html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="67" vertex="1">
                     <mxGeometry y="208" width="140" height="20" as="geometry"/>
                 </mxCell>
-                <mxCell id="101" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Default() : Policy&lt;/span&gt;" style="html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" vertex="1" parent="67">
+                <mxCell id="101" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Default() : Policy&lt;/span&gt;" style="html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;rotatable=0;points=[[0,0.5],[1,0.5]];resizeWidth=1;whiteSpace=wrap;" parent="67" vertex="1">
                     <mxGeometry y="228" width="140" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="80" value="SchoolSetting" style="swimlane;fontStyle=4;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;whiteSpace=wrap;" parent="1" vertex="1">
