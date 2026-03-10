@@ -26,6 +26,8 @@ namespace Modules.School.Infrastructure.Persistent
         public DbSet<Area> Areas { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.HasDefaultSchema("school");
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(SchoolDbContext).Assembly);
             
         }
