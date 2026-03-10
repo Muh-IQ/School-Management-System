@@ -1,0 +1,6 @@
+@Modules.User.WebAPI_HostAddress = http://localhost:5003
+
+GET {{Modules.User.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
