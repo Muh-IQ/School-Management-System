@@ -284,8 +284,6 @@ namespace Modules.School.Application.Services
 
             return Result<IEnumerable<SchoolListItemDTO>>.Success(data);
         }
-
-
         public async Task<Result<SchoolDetailsDTO>> GetByIdAsync(Guid id)
         {
             var school = await _SchoolRepository.GetByIdAsDtoAsync(id);
