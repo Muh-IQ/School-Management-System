@@ -39,6 +39,15 @@ namespace Modules.School.WebAPI.Controllers.V1
         public async Task<IActionResult> GetAllCityWithIdAsync(Guid countryId)
         {
             var result = await _cityService.GetAllByIdAsync(countryId);
+            if (result.IsSuccess)
+            {
+                Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
+                {
+                    Public = true,
+                    MaxAge = TimeSpan.FromDays(365)
+                };
+                Response.Headers.CacheControl += ", immutable";
+            }
             return result.ToApiResponse();
         }
 
@@ -47,6 +56,15 @@ namespace Modules.School.WebAPI.Controllers.V1
         public async Task<IActionResult> GetAllAreaWithIdAsync(Guid countryId, Guid cityId)
         {
             var result = await _areaService.GetAllByIdAsync(countryId,cityId);
+            if (result.IsSuccess)
+            {
+                Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
+                {
+                    Public = true,
+                    MaxAge = TimeSpan.FromDays(365)
+                };
+                Response.Headers.CacheControl += ", immutable";
+            }
             return result.ToApiResponse();
         }
     }

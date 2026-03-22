@@ -197,10 +197,8 @@ namespace Modules.School.Application.Services
 
             string cacheKey = $"schools_{pageNumber}_{pageSize}";
 
-            var data = await _cacheService.GetOrCreateAsync(
-                cacheKey,
-                () => _SchoolRepository.GetPagedAsDtoAsync(pageNumber, pageSize),
-                TimeSpan.FromMinutes(15)
+            var data = await _cacheService.GetOrCreateAsync(cacheKey,
+                () => _SchoolRepository.GetPagedAsDtoAsync(pageNumber, pageSize),TimeSpan.FromMinutes(15)
             );
 
             return Result<IEnumerable<SchoolListItemDTO>>.Success(data);
