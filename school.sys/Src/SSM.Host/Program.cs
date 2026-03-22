@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Modules.School.Infrastructure;
 using Modules.School.Infrastructure.Persistent;
 using Modules.School.WebAPI.Extensions;
@@ -16,6 +16,16 @@ if (builder.Environment.IsDevelopment())
     builder.SetIfNotExists("EmailSettings__Password", "ybek fhsl tspb fpdq");
 }
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+});
 // Add services to the container. (School module: controllers, validation filter, DI)
 builder.Services.AddControllers().AddSchoolModule(builder.Configuration);
 
@@ -24,14 +34,14 @@ builder.Services.AddControllers().AddSchoolModule(builder.Configuration);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 var app = builder.Build();
 
 
 // regiseter modules global exception handler middleware in the pipeline.
-app.UseSchoolGlobalExceptionHandler();
 // here add other GlobalException for each module
 
-
+app.UseSchoolGlobalExceptionHandler();
 
 
 
@@ -42,7 +52,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
+
 app.UseHttpsRedirection();
+app.UseCors("AllowAll");      
+
 
 app.UseAuthorization();
 

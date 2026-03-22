@@ -109,7 +109,6 @@ namespace Modules.School.Application.Services
                 policy.Description == schoolUpdateCommand.PolicyDescription;
         }
 
-        ///////////////////
         public async Task<Result> DeleteAsync(Guid schoolId)
         {
             var school = await _SchoolRepository.GetByIdAsync(schoolId);
@@ -285,8 +284,6 @@ namespace Modules.School.Application.Services
 
             return Result<IEnumerable<SchoolListItemDTO>>.Success(data);
         }
-
-
         public async Task<Result<SchoolDetailsDTO>> GetByIdAsync(Guid id)
         {
             var school = await _SchoolRepository.GetByIdAsDtoAsync(id);

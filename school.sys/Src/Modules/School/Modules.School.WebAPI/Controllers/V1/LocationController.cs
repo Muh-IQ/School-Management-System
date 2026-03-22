@@ -2,6 +2,7 @@
 using Modules.School.WebAPI.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Modules.School.Application.IServices;
+using Microsoft.Net.Http.Headers;
 
 namespace Modules.School.WebAPI.Controllers.V1
 {
@@ -21,6 +22,16 @@ namespace Modules.School.WebAPI.Controllers.V1
         public async Task<IActionResult> GetAllCountryAsync()
         {
             var result = await _countryService.GetAsync();
+
+            if (result.IsSuccess)
+            {
+                Response.GetTypedHeaders().CacheControl = new CacheControlHeaderValue
+                {
+                    Public = true,
+                    MaxAge = TimeSpan.FromDays(365)
+                };
+                Response.Headers.CacheControl += ", immutable";
+            }
             return result.ToApiResponse();
         }
         [HttpGet("{countryId}/city")]
