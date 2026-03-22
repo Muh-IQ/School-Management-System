@@ -15,9 +15,12 @@ public class SchoolAddDTOValidator : AbstractValidator<SchoolAddCommand>
             .NotEmpty().WithMessage("Email is required.")
             .EmailAddress().WithMessage("A valid email address is required.");
 
+
         RuleFor(x => x.Phone)
-            .NotEmpty().WithMessage("Phone number is required.")
-            .MaximumLength(50).WithMessage("Phone must not exceed 50 characters.");
+    .NotEmpty().WithMessage("Phone number is required.")
+    .Matches(@"^(\+|00)\d{1,3}\d{10}$")
+    .WithMessage("Phone must start with + or 00, followed by a country code (1–3 digits) and 10 digits.");
+
 
         RuleFor(x => x.LanguageId)
             .NotEmpty().WithMessage("Language is required.");
