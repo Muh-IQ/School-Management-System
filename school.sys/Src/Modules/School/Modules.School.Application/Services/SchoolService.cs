@@ -11,7 +11,7 @@ using Modules.School.Domain.IThirdPartyServices;
 
 namespace Modules.School.Application.Services
 {
-    public class SchoolService : ISchoolService
+    public partial class SchoolService : ISchoolService
     {
         private readonly ISchoolRepository _SchoolRepository;
         private readonly IPolicyRepository _PolicyRepository;
@@ -34,79 +34,6 @@ namespace Modules.School.Application.Services
             _CityRepository = cityRepository;
             _AreaRepository = areaRepository;
             _timeProvider = timeProvider;
-        }
-
-        /////////////////////////
-
-        private Result ValidatePolicyInfo(string policyTitle, string policyDescription)
-        {
-            bool hasTitle = !string.IsNullOrWhiteSpace(policyTitle);
-            bool hasDescription = !string.IsNullOrWhiteSpace(policyDescription);
-
-            if (hasTitle != hasDescription)
-            {
-                return Result.Failure(ErrorType.BadRequest, "Both PolicyTitle and PolicyDescription should be provided together or both should be null/empty.");
-            }
-
-            return Result.Success();
-        }
-
-        private async Task<bool> EmailExists(string Email)
-        {
-            var exists = await _SchoolRepository.AnyAsync(s => s.Email == Email);
-            return exists; 
-        }
-        private async Task<bool> PhoneExists(string Phone)
-        {
-            var exists = await _SchoolRepository.AnyAsync(s => s.Phone == Phone);
-            return exists;
-        }
-        private async Task<Result> ValidateContactUniquenessAsync(string Email,string Phone)
-        {
-            if(await EmailExists(Email))
-            {
-                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage(ExistsEmail: Email));
-            }
-            else if(await PhoneExists(Phone))
-            {
-                return Result.Failure(ErrorType.Conflict, UserErrors.ConflictMessage(ExistsPhone: Phone));
-            }
-
-            return Result.Success();
-        }
-        private async Task<bool> LanguageExists(Guid id)
-        {
-            var exists = await _LanguageRepository.AnyAsync(l => l.Id == id);
-            return exists;
-        }
-
-        private async Task<Result> CheckLocation(Guid CountryId,Guid CityId,Guid AreaId)
-        {
-            if(!await _CountryRepository.AnyAsync(c => c.Id == CountryId))
-                return Result.Failure(ErrorType.NotFound, CountryErrors.NotFoundMessage(CountryId));
-            if(!await _CityRepository.AnyAsync(c => c.CountryId == CountryId && c.Id == CityId ))
-                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(CityId));
-            if(!await _AreaRepository.AnyAsync(a => a.CityId == CityId && a.Id == AreaId))
-                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(AreaId));
-            return Result.Success();
-        }
-
-        private  bool IsSchoolDataUnchanged(SchoolUpdateCommand schoolUpdateCommand,Domain.Entities.School school)
-        {
-            return
-                school.Email == schoolUpdateCommand.Email &&
-                school.Phone == schoolUpdateCommand.Phone &&
-                school.Name == schoolUpdateCommand.Name &&
-                school.LanguageId == schoolUpdateCommand.LanguageId &&
-                school.CountryId == schoolUpdateCommand.CountryId &&
-                school.CityId == schoolUpdateCommand.CityId &&
-                school.AreaId == schoolUpdateCommand.AreaId;
-        }
-        private bool IsPolicyDataUnchanged(SchoolUpdateCommand schoolUpdateCommand, Domain.Entities.Policy policy)
-        {
-            return
-                policy.Title == schoolUpdateCommand.PolicyTitle &&
-                policy.Description == schoolUpdateCommand.PolicyDescription;
         }
 
         public async Task<Result> DeleteAsync(Guid schoolId)
@@ -181,12 +108,6 @@ namespace Modules.School.Application.Services
 
         public async Task<Result> UpdateAsync(Guid id, SchoolUpdateCommand updatedSchool)
         {
-            //check policy info
-            if (string.IsNullOrEmpty(updatedSchool.PolicyTitle) || string.IsNullOrEmpty(updatedSchool.PolicyDescription))
-            {
-                return Result.Failure(ErrorType.BadRequest, "Both PolicyTitle and PolicyDescription should be provided together.");
-            }
-
             //check contact
             var validationResult = await ValidateContactUniquenessAsync(updatedSchool.Email, updatedSchool.Phone);
             if (!validationResult.IsSuccess)
