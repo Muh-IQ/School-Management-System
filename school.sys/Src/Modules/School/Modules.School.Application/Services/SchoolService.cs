@@ -109,7 +109,6 @@ namespace Modules.School.Application.Services
                 policy.Description == schoolUpdateCommand.PolicyDescription;
         }
 
-        ///////////////////
         public async Task<Result> DeleteAsync(Guid schoolId)
         {
             var school = await _SchoolRepository.GetByIdAsync(schoolId);
