@@ -20,6 +20,8 @@ namespace Modules.School.Application.Services
 
             result = await factory();
 
+            if (result == null) return result;
+
             var options = new MemoryCacheEntryOptions
             { AbsoluteExpirationRelativeToNow = expiration ?? TimeSpan.FromMinutes(10) };
 
