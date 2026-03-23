@@ -20,8 +20,6 @@ namespace Modules.User.Infrastructure.Presistent.Configuration
                    .WithMany(x => x.UserRoles)
                    .HasForeignKey(x => x.RoleId);
 
-            builder.Property(x => x.SchoolId)
-                   .IsRequired();
 
             builder.Property(x => x.IsDeleted)
                    .HasDefaultValue(false);

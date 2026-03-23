@@ -24,6 +24,7 @@ namespace Modules.School.Infrastructure.Persistent
         public DbSet<Country> Countries { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Area> Areas { get; set; }
+        public DbSet<UserSchool> UserSchool {get;set;}
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("school");
