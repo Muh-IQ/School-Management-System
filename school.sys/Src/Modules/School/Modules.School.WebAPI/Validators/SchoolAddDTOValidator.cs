@@ -21,7 +21,6 @@ public class SchoolAddDTOValidator : AbstractValidator<SchoolAddCommand>
     .Matches(@"^(\+|00)\d{1,3}\d{10}$")
     .WithMessage("Phone must start with + or 00, followed by a country code (1–3 digits) and 10 digits.");
 
-
         RuleFor(x => x.LanguageId)
             .NotEmpty().WithMessage("Language is required.");
 
