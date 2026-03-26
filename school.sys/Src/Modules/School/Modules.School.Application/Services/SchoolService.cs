@@ -209,7 +209,6 @@ namespace Modules.School.Application.Services
             if (school == null)
                 return Result<SchoolDetailsDTO>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(id));
             return Result<SchoolDetailsDTO>.Success(school);
-
         }
     }
 }
