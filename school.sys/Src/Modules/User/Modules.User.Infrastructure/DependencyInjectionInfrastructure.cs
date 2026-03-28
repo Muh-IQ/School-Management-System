@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Modules.User.Domain.IRepositories;
+using Modules.User.Infrastructure.Repositories;
 
 namespace Modules.User.Infrastructure
 {
@@ -23,7 +25,7 @@ namespace Modules.User.Infrastructure
                 var connectionProvider = serviceProvider.GetRequiredService<ConnectionProvider>();
                 options.UseSqlServer(connectionProvider.GetConnectionString());
             });
-
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             return services;
         }
     }
