@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.DependencyInjection;
 
 namespace Modules.User.Application
 {
-    public class DependencyInjectionApplication
+    public static class DependencyInjectionApplication
     {
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+        {
+            return services;
+        }
     }
 }
