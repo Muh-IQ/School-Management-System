@@ -1,0 +1,43 @@
+ School & Tenant Management
+ {
+    Create School (Tenant)
+    Assign School Admin
+ }
+
+ Academic Structure Management 
+ {
+    Manage Subjects
+    Manage Academic Years
+    Manage Timetable
+    Manage Classes & Sections
+ }
+
+ Exams & Grades Management
+{
+    Manage Exams & Grades
+    View Results
+}
+
+User & Role Management
+{
+    Manage Teachers
+    Manage Students
+    Manage Parent
+}
+
+Attendance & Leave Management
+{
+    Attendance
+    Manage Leave
+}
+
+Reporting & Analytics 
+{
+    Generate Reports
+}
+
+Communication & Notifications
+{
+    Alerts & Notifications
+    Parent–Teacher Communication
+}
