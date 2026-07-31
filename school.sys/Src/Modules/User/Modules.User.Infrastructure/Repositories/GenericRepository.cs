@@ -25,6 +25,21 @@ namespace Modules.User.Infrastructure.Repositories
             return result > 0;
         }
 
+        public async Task<T?> GetByIdAsync(Guid id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
 
+        public async Task<bool> UpdateAsync(T entity)
+        {
+            _dbSet.Update(entity);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> DeleteAsync(T entity)
+        {
+            _dbSet.Remove(entity);
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }
