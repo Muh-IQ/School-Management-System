@@ -54,5 +54,21 @@ namespace Modules.User.Infrastructure.Repositories
 
             return await context.SaveChangesAsync() > 0;
         }
+       
+
+
+        /// <summary>
+        /// Stages the specified entity for insertion into the database.
+        /// The entity is added to the current <see cref="DbContext"/> change tracker,
+        /// but no changes are persisted until <c>SaveChangesAsync</c> is called,
+        /// typically through the <c>IUnitOfWork</c>.
+        /// </summary>
+        /// <param name="entity">The entity to be staged for insertion.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+        public async Task StageInsert(Domain.Entities.User entity)
+        {
+            await context.Users.AddAsync(entity);
+        }
+
     }
 }
