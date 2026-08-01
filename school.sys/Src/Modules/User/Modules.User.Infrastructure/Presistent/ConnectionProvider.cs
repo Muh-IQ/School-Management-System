@@ -11,9 +11,10 @@ namespace Modules.User.Infrastructure.Presistent
         private readonly string _connectionString;
 
         // Constructor reads the connection string from an environment variable
+        //USER_MODULE____DB_CONNECTION *RPLACE WITH SCHOOL_MODULE____DB_CONNECTION   
         public ConnectionProvider()
         {
-            _connectionString = Environment.GetEnvironmentVariable("USER_MODULE____DB_CONNECTION")
+            _connectionString = Environment.GetEnvironmentVariable("SCHOOL_MODULE____DB_CONNECTION")
                 ?? throw new InvalidOperationException("Database connection string is not set in environment variables.");
         }
 

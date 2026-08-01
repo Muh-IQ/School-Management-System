@@ -9,6 +9,7 @@ namespace Modules.User.Domain.Entities
     public class Role : BaseEntity
     {
         public string Name { get; set; }
+        public string Code { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
     }
 }
