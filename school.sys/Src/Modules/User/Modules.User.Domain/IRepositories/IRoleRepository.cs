@@ -22,5 +22,9 @@ namespace Modules.User.Domain.IRepositories
         /// The matching <see cref="RoleDTO"/> if found; otherwise <c>null</c>.
         /// </returns>
         Task<RoleDTO?> GetByCodeAsync(string Code);
+        Task<RoleDTO?> GetByNameAsync(string name);
+        Task<Role?> GetWithUsersAsync(Guid roleId);
+        Task<bool> HasUsersAsync(Guid roleId);
+        Task<IEnumerable<RoleDTO>> GetRolesByUserIdAsync(Guid userId);
     }
 }
