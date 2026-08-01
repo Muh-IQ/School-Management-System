@@ -1,4 +1,5 @@
-﻿using Modules.User.Domain.DTOs;
+﻿using Microsoft.EntityFrameworkCore;
+using Modules.User.Domain.DTOs;
 using Modules.User.Domain.IRepositories;
 using Modules.User.Infrastructure.Presistent;
 using System;
