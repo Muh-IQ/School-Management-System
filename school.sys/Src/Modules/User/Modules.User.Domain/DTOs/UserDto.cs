@@ -18,7 +18,7 @@ namespace Modules.User.Domain.DTOs
 
         public DateTime DOB { get; set; }
 
-        public string gender { get; set; }
+        public bool gender { get; set; }
 
         public bool IsActive { get; set; }
     }

@@ -19,7 +19,11 @@ namespace Modules.User.Infrastructure.Repositories
         }
         public async Task<bool> DeleteAsync(Domain.Entities.User entity)
         {
-            context.Users.Remove(entity);
+            entity.IsDeleted = true;
+            entity.UpdateAt = DateTime.UtcNow;
+
+            context.Users.Update(entity);
+
             return await context.SaveChangesAsync() > 0;
         }
         public async Task<Domain.Entities.User?> GetByIdAsync(Guid id)
@@ -39,7 +43,7 @@ namespace Modules.User.Infrastructure.Repositories
                 Name = u.Name,
                 Email = u.Email,
                 Phone=u.Phone,
-                gender = u.Gender ? "Female" : "Male"
+                gender = u.Gender
                 ,DOB=u.DOB,
                 IsActive=u.IsActive
             })
@@ -54,7 +58,11 @@ namespace Modules.User.Infrastructure.Repositories
 
             return await context.SaveChangesAsync() > 0;
         }
-       
+        public async Task<bool> IsExistEmailAsync(string email)
+        {
+            return await context.Users
+                .AnyAsync(x =>x.Email == email);
+        }
 
 
         /// <summary>

@@ -416,3 +416,4 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+/school.sys/Src/Modules/User/Modules.User.Domain/DTOs/UserDto.cs

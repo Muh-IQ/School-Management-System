@@ -10,6 +10,7 @@ namespace Modules.User.Domain.IRepositories
     public interface IUserRepository: IGenericRepository<Entities.User>
     {
         Task<IEnumerable<DTOs.UserDto>> GetUsersAsync(int page, int pageSize);
+        Task<bool> IsExistEmailAsync(string email);
 
 
         /// <summary>
