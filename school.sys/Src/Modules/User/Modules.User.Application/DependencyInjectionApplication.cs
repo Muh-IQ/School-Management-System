@@ -10,7 +10,7 @@ namespace Modules.User.Application
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddMemoryCache();
-            services.AddScoped<ICacheService, MemoryCacheService>();
+            services.AddSingleton<ICacheService, MemoryCacheService>();
 
             return services;
         }
