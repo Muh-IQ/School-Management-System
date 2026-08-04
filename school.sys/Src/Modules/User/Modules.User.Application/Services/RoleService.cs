@@ -1,4 +1,5 @@
-﻿using Modules.User.Application.IServices;
+﻿using Modules.User.Application.Common.Results;
+using Modules.User.Application.IServices;
 using Modules.User.Domain.DTOs;
 using Modules.User.Domain.IRepositories;
 using System;
@@ -11,9 +12,12 @@ namespace Modules.User.Application.Services
 {
     internal class RoleService(IRoleRepository repository) : IRoleService
     {
-        public async Task<RoleDTO?> GetByCodeAsync(string Code)
+        public async Task<Result<RoleDTO?>> GetByCodeAsync(string Code)
         {
-            return await repository.GetByCodeAsync(Code);
+            var res = await repository.GetByCodeAsync(Code);
+            return res is null ? Result<RoleDTO?>.
+                Failure(ErrorType.NotFound, $"Role with code '{Code}' not found.") 
+                : Result<RoleDTO?>.Success(res);
         }
     }
 }
