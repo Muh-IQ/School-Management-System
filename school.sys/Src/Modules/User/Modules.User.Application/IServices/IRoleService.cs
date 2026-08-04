@@ -1,4 +1,5 @@
-﻿using Modules.User.Domain.DTOs;
+﻿using Modules.User.Application.Common.Results;
+using Modules.User.Domain.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,6 @@ namespace Modules.User.Application.IServices
         /// <returns>
         /// The matching <see cref="RoleDTO"/> if found; otherwise <c>null</c>.
         /// </returns>
-        Task<RoleDTO?> GetByCodeAsync(string Code);
+        Task<Result<RoleDTO?>> GetByCodeAsync(string Code);
     }
 }
