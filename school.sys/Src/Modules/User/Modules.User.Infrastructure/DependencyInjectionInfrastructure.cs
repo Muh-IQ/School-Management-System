@@ -26,6 +26,9 @@ namespace Modules.User.Infrastructure
                 options.UseSqlServer(connectionProvider.GetConnectionString());
             });
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             return services;
         }
     }
