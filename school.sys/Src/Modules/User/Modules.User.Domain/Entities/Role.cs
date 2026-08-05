@@ -11,5 +11,6 @@ namespace Modules.User.Domain.Entities
         public string Name { get; set; }
         public string Code { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
+
     }
 }

@@ -1,14 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Modules.User.Domain.IRepositories;
 using Modules.User.Infrastructure.Presistent;
-using Microsoft.EntityFrameworkCore;
+using Modules.User.Infrastructure.Presistent.Seeds;
+using Modules.User.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Modules.User.Domain.IRepositories;
-using Modules.User.Infrastructure.Repositories;
 
 namespace Modules.User.Infrastructure
 {
@@ -29,6 +30,7 @@ namespace Modules.User.Infrastructure
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
+            services.AddScoped<ISeeder, RoleSeeder>();
             return services;
         }
     }
