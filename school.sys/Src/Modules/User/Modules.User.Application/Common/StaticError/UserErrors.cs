@@ -1,37 +1,66 @@
-﻿using Modules.User.Application.Common.Results;
-
-namespace Modules.User.Application.Common.StaticError
+﻿namespace Modules.User.Application.Common.StaticError
 {
     public static class UserErrors
     {
-        //public static readonly Error NotFound =
-        //       new("User.NotFound", "User was not found.");
+        public static string UnauthorizedMessage(Guid id)
+            => $"User with ID '{id}' is not authorized to perform this operation.";
 
-        //public static readonly Error DuplicateEmail =
-        //    new("User.DuplicateEmail", "The provided email is already in use.");
+        public static string UnauthorizedMessage(string username)
+            => $"User '{username}' is not authorized to perform this operation.";
 
-        //public static readonly Error InvalidEmail =
-        //    new("User.InvalidEmail", "The email format is invalid.");
+        public static string NotFoundMessage()
+            => "User was not found.";
 
-        //public static readonly Error EmailRequired =
-        //    new("User.EmailRequired", "Email cannot be empty.");
+        public static string NotFoundMessage(Guid id)
+            => $"User with ID '{id}' was not found.";
 
-        //public static readonly Error InvalidPassword =
-        //    new("User.InvalidPassword", "Password does not meet security requirements.");
+        public static string AlreadyExistsMessage()
+            => "User already exists.";
 
-        //public static readonly Error Unauthorized =
-        //    new("User.Unauthorized", "User is not authorized to perform this action.");
+        public static string AlreadyExistsMessage(Guid id)
+            => $"User with ID '{id}' already exists.";
 
-        //public static readonly Error AlreadyExists =
-        //    new("User.AlreadyExists", "User already exists.");
+        public static string EmailAlreadyExistsMessage(string email)
+            => $"A user with email '{email}' already exists.";
 
-        //public static readonly Error InvalidCredentials =
-        //    new("User.InvalidCredentials", "Email or password is incorrect.");
+        public static string PhoneAlreadyExistsMessage(string phone)
+            => $"A user with phone number '{phone}' already exists.";
 
-        //public static readonly Error AccountLocked =
-        //    new("User.AccountLocked", "The user account is locked.");
+        public static string InvalidEmailMessage(string email)
+            => $"'{email}' is not a valid email address.";
 
-        //public static readonly Error AccountInactive =
-        //    new("User.AccountInactive", "The user account is inactive.");
+        public static string InvalidPhoneMessage(string phone)
+            => $"'{phone}' is not a valid phone number.";
+
+        public static string InvalidNameMessage()
+            => "User name is invalid.";
+
+        public static string InvalidDateOfBirthMessage()
+            => "Date of birth is invalid.";
+
+
+        public static string CreateFailedMessage()
+            => "Failed to create the user.";
+
+        public static string UpdateFailedMessage()
+            => "Failed to update the user.";
+
+        public static string DeleteFailedMessage()
+            => "Failed to delete the user.";
+
+        public static string ActivateFailedMessage()
+            => "Failed to activate the user.";
+
+        public static string DeactivateFailedMessage()
+            => "Failed to deactivate the user.";
+
+        public static string UnexpectedMessage()
+            => "An unexpected error occurred while processing the user.";
+
+        public static string ServiceUnavailableMessage()
+            => "The user service is currently unavailable.";
+
+        public static string TimeoutMessage()
+            => "The request timed out while processing the user.";
     }
 }
