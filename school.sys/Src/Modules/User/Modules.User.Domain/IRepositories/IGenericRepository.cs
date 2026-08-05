@@ -14,5 +14,7 @@ namespace Modules.User.Domain.IRepositories
 
         Task<bool> DeleteAsync(T entity);
         Task<T?> GetByIdAsync(Guid id);
+        Task<bool> ExistsAsync(Expression<Func<T, bool>> predicate);
+
     }
 }

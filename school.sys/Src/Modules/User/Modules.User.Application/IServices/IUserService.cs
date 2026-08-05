@@ -11,5 +11,7 @@ namespace Modules.User.Application.IServices
     public interface IUserService
     {
         Task<Result> AddAsync(AddUserDTO dTO);
+        Task<Result> IsPhoneExistsAsync(string phone);
+        Task<Result> IsEmailExistsAsync(string email);
     }
 }
