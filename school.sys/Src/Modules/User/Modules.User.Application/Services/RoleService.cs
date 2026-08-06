@@ -19,6 +19,7 @@ namespace Modules.User.Application.Services
                 async () => await repository.GetByCodeAsync(Code),
                 TimeSpan.FromDays(365));
 
+
             return res is null ? Result<RoleDTO?>.
                 Failure(ErrorType.NotFound, $"Role with code '{Code}' not found.") 
                 : Result<RoleDTO?>.Success(res);

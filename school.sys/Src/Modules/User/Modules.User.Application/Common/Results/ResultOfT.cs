@@ -23,7 +23,7 @@ namespace Modules.User.Application.Common.Results
 
         public static Result<T> Success(T value)
             => new Result<T>(true, value);
-
+            
         public static new Result<T> Failure(ErrorType errorType, string errorMessage)
             => new Result<T>(false, default, errorType, errorMessage);
 
