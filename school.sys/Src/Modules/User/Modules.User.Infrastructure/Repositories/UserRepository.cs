@@ -5,8 +5,10 @@ using Modules.User.Infrastructure.Presistent;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Modules.User.Infrastructure.Repositories
 {
@@ -54,9 +56,8 @@ namespace Modules.User.Infrastructure.Repositories
 
             return await context.SaveChangesAsync() > 0;
         }
-       
-
-
+      
+      
         /// <summary>
         /// Stages the specified entity for insertion into the database.
         /// The entity is added to the current <see cref="DbContext"/> change tracker,
@@ -70,5 +71,9 @@ namespace Modules.User.Infrastructure.Repositories
             await context.Users.AddAsync(entity);
         }
 
+        public Task<bool> ExistsAsync(Expression<Func<Domain.Entities.User, bool>> predicate)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
