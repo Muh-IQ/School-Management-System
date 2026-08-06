@@ -1,10 +1,11 @@
-﻿
+
 //namespace Modules.User.WebAPI.Mapping
 //{
 //    public static class ErrorMapping
 //    {
 //        private static readonly Dictionary<string, int> ErrorMap = new()
 //        {
+// using Modules.User.Application.Common.Results;
 
 //            // ---------- User ----------
 //            ["User.NotFound"] = StatusCodes.Status404NotFound,
@@ -41,3 +42,13 @@
 //        }
 //    }
 //}
+//         };
+
+//         //public static int ToStatusCode(Error error)
+//         //{
+//         //    return ErrorMap.TryGetValue(error.Code, out var status)
+//         //        ? status
+//         //        : StatusCodes.Status400BadRequest;
+//         //}
+//     }
+// }

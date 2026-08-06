@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Modules.User.Domain.Utilities
 {
+
     public static class RoleCodes
     {
         public const string SuperAdmin = "SUPER_ADMIN";

@@ -1,5 +1,6 @@
 ﻿//using Microsoft.AspNetCore.Mvc;
 //using Modules.User.Domain.Common.Results;
+//using Modules.User.Application.Common.Results;
 //using Modules.User.WebAPI.Mapping;
 
 //namespace Modules.User.WebAPI.Extensions
@@ -12,6 +13,7 @@
 //                return new OkResult();
 
 //            var statusCode = ErrorMapping.ToStatusCode(result.Error);
+//            var statusCode = ErrorMapping.ToStatusCode(result.Errors);
 
 //            return new ObjectResult(new ProblemDetails
 //            {
