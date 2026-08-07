@@ -10,6 +10,7 @@ namespace Modules.User.Application.Helpers
     public interface IUnitOfWork
     {
         IUserRepository Users { get; }
+        IUserRoleRepository UserRoles { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }

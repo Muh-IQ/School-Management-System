@@ -4,22 +4,22 @@ public class Result
     public bool IsSuccess { get; private set; }
     public bool IsFailure => !IsSuccess;
     private Error _MainError;
-    //public Error MainError 
-    //{ 
-    //    get
-    //    {
-    //        if(IsSuccess)
-    //        {
-    //            throw new InvalidOperationException("Cannot access MainError when the result is successful.");
-    //        }
-    //        return _MainError;  
-    //    }
-            
-    //    private set
-    //    {
-    //        _MainError = value;
-    //    }
-    //}
+    public Error MainError
+    {
+        get
+        {
+            if (IsSuccess)
+            {
+                throw new InvalidOperationException("Cannot access MainError when the result is successful.");
+            }
+            return _MainError;
+        }
+
+        private set
+        {
+            _MainError = value;
+        }
+    }
 
     public List<Error> Errors { get; private set; }
 
@@ -27,7 +27,7 @@ public class Result
     {
         IsSuccess = isSuccess;
         Errors = [];
-        //MainError = Error.Create(errorType, errorMessage);
+        MainError = Error.Create(errorType, errorMessage);
     }
     protected Result(bool isSuccess)
     {

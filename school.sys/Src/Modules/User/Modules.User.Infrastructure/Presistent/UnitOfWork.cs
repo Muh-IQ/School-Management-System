@@ -14,13 +14,16 @@ namespace Modules.User.Infrastructure.Presistent
 
         public IUserRepository Users { get; }
 
+        public IUserRoleRepository UserRoles { get; }
 
         public UnitOfWork(
             UserDbContext context,
-            IUserRepository users)
+            IUserRepository users,
+            IUserRoleRepository userRoles)
         {
             _context = context;
             Users = users;
+            UserRoles = userRoles;
         }
 
         public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
@@ -28,6 +31,6 @@ namespace Modules.User.Infrastructure.Presistent
             return _context.SaveChangesAsync(cancellationToken);
         }
 
-      
+        
     }
 }
