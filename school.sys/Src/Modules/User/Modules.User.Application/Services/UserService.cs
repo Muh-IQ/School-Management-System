@@ -6,11 +6,13 @@ using Modules.User.Application.IServices;
 using Modules.User.Domain.Entities;
 using Modules.User.Domain.IRepositories;
 using Modules.User.Domain.Utilities;
+using SharedKernel;
+using SharedKernel.Events;
 using System.Numerics;
 
 namespace Modules.User.Application.Services
 {
-    public class UserService(IUserRepository userRepository, IRoleService roleService, IUnitOfWork UoF,
+    public class UserService(IEventBus @event, IRoleService roleService, IUnitOfWork UoF,
         IGenericRepository<Domain.Entities.User> genericRepository, ICacheService cacheService) : IUserService
     {
         public async Task<Result> AddAsync(AddUserDTO dto)
@@ -28,8 +30,10 @@ namespace Modules.User.Application.Services
             await UoF.UserRoles.StageInsert(UserHelper.CreateUserRole(userId, role.Value.Id));
 
 
-
             //I must tell the school module to assign the user to the school.
+            await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID));
+            
+            
             // I must send an email to the user with his credentials and a link to set his password.
             return await UoF.SaveChangesAsync() > 0
                 ? Result.Success()

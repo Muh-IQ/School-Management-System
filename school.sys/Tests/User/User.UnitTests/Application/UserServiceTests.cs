@@ -8,6 +8,7 @@ using Modules.User.Domain.Entities;
 using Modules.User.Domain.IRepositories;
 using Modules.User.Domain.Utilities;
 using Moq;
+using SharedKernel;
 using Xunit;
 
 using user = Modules.User.Domain.Entities;
@@ -22,7 +23,7 @@ public class UserServiceTests
     private readonly Mock<IUnitOfWork> _unitOfWork;
     private readonly Mock<IGenericRepository<user.User>> _genericRepository;
     private readonly Mock<ICacheService> _cacheService;
-
+    private readonly Mock<IEventBus> _eventBus;
     private readonly UserService _service;
 
     public UserServiceTests()
@@ -34,6 +35,7 @@ public class UserServiceTests
         _unitOfWork = new Mock<IUnitOfWork>();
         _genericRepository = new Mock<IGenericRepository<user.User>>();
         _cacheService = new Mock<ICacheService>();
+        _eventBus = new Mock<IEventBus>();
 
         // Tell UnitOfWork what Users means
         _unitOfWork
@@ -47,13 +49,12 @@ public class UserServiceTests
 
         // Create the service
         _service = new UserService(
-            _userRepository.Object,
+            _eventBus.Object,              // ✅ IEventBus
             _roleService.Object,
             _unitOfWork.Object,
             _genericRepository.Object,
             _cacheService.Object);
     }
-
     #region ValidateEmailUniquenessAsync
 
     [Fact]
