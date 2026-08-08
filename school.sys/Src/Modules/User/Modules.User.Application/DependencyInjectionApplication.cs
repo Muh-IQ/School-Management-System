@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Modules.User.Application.IServices;
 using Modules.User.Application.Services;
+using Modules.User.Application.Validators.Users;
+using FluentValidation;
 
 namespace Modules.User.Application
 {
@@ -11,8 +13,8 @@ namespace Modules.User.Application
         {
             services.AddMemoryCache();
             services.AddSingleton<ICacheService, MemoryCacheService>();
+            services.AddValidatorsFromAssemblyContaining<CreateUserDtoValidator>();
             services.AddScoped<IRoleService, RoleService>();
-
             return services;
         }
     }

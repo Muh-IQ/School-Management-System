@@ -16,6 +16,16 @@ namespace Modules.User.Application.Services
             throw new NotImplementedException();
         }
 
+        public Task<Result> IsEmailExistsAsync(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Result> IsPhoneExistsAsync(string phone)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Result> ValidateEmailUniquenessAsync(string email)
         {
             bool res = await cacheService.GetOrCreateAsync($"SEARCH-Email-{email}", async () =>

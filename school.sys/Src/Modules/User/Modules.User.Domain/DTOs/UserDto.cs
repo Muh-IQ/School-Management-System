@@ -22,4 +22,15 @@ namespace Modules.User.Domain.DTOs
 
         public bool IsActive { get; set; }
     }
+
+    public class CreateUserDto
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public DateTime DOB { get; set; }
+        public int Gender { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+    }
 }
