@@ -1,19 +1,39 @@
 ﻿
 using Modules.User.Application.Common.DTOs;
 using Modules.User.Application.Common.Results;
+using Modules.User.Application.Helpers;
 using Modules.User.Application.IServices;
+using Modules.User.Domain.Entities;
 using Modules.User.Domain.IRepositories;
+using Modules.User.Domain.Utilities;
 using System.Numerics;
 
 namespace Modules.User.Application.Services
 {
-    public class UserService(IUserRepository userRepository, IRoleService roleService,
+    public class UserService(IUserRepository userRepository, IRoleService roleService, IUnitOfWork UoF,
         IGenericRepository<Domain.Entities.User> genericRepository, ICacheService cacheService) : IUserService
     {
-        public Task<Result> AddAsync(AddUserDTO dTO)
+        public async Task<Result> AddAsync(AddUserDTO dto)
         {
+            var validation = await ValidateUserAsync(dto);
 
-            throw new NotImplementedException();
+            if (validation.IsFailure)
+                return validation;
+
+            var role = await roleService.GetByCodeAsync(RoleCodes.SchoolAdmin);
+
+            var userId = Guid.NewGuid();
+
+            await UoF.Users.StageInsert(UserHelper.CreateUser(dto, userId));
+            await UoF.UserRoles.StageInsert(UserHelper.CreateUserRole(userId, role.Value.Id));
+
+
+
+            //I must tell the school module to assign the user to the school.
+            // I must send an email to the user with his credentials and a link to set his password.
+            return await UoF.SaveChangesAsync() > 0
+                ? Result.Success()
+                : Result.Failure(ErrorType.InternalServerError, "Failed to add user");
         }
 
         public async Task<Result> ValidateEmailUniquenessAsync(string email)
@@ -43,6 +63,28 @@ namespace Modules.User.Application.Services
             {
                 return Result.Failure(ErrorType.Conflict, "Phone already exists");
             }
+            return Result.Success();
+        }
+
+
+        private async Task<Result> ValidateUserAsync(AddUserDTO dto)
+        {
+            var emailValidation = await ValidateEmailUniquenessAsync(dto.Email);
+            var phoneValidation = await ValidatePhoneUniquenessAsync(dto.Phone);
+
+            if (emailValidation.IsFailure && phoneValidation.IsFailure)
+            {
+                return emailValidation.WithError(
+                    phoneValidation.MainError.ErrorType,
+                    phoneValidation.MainError.Message);
+            }
+
+            if (emailValidation.IsFailure)
+                return emailValidation;
+
+            if (phoneValidation.IsFailure)
+                return phoneValidation;
+
             return Result.Success();
         }
     }
