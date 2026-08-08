@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace SharedKernel.Events
 {
-    public record UserRegisteredIntegrationEvent(Guid UserId) : IntegrationEvent(Guid.NewGuid());
+    public record UserRegisteredIntegrationEvent(Guid UserId, Guid SchoolId) : IntegrationEvent(Guid.NewGuid());
 }
