@@ -14,7 +14,7 @@ namespace Modules.User.Application.Validators.Users
         public CreateUserDtoValidator()
         {
             // Name
-            RuleFor(x => x.Name)
+                RuleFor(x => x.Name)
             .NotEmpty()
             .WithMessage("Name is required.")
             .MaximumLength(100)

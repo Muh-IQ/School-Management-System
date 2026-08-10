@@ -1,16 +1,17 @@
-using FluentValidation.AspNetCore;
 using Modules.User.Application;
 using Modules.User.Infrastructure;
+using Modules.User.WebAPI.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddInfrastructureServices(builder.Configuration);
-builder.Services.AddApplicationServices();
+//builder.Services.AddInfrastructureServices(builder.Configuration);
+//builder.Services.AddApplicationServices();
+builder.Services.AddUserModule(builder.Configuration);
 
-builder.Services.AddFluentValidationAutoValidation();// testing  the validation api of user  
 
-builder.Services.AddControllers();
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
