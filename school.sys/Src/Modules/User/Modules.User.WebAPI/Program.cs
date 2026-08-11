@@ -4,7 +4,7 @@ using Modules.User.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddInfrastructureServices(builder.Configuration);
+builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
 
 builder.Services.AddControllers();

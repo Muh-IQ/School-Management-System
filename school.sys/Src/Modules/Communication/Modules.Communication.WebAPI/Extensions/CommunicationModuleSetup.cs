@@ -1,11 +1,9 @@
-﻿using Modules.User.Infrastructure;
-
-namespace Modules.User.WebAPI.Extensions
+﻿using Modules.Communication.Infrastructure;
+namespace Modules.Communication.WebAPI.Extensions
 {
-    public static class UserModuleSetup
+    public static class CommunicationModuleSetup
     {
-
-        public static IServiceCollection AddUserModule(this IServiceCollection services)
+        public static IServiceCollection AddCommunicationModule(this IServiceCollection services)
         {
             services.AddInfrastructureServices();
             //services.AddApplicationServices();
