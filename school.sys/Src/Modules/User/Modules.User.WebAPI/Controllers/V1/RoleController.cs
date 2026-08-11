@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modules.User.Application.IServices;
+using Modules.User.WebAPI.Extensions;
 
 namespace Modules.User.WebAPI.Controllers.V1
 {
@@ -21,12 +22,7 @@ namespace Modules.User.WebAPI.Controllers.V1
         {
             var result = await _roleService.GetByCodeAsync(code);
 
-            if (!result.IsSuccess)
-            {
-                return NotFound(result);
-            }
-
-            return Ok(result);
+            return result.ToHttpResult();
         }
 
 
