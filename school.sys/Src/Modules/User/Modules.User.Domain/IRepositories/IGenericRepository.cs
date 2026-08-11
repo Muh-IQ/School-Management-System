@@ -10,6 +10,7 @@ namespace Modules.User.Domain.IRepositories
     public interface IGenericRepository<T> where T : class
     {
         Task<bool> AddAsync(T entity);
+        Task<bool> AddRangeAsync(IEnumerable<T> entities);
         Task<bool> UpdateAsync(T entity);
 
         Task<bool> DeleteAsync(T entity);
