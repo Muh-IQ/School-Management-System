@@ -19,10 +19,8 @@ namespace Modules.User.Infrastructure.Presistent
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // ✅ Use module-specific schema
             modelBuilder.HasDefaultSchema("user");
 
-            // ✅ Apply all IEntityTypeConfiguration<> in this assembly
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserDbContext).Assembly);
             ApplySeeders(modelBuilder);
         }

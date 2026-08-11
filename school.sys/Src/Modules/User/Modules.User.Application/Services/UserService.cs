@@ -41,7 +41,7 @@ namespace Modules.User.Application.Services
             await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID));
 
             // I must send an email to the user with his credentials and a link to set his password.
-            return Result.Success();      
+            return Result.Success();
         }
         public async Task<Result> ValidateEmailUniquenessAsync(string email)
         {
