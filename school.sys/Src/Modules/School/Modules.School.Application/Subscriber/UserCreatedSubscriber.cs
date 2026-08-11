@@ -1,14 +1,15 @@
 ﻿using MediatR;
+using Modules.School.Application.IServices;
 using SharedKernel.Events;
 
 namespace Modules.School.Application.Subscriber;
 
-internal sealed class UserCreatedSubscriber
+internal sealed class UserCreatedSubscriber(IUserSchoolService userSchoolService)
     : INotificationHandler<SharedKernel.Events.UserRegisteredIntegrationEvent>
 {
 
-    public Task Handle(UserRegisteredIntegrationEvent notification, CancellationToken cancellationToken)
+    public async Task Handle(UserRegisteredIntegrationEvent notification, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        await userSchoolService.AddAsync(notification.UserId, notification.SchoolId);
     }
 }
