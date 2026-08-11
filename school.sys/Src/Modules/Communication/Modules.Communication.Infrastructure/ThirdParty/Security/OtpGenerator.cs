@@ -7,14 +7,14 @@ namespace Modules.Communication.Infrastructure.ThirdParty.Security
     {
         public string Generate(int length = 6)
         {
-            using var rng = RandomNumberGenerator.Create();
+            if (length <= 0)
+                throw new ArgumentOutOfRangeException(nameof(length));
+
             var otp = new char[length];
-            var random = new byte[1];
 
             for (int i = 0; i < length; i++)
             {
-                rng.GetBytes(random);
-                otp[i] = (char)('0' + (random[0] % 10));
+                otp[i] = (char)('0' + RandomNumberGenerator.GetInt32(0, 10));
             }
 
             return new string(otp);

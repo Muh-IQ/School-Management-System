@@ -6,13 +6,10 @@ using SSM.Host.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//you need to add EmailSetting__Password to your Enironment variables in the section User
 if (builder.Environment.IsDevelopment())
 {
 
-    builder.SetIfNotExists("EmailSettings__SmtpServer", "smtp.gmail.com");
-    builder.SetIfNotExists("EmailSettings__SmtpPort", "587");
-    builder.SetIfNotExists("EmailSettings__SenderEmail", "mohamedajaj0007@gmail.com");
-    builder.SetIfNotExists("EmailSettings__SenderName", "School System");
     builder.SetIfNotExists("EmailSettings__Password", "ybek fhsl tspb fpdq");
 }
 
