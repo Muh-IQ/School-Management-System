@@ -17,16 +17,22 @@ namespace Modules.User.Application.Services
     {
         public async Task<Result> AddAsync(AddUserDTO dto)
         {
-            var validation = await ValidateUserAsync(dto);
+            var validationTask = ValidateUserAsync(dto);
+            var roleTask = roleService.GetByCodeAsync(RoleCodes.SchoolAdmin);
+
+            var validation = await validationTask;
 
             if (validation.IsFailure)
                 return validation;
 
-            var role = await roleService.GetByCodeAsync(RoleCodes.SchoolAdmin);
+            var role = await roleTask;
 
             var userId = Guid.NewGuid();
+            string Password = PasswordHelper.GenerateRandomPassword();
+            string HashedPassword = PasswordHelper.HashPassword(Password);
 
-            await UoF.Users.StageInsert(UserHelper.CreateUser(dto, userId));
+
+            await UoF.Users.StageInsert(UserHelper.CreateUser(dto, userId, HashedPassword));
             await UoF.UserRoles.StageInsert(UserHelper.CreateUserRole(userId, role.Value.Id));
 
 

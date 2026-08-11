@@ -10,7 +10,7 @@ namespace Modules.User.Application.Helpers
 {
     internal class UserHelper
     {
-        public static Domain.Entities.User CreateUser(AddUserDTO dto, Guid userId)
+        public static Domain.Entities.User CreateUser(AddUserDTO dto, Guid userId, string HashedPassword)
         {
             return new Domain.Entities.User
             {
@@ -19,7 +19,8 @@ namespace Modules.User.Application.Helpers
                 Email = dto.Email,
                 Phone = dto.Phone,
                 DOB = dto.DateOfBirth,
-                Gender = dto.gender
+                Gender = dto.gender,
+                Password = HashedPassword,
             };
         }
         public static UserRole CreateUserRole(Guid userId, Guid roleId)
