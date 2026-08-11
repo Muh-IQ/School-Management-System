@@ -4,7 +4,6 @@ namespace Modules.Communication.Domain.ThirdParty.Email
 {
     public interface IEmailService
     {
-        Task SendAsync(EmailMessage message);
-
+        Task SendPasswordAsync(string email, string password);
     }
 }

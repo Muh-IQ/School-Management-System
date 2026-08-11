@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modules.Communication.Domain.ThirdParty.Email;
-using Modules.Communication.Domain.ThirdParty.Security;
 
 namespace Modules.Communication.WebAPI.Controllers
 {
@@ -10,26 +9,19 @@ namespace Modules.Communication.WebAPI.Controllers
     public class TestEmailController : ControllerBase
     {
         private readonly IEmailService _emailService;
-        private readonly IOtpGenerator _tpGenerator;
 
-        public TestEmailController(IEmailService emailService, IOtpGenerator otpGenerator)
+        public TestEmailController(IEmailService emailService)
         {
             _emailService = emailService;
-            _tpGenerator = otpGenerator;
         }
 
         [HttpPost]
         public async Task<IActionResult> Send()
         {
-            var message = new EmailMessage
-            {
-                To = "addh3584@gmail.com",
-                Subject = "This is your code",
-                Body = _tpGenerator.Generate(),
-                IsHtml = false
-            };
+            string email = "addh3584@gmail.com";
+            string password = "GG1122GG";
 
-            await _emailService.SendAsync(message);
+            await _emailService.SendPasswordAsync(email, password);
 
             return Ok();
         }

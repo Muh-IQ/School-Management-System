@@ -15,7 +15,7 @@ namespace Modules.User.Infrastructure
 {
     public static class DependencyInjectionInfrastructure
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services)
         {
             // Register your singleton ConnectionProvider
             services.AddSingleton<ConnectionProvider>();

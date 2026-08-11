@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Modules.Communication.Domain.ThirdParty.Email;
+using Modules.Communication.Infrastructure.Common;
 using System.Net;
 using System.Net.Mail;
 
@@ -14,26 +15,33 @@ namespace Modules.Communication.Infrastructure.ThirdParty.Email
             _settings = settings.Value;
         }
 
-        public async Task SendAsync(EmailMessage message)
+        private async Task SendAsync(string email,string subject,string body)
         {
 
             using var mail = new MailMessage
             {
                 From = new MailAddress(_settings.SenderEmail, _settings.SenderName),
-                Subject = message.Subject,
-                Body = message.Body,
-                IsBodyHtml = message.IsHtml
+                Subject = subject,
+                Body = body,
+                IsBodyHtml = true
             };
 
-            mail.To.Add(message.To);
+            mail.To.Add(email);
 
             using var client = new SmtpClient(_settings.SmtpServer, _settings.SmtpPort)
             {
-                Credentials = new NetworkCredential(_settings.SenderEmail, _settings.Password),
+                Credentials = new NetworkCredential(_settings.SenderEmail, _settings.Key),
                 EnableSsl = true
             };
 
             await client.SendMailAsync(mail);
         }
+
+        public async Task SendPasswordAsync(string email, string password)
+        {
+            string subject = "Your password";
+            await SendAsync(email, subject, HTMLBodys.SendPasswordBody(password));
+        }
+       
     }
 }

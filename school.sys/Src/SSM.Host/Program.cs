@@ -1,16 +1,18 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Modules.Communication.WebAPI.Extensions;
 using Modules.School.Infrastructure;
 using Modules.School.Infrastructure.Persistent;
 using Modules.School.WebAPI.Extensions;
+using Modules.User.WebAPI.Extensions;
 using SSM.Host.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//you need to add EmailSetting__Password to your Enironment variables in the section User
+//you need to add EmailSetting__Key to your Enironment variables in the section User
 if (builder.Environment.IsDevelopment())
 {
 
-    builder.SetIfNotExists("EmailSettings__Password", "ybek fhsl tspb fpdq");
+    builder.SetIfNotExists("EmailSettings__Key", "ybek fhsl tspb fpdq");
 }
 
 builder.Services.AddCors(options =>
@@ -24,8 +26,10 @@ builder.Services.AddCors(options =>
     });
 });
 // Add services to the container. (School module: controllers, validation filter, DI)
-builder.Services.AddControllers().AddSchoolModule(builder.Configuration);
-
+builder.Services.AddControllers();
+builder.Services.AddSchoolModule(builder.Configuration);
+builder.Services.AddUserModule();
+builder.Services.AddCommunicationModule();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -6,6 +6,6 @@
         public int SmtpPort { get; set; }
         public string SenderEmail { get; set; } = default!;
         public string SenderName { get; set; } = default!;
-        public string Password { get; set; } = default!;
+        public string Key { get; set; } = default!;
     }
 }

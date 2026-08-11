@@ -10,12 +10,12 @@ namespace Modules.Communication.Infrastructure.Extensions
         public static EmailSettings CreateEmailSettings()
         {
 
-         var password = Environment.GetEnvironmentVariable("EmailSettings__Password");
+         var Key = Environment.GetEnvironmentVariable("EmailSettings__Key");
 
-        if (string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(Key))
             {
                 throw new InvalidOperationException(
-                    "Email password is not configured in environment variables.");
+                    "Email key is not configured in environment variables.");
             }
 
             return new EmailSettings
@@ -24,7 +24,7 @@ namespace Modules.Communication.Infrastructure.Extensions
                 SmtpPort = 587,
                 SenderEmail = "mohamedajaj0007@gmail.com",
                 SenderName = "School System",
-                Password = password
+                Key = Key
             };
         
         }
