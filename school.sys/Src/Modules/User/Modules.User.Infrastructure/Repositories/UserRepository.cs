@@ -14,24 +14,8 @@ namespace Modules.User.Infrastructure.Repositories
 {
     public class UserRepository(UserDbContext context) : IUserRepository
     {
-        public async Task<bool> AddAsync(Domain.Entities.User entity)
-        {
-            await context.Users.AddAsync(entity);
-            return await context.SaveChangesAsync() > 0;
-        }
-        public async Task<bool> DeleteAsync(Domain.Entities.User entity)
-        {
-            context.Users.Remove(entity);
-            return await context.SaveChangesAsync() > 0;
-        }
-        public async Task<Domain.Entities.User?> GetByIdAsync(Guid id)
-        {
-            return await context.Users.FindAsync(id);
-        }
-
         public async Task<IEnumerable<UserDto>> GetUsersAsync(int page, int pageSize)
         {
-
             var users = await context.Users
              .Skip((page - 1) * pageSize)
              .Take(pageSize)
@@ -49,14 +33,6 @@ namespace Modules.User.Infrastructure.Repositories
 
             return users;
         }
-
-        public async Task<bool> UpdateAsync(Domain.Entities.User entity)
-        {
-            context.Users.Update(entity);
-
-            return await context.SaveChangesAsync() > 0;
-        }
-      
       
         /// <summary>
         /// Stages the specified entity for insertion into the database.
@@ -71,9 +47,5 @@ namespace Modules.User.Infrastructure.Repositories
             await context.Users.AddAsync(entity);
         }
 
-        public Task<bool> ExistsAsync(Expression<Func<Domain.Entities.User, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

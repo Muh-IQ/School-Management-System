@@ -7,10 +7,9 @@ using System.Threading.Tasks;
 
 namespace Modules.User.Domain.IRepositories
 {
-    public interface IUserRepository: IGenericRepository<Entities.User>
+    public interface IUserRepository
     {
         Task<IEnumerable<DTOs.UserDto>> GetUsersAsync(int page, int pageSize);
-
 
         /// <summary>
         /// Stages the specified entity for insertion into the database.
@@ -21,5 +20,6 @@ namespace Modules.User.Domain.IRepositories
         /// <param name="entity">The entity to be staged for insertion.</param>
         /// <returns>A task that represents the asynchronous operation.</returns>
         Task StageInsert(Domain.Entities.User entity);
+
     }
 }
