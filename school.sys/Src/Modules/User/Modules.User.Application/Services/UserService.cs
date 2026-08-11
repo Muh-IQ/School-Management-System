@@ -12,7 +12,7 @@ using System.Numerics;
 
 namespace Modules.User.Application.Services
 {
-    public class UserService(IEventBus @event, IRoleService roleService, MicroBatch<Domain.Entities.User> UserBatcher, MicroBatch<Domain.Entities.UserRole> UserRoleBatcher, IUnitOfWork UoF,
+    public class UserService(IEventBus @event, IRoleService roleService, MicroBatch<Domain.Entities.User> UserBatcher, MicroBatch<Domain.Entities.UserRole> UserRoleBatcher,
         IGenericRepository<Domain.Entities.User> genericRepository, ICacheService cacheService) : IUserService
     {
         public async Task<Result> AddAsync(AddUserDTO dto)
@@ -24,6 +24,7 @@ namespace Modules.User.Application.Services
 
             if (validation.IsFailure)
                 return validation;
+
 
             var role = await roleTask;
 
@@ -39,12 +40,9 @@ namespace Modules.User.Application.Services
             //I must tell the school module to assign the user to the school.
             await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID));
 
-
             // I must send an email to the user with his credentials and a link to set his password.
-            return Result.Success();
-               
+            return Result.Success();      
         }
-
         public async Task<Result> ValidateEmailUniquenessAsync(string email)
         {
             bool res = await cacheService.GetOrCreateAsync($"SEARCH-Email-{email}", async () =>

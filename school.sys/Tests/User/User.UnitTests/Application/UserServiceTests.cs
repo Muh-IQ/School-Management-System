@@ -20,15 +20,16 @@ public class UserServiceTests
     private readonly Mock<IUserRepository> _userRepository;
     private readonly Mock<IUserRoleRepository> _userRoleRepository;
     private readonly Mock<IRoleService> _roleService;
-    private readonly Mock<IUnitOfWork> _unitOfWork;
     private readonly Mock<IGenericRepository<user.User>> _genericRepository;
     private readonly Mock<ICacheService> _cacheService;
+    private readonly Mock<IUnitOfWork> _unitOfWork;
     private readonly Mock<IEventBus> _eventBus;
     private readonly UserService _service;
+    private readonly MicroBatch<Modules.User.Domain.Entities.User> _userBatcher;
+    private readonly MicroBatch<Modules.User.Domain.Entities.UserRole> _userRoleBatcher;
 
     public UserServiceTests()
     {
-        // Create mocks
         _userRepository = new Mock<IUserRepository>();
         _userRoleRepository = new Mock<IUserRoleRepository>();
         _roleService = new Mock<IRoleService>();
@@ -37,24 +38,34 @@ public class UserServiceTests
         _cacheService = new Mock<ICacheService>();
         _eventBus = new Mock<IEventBus>();
 
-        // Tell UnitOfWork what Users means
+        // Create MicroBatch instances
+        _userBatcher = new MicroBatch<Modules.User.Domain.Entities.User>(
+            100,
+            TimeSpan.FromSeconds(10),
+            async users => { });
+
+        _userRoleBatcher = new MicroBatch<Modules.User.Domain.Entities.UserRole>(
+            100,
+            TimeSpan.FromSeconds(10),
+            async userRoles => { });
+
         _unitOfWork
             .Setup(x => x.Users)
             .Returns(_userRepository.Object);
 
-        // Tell UnitOfWork what UserRoles means
         _unitOfWork
             .Setup(x => x.UserRoles)
             .Returns(_userRoleRepository.Object);
 
-        // Create the service
         _service = new UserService(
-            _eventBus.Object,              // ✅ IEventBus
+            _eventBus.Object,
             _roleService.Object,
-            _unitOfWork.Object,
+            _userBatcher,
+            _userRoleBatcher,
             _genericRepository.Object,
             _cacheService.Object);
     }
+
     #region ValidateEmailUniquenessAsync
 
     [Fact]
