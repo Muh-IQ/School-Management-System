@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Modules.User.Application.Helpers;
+using Modules.User.Application.Services;
 using Modules.User.Domain.IRepositories;
 using Modules.User.Infrastructure.Presistent;
 using Modules.User.Infrastructure.Presistent.Seeds;
 using Modules.User.Infrastructure.Repositories;
+using SharedKernel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +30,7 @@ namespace Modules.User.Infrastructure
                 options.UseSqlServer(connectionProvider.GetConnectionString());
             });
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<IUnitOfWork,UnitOfWork>();
             services.AddScoped<IUserRoleRepository, UserRoleRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();

@@ -4,15 +4,24 @@ using Modules.School.Infrastructure;
 using Modules.School.Infrastructure.Persistent;
 using Modules.School.WebAPI.Extensions;
 using Modules.User.WebAPI.Extensions;
+using SharedKernel;
 using SSM.Host.Common;
+using SSM.Host.MessageEngine;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<InMemoryMessageQueue>();
+
+builder.Services.AddSingleton<IEventBus, EventBus>();
+
+builder.Services.AddHostedService<IntegrationEventProcessorJob>();
 
 //you need to add EmailSetting__Key to your Enironment variables in the section User
 if (builder.Environment.IsDevelopment())
 {
 
-    builder.SetIfNotExists("EmailSettings__Key", "ybek fhsl tspb fpdq");
+   builder.SetIfNotExists("EmailSettings__Key", "ybek fhsl tspb fpdq");
+
 }
 
 builder.Services.AddCors(options =>
