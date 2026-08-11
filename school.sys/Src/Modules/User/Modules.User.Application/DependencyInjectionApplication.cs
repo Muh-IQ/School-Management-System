@@ -12,6 +12,7 @@ namespace Modules.User.Application
             services.AddMemoryCache();
             services.AddSingleton<ICacheService, MemoryCacheService>();
             services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IUserService, UserService>();
 
             return services;
         }
