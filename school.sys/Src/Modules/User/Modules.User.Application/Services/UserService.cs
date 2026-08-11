@@ -12,7 +12,7 @@ using System.Numerics;
 
 namespace Modules.User.Application.Services
 {
-    public class UserService(IEventBus @event, IRoleService roleService, IUnitOfWork UoF,
+    public class UserService(IEventBus @event, IRoleService roleService, MicroBatch<Domain.Entities.User> UserBatcher, MicroBatch<Domain.Entities.UserRole> UserRoleBatcher, IUnitOfWork UoF,
         IGenericRepository<Domain.Entities.User> genericRepository, ICacheService cacheService) : IUserService
     {
         public async Task<Result> AddAsync(AddUserDTO dto)
@@ -31,19 +31,18 @@ namespace Modules.User.Application.Services
             string Password = PasswordHelper.GenerateRandomPassword();
             string HashedPassword = PasswordHelper.HashPassword(Password);
 
-
-            await UoF.Users.StageInsert(UserHelper.CreateUser(dto, userId, HashedPassword));
-            await UoF.UserRoles.StageInsert(UserHelper.CreateUserRole(userId, role.Value.Id));
+            //Fire-and-forget the user and user role creation, we don't need to wait for them to be created in the database.
+            UserBatcher.Add(UserHelper.CreateUser(dto, userId, HashedPassword));
+            UserRoleBatcher.Add(UserHelper.CreateUserRole(userId, role.Value.Id));
 
 
             //I must tell the school module to assign the user to the school.
             await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID));
-            
-            
+
+
             // I must send an email to the user with his credentials and a link to set his password.
-            return await UoF.SaveChangesAsync() > 0
-                ? Result.Success()
-                : Result.Failure(ErrorType.InternalServerError, "Failed to add user");
+            return Result.Success();
+               
         }
 
         public async Task<Result> ValidateEmailUniquenessAsync(string email)

@@ -47,5 +47,12 @@ namespace Modules.User.Infrastructure.Repositories
         {
             return await _dbSet.AnyAsync(predicate);
         }
+
+        public async Task<bool> AddRangeAsync(IEnumerable<T> entities)
+        {
+            await _dbSet.AddRangeAsync(entities);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }
