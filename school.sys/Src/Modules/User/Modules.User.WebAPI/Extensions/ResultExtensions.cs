@@ -32,6 +32,23 @@ namespace Modules.User.WebAPI.Extensions
             };
         }
 
+        //this is overload to choose a specific success code
+        public static IActionResult ToHttpResult(this Result result,int successStatusCode)
+        {
+            if (result.IsSuccess)
+            {
+                return new ObjectResult(new
+                {
+                    success = true
+                })
+                {
+                    StatusCode = successStatusCode
+                };
+            }
+
+            return result.ToHttpResult();
+        }
+
         public static IActionResult ToHttpResult<T>(this Result<T> result)
         {
             if (result.IsSuccess)
@@ -58,6 +75,24 @@ namespace Modules.User.WebAPI.Extensions
             {
                 StatusCode = (int)result.MainError.ErrorType
             };
+        }
+
+        //this is overload to choose a specific success code
+        public static IActionResult ToHttpResult<T>(this Result<T> result,int successStatusCode)
+        {
+            if (result.IsSuccess)
+            {
+                return new ObjectResult(new
+                {
+                    success = true,
+                    data = result.Value
+                })
+                {
+                    StatusCode = successStatusCode
+                };
+            }
+
+            return result.ToHttpResult();
         }
     }
 }
