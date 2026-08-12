@@ -4,7 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedKernel.Events
-{
-    public record UserRegisteredIntegrationEvent(Guid UserId, Guid SchoolId) : IntegrationEvent(Guid.NewGuid());
-}
+namespace SharedKernel.Events;
+
+public record UserRegisteredIntegrationEvent(
+    Guid UserId,
+    Guid SchoolId,
+    string Email,
+    string Password
+) : IntegrationEvent(Guid.NewGuid());

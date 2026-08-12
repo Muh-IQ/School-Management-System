@@ -1,4 +1,6 @@
-﻿namespace Modules.User.Application.Common.Results;
+﻿using System.Text.Json.Serialization;
+
+namespace Modules.User.Application.Common.Results;
 public class Result
 {
     public bool IsSuccess { get; private set; }
