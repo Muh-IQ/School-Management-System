@@ -1,8 +1,8 @@
 ﻿using Microsoft.Extensions.Options;
-using Modules.Communication.Domain.ThirdParty.Email;
 using Modules.Communication.Infrastructure.Common;
 using System.Net;
 using System.Net.Mail;
+using Modules.Communication.Domain.ThirdParty.Email;
 
 namespace Modules.Communication.Infrastructure.ThirdParty.Email
 {
