@@ -21,8 +21,8 @@ namespace Modules.User.Application.Services
             var role = await roleService.GetByCodeAsync(RoleCodes.SchoolAdmin);
 
 
-            //if (validation.IsFailure)
-            //    return validation;
+            if (validation.IsFailure)
+                return validation;
 
 
             var userId = Guid.NewGuid();
