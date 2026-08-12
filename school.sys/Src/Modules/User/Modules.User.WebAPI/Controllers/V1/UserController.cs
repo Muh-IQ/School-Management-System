@@ -19,7 +19,7 @@ namespace Modules.User.WebAPI.Controllers.V1
             var result = await _userService.AddAsync(dto);
             if (result.IsFailure)
                 return BadRequest(result);
-            return Ok(result);
+            return Ok();
         }
     }
 }

@@ -4,7 +4,7 @@ using SharedKernel.Events;
 
 namespace Modules.School.Application.Subscriber;
 
-internal sealed class UserCreatedSubscriber(IUserSchoolService userSchoolService)
+public sealed class UserCreatedSubscriber(IUserSchoolService userSchoolService)
     : INotificationHandler<SharedKernel.Events.UserRegisteredIntegrationEvent>
 {
 

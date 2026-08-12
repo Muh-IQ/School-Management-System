@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Modules.Communication.Infrastructure.Subscriber;
 
-internal sealed class UserEmailSubscriber(
+public sealed class UserEmailSubscriber(
     IEmailService emailService)
     : INotificationHandler<UserRegisteredIntegrationEvent>
 {
