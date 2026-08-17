@@ -17,16 +17,13 @@ namespace Modules.User.Application.Services
     {
         public async Task<Result> AddAsync(AddUserDTO dto)
         {
-            var validationTask = ValidateUserAsync(dto);
-            var roleTask = roleService.GetByCodeAsync(RoleCodes.SchoolAdmin);
+            var validation = await ValidateUserAsync(dto);
+            var role = await roleService.GetByCodeAsync(RoleCodes.SchoolAdmin);
 
-            var validation = await validationTask;
 
             if (validation.IsFailure)
                 return validation;
 
-
-            var role = await roleTask;
 
             var userId = Guid.NewGuid();
             string Password = PasswordHelper.GenerateRandomPassword();
@@ -38,7 +35,7 @@ namespace Modules.User.Application.Services
 
 
             //I must tell the school module to assign the user to the school.
-            await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID));
+            await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID, dto.Email, Password));
 
             // I must send an email to the user with his credentials and a link to set his password.
             return Result.Success();
@@ -48,7 +45,6 @@ namespace Modules.User.Application.Services
             bool res = await cacheService.GetOrCreateAsync($"SEARCH-Email-{email}", async () =>
             {
                 return await genericRepository.ExistsAsync(e => e.Email == email);
-           
             }, TimeSpan.FromMinutes(10));
 
             if (res)
@@ -62,7 +58,7 @@ namespace Modules.User.Application.Services
         {
             bool res = await cacheService.GetOrCreateAsync($"SEARCH-Phone-{phone}", async () =>
             {
-                return  await genericRepository.ExistsAsync(ph => ph.Phone == phone);
+                return await genericRepository.ExistsAsync(ph => ph.Phone == phone);
             }, TimeSpan.FromMinutes(10));
 
             if (res)
