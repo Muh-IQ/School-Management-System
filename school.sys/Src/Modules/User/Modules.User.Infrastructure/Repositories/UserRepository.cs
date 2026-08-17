@@ -47,5 +47,34 @@ namespace Modules.User.Infrastructure.Repositories
             await context.Users.AddAsync(entity);
         }
 
+        public async Task<bool> UpdateUserActiveStatusAsync(Guid userId, bool isActive)
+        {
+            var user = await context.Users.FindAsync(userId);
+
+            if (user is null)
+                return false;
+
+            user.IsActive = isActive;
+            user.UpdateAt = DateTime.UtcNow;
+
+            return true;
+        }
+
+        public async Task<int> UpdateUsersActiveStatusAsync(IEnumerable<Guid> userIds, bool isActive)
+        {
+            var ids = userIds.Distinct().ToList();
+
+            var users = await context.Users
+                .Where(u => ids.Contains(u.Id))
+                .ToListAsync();
+
+            foreach (var user in users)
+            {
+                user.IsActive = isActive;
+                user.UpdateAt = DateTime.UtcNow;
+            }
+
+            return users.Count;
+        }
     }
 }

@@ -21,5 +21,11 @@ namespace Modules.User.Domain.IRepositories
         /// <returns>A task that represents the asynchronous operation.</returns>
         Task StageInsert(Domain.Entities.User entity);
 
+        Task<bool> UpdateUserActiveStatusAsync(Guid userId, bool isActive);
+
+        Task<int> UpdateUsersActiveStatusAsync(IEnumerable<Guid> userIds, bool isActive);
+
     }
+
+
 }
