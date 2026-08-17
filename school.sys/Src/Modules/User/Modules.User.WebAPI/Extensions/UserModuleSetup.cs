@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Modules.User.Application;
 using Modules.User.Infrastructure;
+using Modules.User.WebAPI.ExceptionHandling.Handlers;
 using Modules.User.WebAPI.Filters;
 using Modules.User.WebAPI.Validators.Users;
 
@@ -13,8 +14,9 @@ namespace Modules.User.WebAPI.Extensions
         {
             services.AddInfrastructureServices();
             services.AddApplicationServices();
-            services.AddValidatorsFromAssemblyContaining<AddUserDTOValidator>();
 
+            services.AddValidatorsFromAssemblyContaining<AddUserDTOValidator>();
+            services.AddExceptionHandler<UnhandledExceptionHandler>();
             // Register validation filter in DI
             services.AddScoped<FluentValidationFilter>();
 

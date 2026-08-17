@@ -35,7 +35,7 @@ namespace Modules.User.Application.Services
 
 
             //I must tell the school module to assign the user to the school.
-            await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID,dto.Email, Password));
+            await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID, dto.Email, Password));
 
             // I must send an email to the user with his credentials and a link to set his password.
             return Result.Success();
@@ -44,7 +44,7 @@ namespace Modules.User.Application.Services
         {
             bool res = await cacheService.GetOrCreateAsync($"SEARCH-Email-{email}", async () =>
             {
-                return  await genericRepository.ExistsAsync(e => e.Email == email);
+                return await genericRepository.ExistsAsync(e => e.Email == email);
             }, TimeSpan.FromMinutes(10));
 
             if (res)

@@ -38,7 +38,6 @@ public class GlobalExceptionHandlerMiddleware
             await HandleExceptionAsync(context, ex);
         }
     }
-
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
         if (context.Response.HasStarted)
