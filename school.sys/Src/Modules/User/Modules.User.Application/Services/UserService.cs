@@ -47,8 +47,8 @@ namespace Modules.User.Application.Services
         {
             bool res = await cacheService.GetOrCreateAsync($"SEARCH-Email-{email}", async () =>
             {
-                var user = await genericRepository.ExistsAsync(e => e.Email == email);
-                return user != null;
+                return await genericRepository.ExistsAsync(e => e.Email == email);
+           
             }, TimeSpan.FromMinutes(10));
 
             if (res)
@@ -62,8 +62,7 @@ namespace Modules.User.Application.Services
         {
             bool res = await cacheService.GetOrCreateAsync($"SEARCH-Phone-{phone}", async () =>
             {
-                var user = await genericRepository.ExistsAsync(ph => ph.Phone == phone);
-                return user != null;
+                return  await genericRepository.ExistsAsync(ph => ph.Phone == phone);
             }, TimeSpan.FromMinutes(10));
 
             if (res)

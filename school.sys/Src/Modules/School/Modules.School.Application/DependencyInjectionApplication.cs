@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using Modules.School.Application.IServices;
 using Modules.School.Application.Services;
 using Modules.School.Domain.IThirdPartyServices;
@@ -11,7 +12,6 @@ namespace Modules.School.Application
         {
             services.AddMemoryCache();
 
-
             services.AddScoped<ISchoolService, SchoolService>();
             services.AddScoped<ILanguageService, LanguageService>();
             services.AddScoped<IPolicyService, PolicyService>();
@@ -19,6 +19,7 @@ namespace Modules.School.Application
             services.AddScoped<ICityService, CityService>();
             services.AddScoped<IAreaService, AreaService>();
             services.AddScoped<ICacheService, MemoryCacheService>();
+            services.AddScoped<IUserSchoolService, UserSchoolService>();
 
             services.AddSingleton<ITimeProvider, Services.TimeProvider>();
             return services;
