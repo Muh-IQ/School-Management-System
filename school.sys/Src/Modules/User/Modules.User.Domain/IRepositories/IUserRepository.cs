@@ -21,5 +21,9 @@ namespace Modules.User.Domain.IRepositories
         /// <returns>A task that represents the asynchronous operation.</returns>
         Task StageInsert(Domain.Entities.User entity);
 
+        Task<bool> UpdateUserAsync(Domain.Entities.User user);
+
     }
+
+
 }
