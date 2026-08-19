@@ -21,5 +21,7 @@ namespace Modules.User.Domain.IRepositories
         /// <returns>A task that represents the asynchronous operation.</returns>
         Task StageInsert(Domain.Entities.User entity);
 
+        Task<Domain.Entities.User?> GetByIdAsync(Guid id);
+
     }
 }

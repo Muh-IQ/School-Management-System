@@ -3,10 +3,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Modules.User.Application.Helpers;
 using Modules.User.Application.Services;
+using Modules.User.Domain.BatchRecord;
 using Modules.User.Domain.IRepositories;
 using Modules.User.Infrastructure.Presistent;
 using Modules.User.Infrastructure.Presistent.Seeds;
 using Modules.User.Infrastructure.Repositories;
+using Modules.User.Infrastructure.Repositories.BatchRepo;
 using SharedKernel;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,8 @@ namespace Modules.User.Infrastructure
         {
             // Register your singleton ConnectionProvider
             services.AddSingleton<ConnectionProvider>();
+            services.AddScoped<IUserRegistrationWriter,
+            UserRegistrationWriter>();
 
             // Use ConnectionProvider to get the connection string for DbContext
             services.AddDbContext<UserDbContext>((serviceProvider, options) =>

@@ -9,7 +9,6 @@ namespace Modules.User.WebAPI.Extensions
 {
     public static class UserModuleSetup
     {
-
         public static IServiceCollection AddUserModule(this IServiceCollection services)
         {
             services.AddInfrastructureServices();
@@ -17,7 +16,9 @@ namespace Modules.User.WebAPI.Extensions
 
             services.AddValidatorsFromAssemblyContaining<AddUserDTOValidator>();
             services.AddExceptionHandler<UnhandledExceptionHandler>();
+            services.AddProblemDetails();
             // Register validation filter in DI
+
             services.AddScoped<FluentValidationFilter>();
 
             // Register MVC + global validation filter

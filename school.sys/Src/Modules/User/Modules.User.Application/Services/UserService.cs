@@ -3,6 +3,7 @@ using Modules.User.Application.Common.DTOs;
 using Modules.User.Application.Common.Results;
 using Modules.User.Application.Helpers;
 using Modules.User.Application.IServices;
+using Modules.User.Domain.BatchRecord;
 using Modules.User.Domain.Entities;
 using Modules.User.Domain.IRepositories;
 using Modules.User.Domain.Utilities;
@@ -12,7 +13,7 @@ using System.Numerics;
 
 namespace Modules.User.Application.Services
 {
-    public class UserService(IEventBus @event, IRoleService roleService, MicroBatch<Domain.Entities.User> UserBatcher, MicroBatch<Domain.Entities.UserRole> UserRoleBatcher,
+    public class UserService(/*IEventBus @event,*/ IRoleService roleService, MicroBatch<UserRegistrationBatchItem> userBatcher,
         IGenericRepository<Domain.Entities.User> genericRepository, ICacheService cacheService) : IUserService
     {
         public async Task<Result> AddAsync(AddUserDTO dto)
@@ -20,22 +21,31 @@ namespace Modules.User.Application.Services
             var validation = await ValidateUserAsync(dto);
             var role = await roleService.GetByCodeAsync(RoleCodes.SchoolAdmin);
 
-
             if (validation.IsFailure)
                 return validation;
-
 
             var userId = Guid.NewGuid();
             string Password = PasswordHelper.GenerateRandomPassword();
             string HashedPassword = PasswordHelper.HashPassword(Password);
 
             //Fire-and-forget the user and user role creation, we don't need to wait for them to be created in the database.
-            UserBatcher.Add(UserHelper.CreateUser(dto, userId, HashedPassword));
-            UserRoleBatcher.Add(UserHelper.CreateUserRole(userId, role.Value.Id));
+            var user =
+       UserHelper.CreateUser(
+         dto,
+         userId,
+         HashedPassword);
 
+            var userRole =
+                UserHelper.CreateUserRole(
+                    userId,
+                    role.Value.Id);
 
+            userBatcher.Add(
+                new UserRegistrationBatchItem(
+                    user,
+                    userRole));
             //I must tell the school module to assign the user to the school.
-            await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID, dto.Email, Password));
+            //await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID, dto.Email, Password));
 
             // I must send an email to the user with his credentials and a link to set his password.
             return Result.Success();
@@ -67,7 +77,6 @@ namespace Modules.User.Application.Services
             }
             return Result.Success();
         }
-
 
         private async Task<Result> ValidateUserAsync(AddUserDTO dto)
         {

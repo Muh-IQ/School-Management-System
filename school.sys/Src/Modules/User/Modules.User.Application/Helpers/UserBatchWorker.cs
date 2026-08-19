@@ -1,20 +1,17 @@
 ﻿using Microsoft.Extensions.Hosting;
+using Modules.User.Domain.BatchRecord;
 
 
 namespace Modules.User.Application.Helpers;
 
-public sealed class UserBatchWorker : BackgroundService
+public class UserBatchWorker(
+    MicroBatch<UserRegistrationBatchItem> batch)
+    : BackgroundService
 {
-    private readonly MicroBatch<Domain.Entities.User> _batch;
-
-    public UserBatchWorker(MicroBatch<Domain.Entities.User> batch)
-    {
-        _batch = batch;
-    }
-
-    protected override Task ExecuteAsync(
+    protected override async Task ExecuteAsync(
         CancellationToken stoppingToken)
     {
-        return _batch.Run(stoppingToken);
+        await batch.Run(stoppingToken);
     }
 }
+    

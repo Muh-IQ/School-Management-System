@@ -30,7 +30,5 @@ namespace Modules.User.Infrastructure.Presistent
         {
             return _context.SaveChangesAsync(cancellationToken);
         }
-
-        
     }
 }
