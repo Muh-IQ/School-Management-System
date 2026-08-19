@@ -16,6 +16,7 @@ namespace Modules.School.Infrastructure.Repositories
                 .Where(p => p.IsDefault)
                 .Select(p => p.Id)
                 .FirstOrDefaultAsync();
+
         }
         public async Task<Policy> GetDefaultPolicyAsync()
         {
