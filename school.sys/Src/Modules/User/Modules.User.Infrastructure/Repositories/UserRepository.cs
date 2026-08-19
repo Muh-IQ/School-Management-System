@@ -52,5 +52,12 @@ namespace Modules.User.Infrastructure.Repositories
             await context.Users.AddAsync(entity);
         }
 
+        public async Task<bool> UpdateUserAsync(Domain.Entities.User user)
+        {
+            context.Users.Update(user);
+            return await context.SaveChangesAsync() > 0;
+        }
+
+
     }
 }
