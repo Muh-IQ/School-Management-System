@@ -1,4 +1,5 @@
-﻿using Modules.User.Application.Common.DTOs;
+﻿using FluentAssertions;
+using Modules.User.Application.Common.DTOs;
 using Modules.User.Application.Common.Results;
 using Modules.User.Application.Helpers;
 using Modules.User.Application.IServices;
@@ -9,6 +10,7 @@ using Modules.User.Domain.IRepositories;
 using Modules.User.Domain.Utilities;
 using Moq;
 using SharedKernel;
+using System.Linq.Expressions;
 using Xunit;
 
 using user = Modules.User.Domain.Entities;
@@ -25,8 +27,8 @@ public class UserServiceTests
     private readonly Mock<IUnitOfWork> _unitOfWork;
     private readonly Mock<IEventBus> _eventBus;
     private readonly UserService _service;
-    private readonly MicroBatch<Modules.User.Domain.Entities.User> _userBatcher;
-    private readonly MicroBatch<Modules.User.Domain.Entities.UserRole> _userRoleBatcher;
+    private readonly MicroBatch<Modules.User.Domain.BatchRecord.UserRegistrationBatchItem> _userBatcher;
+    //private readonly MicroBatch<Modules.User.Domain.Entities.UserRole> _userRoleBatcher;
 
     public UserServiceTests()
     {
@@ -39,15 +41,15 @@ public class UserServiceTests
         _eventBus = new Mock<IEventBus>();
 
         // Create MicroBatch instances
-        _userBatcher = new MicroBatch<Modules.User.Domain.Entities.User>(
+        _userBatcher = new MicroBatch<Modules.User.Domain.BatchRecord.UserRegistrationBatchItem>(
             100,
             TimeSpan.FromSeconds(10),
             async users => { });
 
-        _userRoleBatcher = new MicroBatch<Modules.User.Domain.Entities.UserRole>(
-            100,
-            TimeSpan.FromSeconds(10),
-            async userRoles => { });
+        //_userRoleBatcher = new MicroBatch<Modules.User.Domain.Entities.UserRole>(
+        //    100,
+        //    TimeSpan.FromSeconds(10),
+        //    async userRoles => { });
 
         _unitOfWork
             .Setup(x => x.Users)
@@ -61,7 +63,7 @@ public class UserServiceTests
             _eventBus.Object,
             _roleService.Object,
             _userBatcher,
-            _userRoleBatcher,
+            //_userRoleBatcher,
             _genericRepository.Object,
             _cacheService.Object);
     }
@@ -265,80 +267,213 @@ public class UserServiceTests
         Assert.True(result.IsSuccess);
     }
 
-    //we dont need this after change
-    //[Fact]
-    //public async Task AddAsync_Should_ReturnFailure_When_SaveChangesFails()
-    //{
-    //    // Arrange
-    //    ArrangeSuccessScenario();
+    #endregion
 
-    //    _unitOfWork
-    //        .Setup(x => x.SaveChangesAsync(It.IsAny<CancellationToken>()))
-    //        .ReturnsAsync(0);
+    #region UpdateAsync
+    [Fact]
+    public async Task UpdateAsync_Should_Update_User_When_User_Exist()
+    {
+        //Arrange
+        var userId = Guid.NewGuid();
 
-    //    // Act
-    //    var result = await _service.AddAsync(CreateDto());
+        var user = new Modules.User.Domain.Entities.User
+        {
+            Id = userId,
+            Name = "Mohammed",
+            Email = "old@test.com",
+            Phone = "123456789",
+            DOB = new DateTime(2000, 1, 1),
+            Gender = true
+        };
 
-    //    // Assert
-    //    Assert.True(result.IsFailure);
+        var dto = new UpdateUserDTO
+        {
+            Id = userId,
+            Name = "Ahmed",
+            Email = "new@test.com",
+            Phone = "987654321",
+            DateOfBirth = new DateTime(1999, 5, 10),
+            gender = false
+        };
 
-    //    Assert.Equal(
-    //        ErrorType.InternalServerError,
-    //        result.MainError.ErrorType);
+        _genericRepository
+    .Setup(x => x.GetByIdAsync(dto.Id))
+    .ReturnsAsync(user);
 
-    //    Assert.Equal(
-    //        "Failed to add user",
-    //        result.MainError.Message);
-    //}
+        _genericRepository
+            .Setup(x => x.UpdateAsync(It.IsAny<Modules.User.Domain.Entities.User>()))
+            .ReturnsAsync(true);
+        // Act
+        var result = await _service.UpdateAsync(dto);
+
+        //Assert
+        result.IsSuccess.Should().BeTrue();
+
+        user.Name.Should().Be(dto.Name);
+        user.Email.Should().Be(dto.Email);
+        user.Phone.Should().Be(dto.Phone);
+        user.DOB.Should().Be(dto.DateOfBirth);
+
+        _genericRepository.Verify(
+            x => x.GetByIdAsync(dto.Id),
+            Times.Once);
+
+        _genericRepository.Verify(
+            x => x.UpdateAsync(user),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_Should_Return_NotFound_When_User_Does_Not_Exist()
+    {
+        // Arrange
+
+        var dto = new UpdateUserDTO
+        {
+            Id = Guid.NewGuid(),
+            Name = "Ahmed",
+            Email = "new@test.com",
+            Phone = "987654321",
+            DateOfBirth = new DateTime(1999, 5, 10),
+            gender = false
+        };
+
+        _genericRepository
+            .Setup(x => x.GetByIdAsync(dto.Id))
+            .ReturnsAsync((Modules.User.Domain.Entities.User?)null);
+        // Act
+
+        var result = await _service.UpdateAsync(dto);
+
+        // Assert
+
+        result.IsSuccess.Should().BeFalse();
+
+        _genericRepository.Verify(
+            x => x.GetByIdAsync(dto.Id),
+            Times.Once);
+
+        _genericRepository.Verify(
+            x => x.UpdateAsync(It.IsAny<Modules.User.Domain.Entities.User>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task UpdateAsync_Should_Return_Error_When_Email_Already_Exists()
+    {
+        // Arrange
+
+        var userId = Guid.NewGuid();
+
+        var user = new Modules.User.Domain.Entities.User
+        {
+            Id = userId,
+            Name = "Mohammed",
+            Email = "mohammed@test.com",
+            Phone = "123456789",
+            DOB = new DateTime(2000, 1, 1)
+        };
+
+        var existingUser = new Modules.User.Domain.Entities.User
+        {
+            Id = Guid.NewGuid(),
+            Name = "Ahmed",
+            Email = "ahmed@test.com",
+            Phone = "987654321",
+            DOB = new DateTime(1999, 1, 1)
+        };
+
+        var dto = new UpdateUserDTO
+        {
+            Id = userId,
+            Name = "Mohammed",
+            Email = "ahmed@test.com",
+            Phone = "123456789",
+            DateOfBirth = new DateTime(2000, 1, 1)
+        };
+
+        _genericRepository
+            .Setup(x => x.GetByIdAsync(dto.Id))
+            .ReturnsAsync(user);
+
+        // Email already exists
+        _cacheService
+            .Setup(x => x.GetOrCreateAsync(
+                It.IsAny<string>(),
+                It.IsAny<Func<Task<bool>>>(),
+                It.IsAny<TimeSpan>()))
+            .ReturnsAsync(true);
 
 
-    //[Fact]
-    //public async Task AddAsync_Should_Insert_User()
-    //{
-    //    // Arrange
-    //    ArrangeSuccessScenario();
+        // Act
 
-    //    // Act
-    //    await _service.AddAsync(CreateDto());
-
-    //    // Assert
-    //    _userRepository.Verify(
-    //        x => x.StageInsert(It.IsAny<user.User>()),
-    //        Times.Once);
-    //}
+        var result = await _service.UpdateAsync(dto);
 
 
-    //[Fact]
-    //public async Task AddAsync_Should_Insert_UserRole()
-    //{
-    //    // Arrange
-    //    ArrangeSuccessScenario();
+        // Assert
 
-    //    // Act
-    //    await _service.AddAsync(CreateDto());
+        result.IsSuccess.Should().BeFalse();
 
-    //    // Assert
-    //    _userRoleRepository.Verify(
-    //        x => x.StageInsert(It.IsAny<UserRole>()),
-    //        Times.Once);
-    //}
+        _genericRepository.Verify(
+            x => x.UpdateAsync(It.IsAny<Modules.User.Domain.Entities.User>()),
+            Times.Never);
+    }
 
 
-    //[Fact]
-    //public async Task AddAsync_Should_Call_SaveChanges_Once()
-    //{
-    //    // Arrange
-    //    ArrangeSuccessScenario();
+    [Fact]
+    public async Task UpdateAsync_Should_Return_Error_When_Phone_Already_Exists()
+    {
+        // Arrange
 
-    //    // Act
-    //    await _service.AddAsync(CreateDto());
+        var userId = Guid.NewGuid();
 
-    //    // Assert
-    //    _unitOfWork.Verify(
-    //        x => x.SaveChangesAsync(It.IsAny<CancellationToken>()),
-    //        Times.Once);
-    //}
+        var user = new Modules.User.Domain.Entities.User
+        {
+            Id = userId,
+            Name = "Mohammed",
+            Email = "mohammed@test.com",
+            Phone = "123456789",
+            DOB = new DateTime(2000, 1, 1)
+        };
 
+        var dto = new UpdateUserDTO
+        {
+            Id = userId,
+            Name = "Mohammed",
+            Email = "mohammed@test.com",
+            Phone = "987654321",
+            DateOfBirth = new DateTime(2000, 1, 1),
+            gender = true
+        };
+
+        // User exists
+        _genericRepository
+            .Setup(x => x.GetByIdAsync(dto.Id))
+            .ReturnsAsync(user);
+
+        // Phone already exists
+        _cacheService
+            .Setup(x => x.GetOrCreateAsync(
+                It.IsAny<string>(),
+                It.IsAny<Func<Task<bool>>>(),
+                It.IsAny<TimeSpan>()))
+            .ReturnsAsync(true);
+
+
+        // Act
+
+        var result = await _service.UpdateAsync(dto);
+
+
+        // Assert
+
+        result.IsSuccess.Should().BeFalse();
+
+        _genericRepository.Verify(
+            x => x.UpdateAsync(
+                It.IsAny<Modules.User.Domain.Entities.User>()),
+            Times.Never);
+    }
     #endregion
 
 

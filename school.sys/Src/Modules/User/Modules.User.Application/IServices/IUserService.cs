@@ -11,6 +11,7 @@ namespace Modules.User.Application.IServices
     public interface IUserService
     {
         Task<Result> AddAsync(AddUserDTO dTO);
+        Task<Result> UpdateAsync(UpdateUserDTO dto);
         Task<Result> ValidatePhoneUniquenessAsync(string phone);
         Task<Result> ValidateEmailUniquenessAsync(string email);
     }

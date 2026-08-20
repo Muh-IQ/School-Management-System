@@ -1,6 +1,7 @@
 ﻿
 using Modules.User.Application.Common.DTOs;
 using Modules.User.Application.Common.Results;
+using Modules.User.Application.Common.StaticError;
 using Modules.User.Application.Helpers;
 using Modules.User.Application.IServices;
 using Modules.User.Domain.BatchRecord;
@@ -13,12 +14,39 @@ using System.Numerics;
 
 namespace Modules.User.Application.Services
 {
-    public class UserService(/*IEventBus @event,*/ IRoleService roleService, MicroBatch<UserRegistrationBatchItem> userBatcher,
+    public class UserService(IEventBus @event, IRoleService roleService, MicroBatch<UserRegistrationBatchItem> userBatcher,
         IGenericRepository<Domain.Entities.User> genericRepository, ICacheService cacheService) : IUserService
     {
+        public async Task<Result> UpdateAsync(UpdateUserDTO dto)
+        {
+
+            var user = await genericRepository.GetByIdAsync(dto.Id);
+            if (user is null)
+            {
+                return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
+            }
+
+            var validation = await ValidateUserAsync(dto.Email, dto.Phone);
+
+            if (validation.IsFailure)
+            {
+                return validation;
+            }
+
+            user.Name = dto.Name;
+            user.Email = dto.Email;
+            user.Phone = dto.Phone;
+            user.DOB = dto.DateOfBirth;
+            user.UpdateAt = DateTime.Now;
+
+            bool result = await genericRepository.UpdateAsync(user);
+            if (result) return Result.Success();
+            else return Result.Failure(ErrorType.InternalServerError, GlobalErrors.InternalServerErrorMessage());
+
+        }
         public async Task<Result> AddAsync(AddUserDTO dto)
         {
-            var validation = await ValidateUserAsync(dto);
+            var validation = await ValidateUserAsync(dto.Email,dto.Phone);
             var role = await roleService.GetByCodeAsync(RoleCodes.SchoolAdmin);
 
             if (validation.IsFailure)
@@ -45,11 +73,13 @@ namespace Modules.User.Application.Services
                     user,
                     userRole));
             //I must tell the school module to assign the user to the school.
-            //await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID, dto.Email, Password));
+            await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID, dto.Email, Password));
 
             // I must send an email to the user with his credentials and a link to set his password.
             return Result.Success();
         }
+     
+
         public async Task<Result> ValidateEmailUniquenessAsync(string email)
         {
             bool res = await cacheService.GetOrCreateAsync($"SEARCH-Email-{email}", async () =>
@@ -78,10 +108,10 @@ namespace Modules.User.Application.Services
             return Result.Success();
         }
 
-        private async Task<Result> ValidateUserAsync(AddUserDTO dto)
+        private async Task<Result> ValidateUserAsync(string email,string phone)
         {
-            var emailValidation = await ValidateEmailUniquenessAsync(dto.Email);
-            var phoneValidation = await ValidatePhoneUniquenessAsync(dto.Phone);
+            var emailValidation = await ValidateEmailUniquenessAsync(email);
+            var phoneValidation = await ValidatePhoneUniquenessAsync(phone);
 
             if (emailValidation.IsFailure && phoneValidation.IsFailure)
             {
