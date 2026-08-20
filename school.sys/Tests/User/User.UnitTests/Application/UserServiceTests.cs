@@ -290,8 +290,6 @@ public class UserServiceTests
         {
             Id = userId,
             Name = "Ahmed",
-            Email = "new@test.com",
-            Phone = "987654321",
             DateOfBirth = new DateTime(1999, 5, 10),
             gender = false
         };
@@ -310,8 +308,6 @@ public class UserServiceTests
         result.IsSuccess.Should().BeTrue();
 
         user.Name.Should().Be(dto.Name);
-        user.Email.Should().Be(dto.Email);
-        user.Phone.Should().Be(dto.Phone);
         user.DOB.Should().Be(dto.DateOfBirth);
 
         _genericRepository.Verify(
@@ -332,8 +328,6 @@ public class UserServiceTests
         {
             Id = Guid.NewGuid(),
             Name = "Ahmed",
-            Email = "new@test.com",
-            Phone = "987654321",
             DateOfBirth = new DateTime(1999, 5, 10),
             gender = false
         };
@@ -358,122 +352,8 @@ public class UserServiceTests
             Times.Never);
     }
 
-    [Fact]
-    public async Task UpdateAsync_Should_Return_Error_When_Email_Already_Exists()
-    {
-        // Arrange
 
-        var userId = Guid.NewGuid();
-
-        var user = new Modules.User.Domain.Entities.User
-        {
-            Id = userId,
-            Name = "Mohammed",
-            Email = "mohammed@test.com",
-            Phone = "123456789",
-            DOB = new DateTime(2000, 1, 1)
-        };
-
-        var existingUser = new Modules.User.Domain.Entities.User
-        {
-            Id = Guid.NewGuid(),
-            Name = "Ahmed",
-            Email = "ahmed@test.com",
-            Phone = "987654321",
-            DOB = new DateTime(1999, 1, 1)
-        };
-
-        var dto = new UpdateUserDTO
-        {
-            Id = userId,
-            Name = "Mohammed",
-            Email = "ahmed@test.com",
-            Phone = "123456789",
-            DateOfBirth = new DateTime(2000, 1, 1)
-        };
-
-        _genericRepository
-            .Setup(x => x.GetByIdAsync(dto.Id))
-            .ReturnsAsync(user);
-
-        // Email already exists
-        _cacheService
-            .Setup(x => x.GetOrCreateAsync(
-                It.IsAny<string>(),
-                It.IsAny<Func<Task<bool>>>(),
-                It.IsAny<TimeSpan>()))
-            .ReturnsAsync(true);
-
-
-        // Act
-
-        var result = await _service.UpdateAsync(dto);
-
-
-        // Assert
-
-        result.IsSuccess.Should().BeFalse();
-
-        _genericRepository.Verify(
-            x => x.UpdateAsync(It.IsAny<Modules.User.Domain.Entities.User>()),
-            Times.Never);
-    }
-
-
-    [Fact]
-    public async Task UpdateAsync_Should_Return_Error_When_Phone_Already_Exists()
-    {
-        // Arrange
-
-        var userId = Guid.NewGuid();
-
-        var user = new Modules.User.Domain.Entities.User
-        {
-            Id = userId,
-            Name = "Mohammed",
-            Email = "mohammed@test.com",
-            Phone = "123456789",
-            DOB = new DateTime(2000, 1, 1)
-        };
-
-        var dto = new UpdateUserDTO
-        {
-            Id = userId,
-            Name = "Mohammed",
-            Email = "mohammed@test.com",
-            Phone = "987654321",
-            DateOfBirth = new DateTime(2000, 1, 1),
-            gender = true
-        };
-
-        // User exists
-        _genericRepository
-            .Setup(x => x.GetByIdAsync(dto.Id))
-            .ReturnsAsync(user);
-
-        // Phone already exists
-        _cacheService
-            .Setup(x => x.GetOrCreateAsync(
-                It.IsAny<string>(),
-                It.IsAny<Func<Task<bool>>>(),
-                It.IsAny<TimeSpan>()))
-            .ReturnsAsync(true);
-
-
-        // Act
-
-        var result = await _service.UpdateAsync(dto);
-
-
-        // Assert
-
-        result.IsSuccess.Should().BeFalse();
-
-        _genericRepository.Verify(
-            x => x.UpdateAsync(
-                It.IsAny<Modules.User.Domain.Entities.User>()),
-            Times.Never);
-    }
+   
     #endregion
 
 

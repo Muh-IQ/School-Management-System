@@ -1,5 +1,4 @@
-﻿
-using Modules.User.Application.Common.DTOs;
+﻿using Modules.User.Application.Common.DTOs;
 using Modules.User.Application.Common.Results;
 using Modules.User.Application.Common.StaticError;
 using Modules.User.Application.Helpers;
@@ -26,17 +25,19 @@ namespace Modules.User.Application.Services
                 return Result.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage());
             }
 
-            var validation = await ValidateUserAsync(dto.Email, dto.Phone);
-
-            if (validation.IsFailure)
+            if(!string.IsNullOrEmpty(dto.Name) && dto.Name != user.Name)
             {
-                return validation;
+                user.Name = dto.Name;   
             }
+            if (dto.DateOfBirth != default(DateTime) && dto.DateOfBirth != user.DOB)
+            {
+                user.DOB = dto.DateOfBirth;
+            }
+            if(user.Gender != dto.gender)
+            {
+                user.Gender = dto.gender;
 
-            user.Name = dto.Name;
-            user.Email = dto.Email;
-            user.Phone = dto.Phone;
-            user.DOB = dto.DateOfBirth;
+            }
             user.UpdateAt = DateTime.Now;
 
             bool result = await genericRepository.UpdateAsync(user);
