@@ -14,11 +14,14 @@ namespace Modules.User.Infrastructure.Repositories
 {
     public class UserRepository(UserDbContext context) : IUserRepository
     {
+
+
         public async Task<Domain.Entities.User?> GetByIdAsync(Guid id)
         {
             return await context.Users
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
+        
         public async Task<IEnumerable<UserDto>> GetUsersAsync(int page, int pageSize)
         {
             var users = await context.Users
