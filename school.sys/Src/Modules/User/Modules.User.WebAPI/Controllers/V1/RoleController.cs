@@ -5,7 +5,7 @@ using Modules.User.WebAPI.Extensions;
 
 namespace Modules.User.WebAPI.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/role")]
     [ApiController]
     public class RoleController : ControllerBase
     {
@@ -24,7 +24,6 @@ namespace Modules.User.WebAPI.Controllers.V1
 
             return result.ToHttpResult();
         }
-
 
     }
 }
