@@ -1,13 +1,14 @@
-﻿using Microsoft.Extensions.Configuration;
-using Modules.Communication.WebAPI.Extensions;
+﻿using MediatR;
+using Microsoft.Extensions.Configuration;
 using Modules.Communication.Infrastructure.Subscriber;
+using Modules.Communication.WebAPI.Extensions;
 using Modules.School.Application.Subscriber;
 using Modules.School.WebAPI.Extensions;
 using Modules.User.WebAPI.Extensions;
 using SharedKernel;
 using SSM.Host.Common;
+using SSM.Host.DependencyInjection;
 using SSM.Host.MessageEngine;
-using MediatR;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSingleton<InMemoryMessageQueue>();
@@ -16,14 +17,9 @@ builder.Services.AddSingleton<IEventBus, EventBus>();
 
 builder.Services.AddHostedService<IntegrationEventProcessorJob>();
 
-//builder.Services.AddMediatR(cfg =>
-//{
-//    cfg.RegisterServicesFromAssembly(
-//        typeof(UserCreatedSubscriber).Assembly);
 
-//    cfg.RegisterServicesFromAssembly(
-//        typeof(UserEmailSubscriber).Assembly);
-//});
+builder.Services.RegisterSubscriptions();
+
 
 //you need to add EmailSetting__Key to your Enironment variables in the section User
 if (builder.Environment.IsDevelopment())

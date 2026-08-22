@@ -59,21 +59,13 @@ namespace Modules.User.Application.Services
 
             //Fire-and-forget the user and user role creation, we don't need to wait for them to be created in the database.
             var user =
-       UserHelper.CreateUser(
-         dto,
-         userId,
-         HashedPassword);
+            UserHelper.CreateUser(dto,userId,HashedPassword);
 
-            var userRole =
-                UserHelper.CreateUserRole(
-                    userId,
-                    role.Value.Id);
+            var userRole = UserHelper.CreateUserRole(userId,role.Value.Id);
 
-            userBatcher.Add(
-                new UserRegistrationBatchItem(
-                    user,
-                    userRole));
-            //I must tell the school module to assign the user to the school.
+            userBatcher.Add( new UserRegistrationBatchItem( user, userRole));
+
+
             await @event.PublishAsync<UserRegisteredIntegrationEvent>(new UserRegisteredIntegrationEvent(userId, dto.SchoolID, dto.Email, Password));
 
             // I must send an email to the user with his credentials and a link to set his password.

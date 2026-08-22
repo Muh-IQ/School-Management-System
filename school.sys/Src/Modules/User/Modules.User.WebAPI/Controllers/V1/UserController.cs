@@ -7,7 +7,7 @@ using Modules.User.WebAPI.Extensions;
 
 namespace Modules.User.WebAPI.Controllers.V1
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/user")]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -17,6 +17,7 @@ namespace Modules.User.WebAPI.Controllers.V1
         public UserController(IUserService userService) {
             _userService = userService;
         }
+
         [HttpPost]
         public async Task <IActionResult> CreateUser(AddUserDTO dto){
 
