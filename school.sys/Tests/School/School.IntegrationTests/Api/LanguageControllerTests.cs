@@ -7,7 +7,7 @@ using System.Net;
 using System.Net.Http.Json;
 using Xunit;
 
-namespace School.IntegrationTests.Api.School_Module;
+namespace School.IntegrationTests.Api;
 
 public class LanguageControllerTests : IClassFixture<SchoolWebApplicationFactory>
 {
