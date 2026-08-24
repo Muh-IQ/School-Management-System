@@ -9,7 +9,7 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using Xunit;
 
-namespace User.IntegrationTests.Api.User_Module;
+namespace User.IntegrationTests.Api;
 
 public class UserControllerTests
 {

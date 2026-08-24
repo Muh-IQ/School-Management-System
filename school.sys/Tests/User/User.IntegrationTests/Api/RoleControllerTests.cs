@@ -6,7 +6,7 @@ using System.Net;
 using System.Text.Json;
 using Xunit;
 
-namespace User.IntegrationTests.Api.User_Module;
+namespace User.IntegrationTests.Api;
 
 public class RoleControllerTests : IClassFixture<UserWebApplicationFactory>
 {
