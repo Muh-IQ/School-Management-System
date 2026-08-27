@@ -18,7 +18,7 @@ namespace Modules.User.Application.Helpers
                 Name = dto.Name,
                 Email = dto.Email,
                 Phone = dto.Phone,
-                DOB = dto.DateOfBirth,
+                DateOfBirth = dto.DateOfBirth,
                 Gender = dto.gender,
                 Password = HashedPassword,
             };

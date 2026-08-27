@@ -27,7 +27,7 @@ namespace Modules.User.Infrastructure.Presistent.Configuration
             builder.Property(x => x.Phone)
                    .HasMaxLength(20);
 
-            builder.Property(x => x.DOB)
+            builder.Property(x => x.DateOfBirth)
                    .IsRequired();
 
             builder.Property(x => x.Gender)

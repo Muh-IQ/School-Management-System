@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Modules.User.Application.Common.DTOs;
 using Modules.User.Application.Common.Results;
+using Modules.User.Application.Common.StaticError;
 using Modules.User.Application.Helpers;
 using Modules.User.Application.IServices;
 using Modules.User.Application.Services;
@@ -10,6 +11,7 @@ using Modules.User.Domain.IRepositories;
 using Modules.User.Domain.Utilities;
 using Moq;
 using SharedKernel;
+using SharedKernel.Events;
 using System.Linq.Expressions;
 using Xunit;
 
@@ -169,6 +171,682 @@ public class UserServiceTests
 
     #endregion
 
+    #region OpenSessionAsync
+
+    [Fact]
+    public async Task OpenSessionAsync_Should_CreateAndCacheSession_AndReturnKey()
+    {
+        // Arrange
+        string? cachedKey = null;
+        ResetEmailSession? cachedSession = null;
+        TimeSpan? cachedExpiration = null;
+
+        _cacheService
+            .Setup(x => x.SetAsync(
+                It.IsAny<string>(),
+                It.IsAny<ResetEmailSession>(),
+                It.IsAny<TimeSpan?>()))
+            .Callback<string, ResetEmailSession, TimeSpan?>(
+                (key, session, expiration) =>
+                {
+                    cachedKey = key;
+                    cachedSession = session;
+                    cachedExpiration = expiration;
+                })
+            .Returns(Task.CompletedTask);
+
+        // Act
+        var result = await _service.OpenSessionAsync();
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+        result.Value.Should().NotBeNull();
+
+        cachedKey.Should().NotBeNullOrWhiteSpace();
+        cachedKey.Should().Be(result.Value!.Key);
+
+        cachedSession.Should().NotBeNull();
+        cachedSession!.IsConfirmOldEmail.Should().BeFalse();
+        cachedSession.IsConfirmNewEmail.Should().BeFalse();
+        cachedSession.IsNewEmailExist.Should().BeTrue();
+        cachedSession.NewEmail.Should().BeNull();
+
+        cachedExpiration.Should().Be(TimeSpan.FromMinutes(15));
+
+        _cacheService.Verify(
+            x => x.SetAsync(
+                It.Is<string>(key => key == result.Value.Key),
+                It.Is<ResetEmailSession>(session =>
+                    session.IsConfirmOldEmail == false &&
+                    session.IsConfirmNewEmail == false &&
+                    session.IsNewEmailExist == true &&
+                    session.NewEmail == null),
+                It.Is<TimeSpan?>(expiration =>
+                    expiration == TimeSpan.FromMinutes(15))),
+            Times.Once);
+    }
+
+    #endregion
+
+    #region SendVerficationCodeUserAsync
+
+    [Fact]
+    public async Task SendVerficationCodeUserAsync_Should_ReturnSuccess_And_SendOtpToOldEmail_WhenSessionExists()
+    {
+        // Arrange
+        const string sessionKey = "RESET-SESSION-123";
+
+        var session = new ResetEmailSession
+        {
+            IsConfirmOldEmail = false,
+            IsConfirmNewEmail = false,
+            IsNewEmailExist = false,
+            NewEmail = null
+        };
+
+        string? cachedOtp = null;
+        UserVerifyIntegrationEvent? publishedEvent = null;
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        _cacheService
+            .Setup(x => x.SetAsync(
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<TimeSpan?>()))
+            .Callback<string, string, TimeSpan?>(
+                (_, otp, _) => cachedOtp = otp)
+            .Returns(Task.CompletedTask);
+
+        _eventBus
+            .Setup(x => x.PublishAsync(
+                It.IsAny<UserVerifyIntegrationEvent>(),
+                It.IsAny<CancellationToken>()))
+            .Callback<UserVerifyIntegrationEvent, CancellationToken>(
+                (eventData, _) => publishedEvent = eventData)
+            .Returns(Task.CompletedTask);
+
+        // Act
+        var result = await _service.SendVerficationCodeUserAsync(sessionKey);
+
+        // Assert
+        result.IsSuccess.Should().BeTrue();
+
+        // OTP should be generated
+        cachedOtp.Should().NotBeNullOrWhiteSpace();
+        cachedOtp.Should().MatchRegex(@"^\d{6}$");
+
+        // Event should be published
+        publishedEvent.Should().NotBeNull();
+
+        // We don't care about the temporary/mock email value
+        publishedEvent!.email.Should().NotBeNullOrWhiteSpace();
+
+        // The OTP sent by event must be the same OTP stored in cache
+        publishedEvent.otp.Should().Be(cachedOtp);
+
+        // Verify cache was accessed
+        _cacheService.Verify(
+            x => x.GetAsync<ResetEmailSession>(sessionKey),
+            Times.Once);
+
+        // Verify OTP was stored
+        _cacheService.Verify(
+            x => x.SetAsync(
+                It.IsAny<string>(),
+                It.IsAny<string>(),
+                It.IsAny<TimeSpan?>()),
+            Times.Once);
+
+        // Verify event was published
+        _eventBus.Verify(
+            x => x.PublishAsync(
+                It.IsAny<UserVerifyIntegrationEvent>(),
+                It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public async Task SendVerficationCodeUserAsync_Should_ReturnBadRequest_WhenSessionKeyIsInvalid(
+    string? sessionKey)
+    {
+        // Act
+        var result = await _service.SendVerficationCodeUserAsync(sessionKey!);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+
+        result.MainError.Should().NotBeNull();
+        result.MainError.ErrorType.Should().Be(ErrorType.BadRequest);
+
+        result.MainError.Message
+            .Should()
+            .Be(SessionErrors.InvalidSessionKeyMessage());
+
+        _cacheService.Verify(
+            x => x.GetAsync<ResetEmailSession>(It.IsAny<string>()),
+            Times.Never);
+
+        _eventBus.Verify(
+            x => x.PublishAsync(
+                It.IsAny<UserVerifyIntegrationEvent>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task SendVerficationCodeUserAsync_Should_ReturnNotFound_WhenSessionDoesNotExist()
+    {
+        // Arrange
+        const string sessionKey = "RESET-SESSION-123";
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync((ResetEmailSession?)null);
+
+        // Act
+        var result = await _service.SendVerficationCodeUserAsync(sessionKey);
+
+        // Assert
+        result.IsSuccess.Should().BeFalse();
+
+        result.MainError.Should().NotBeNull();
+        result.MainError.ErrorType.Should().Be(ErrorType.NotFound);
+
+        result.MainError.Message
+            .Should()
+            .Be(SessionErrors.NotFoundMessage(sessionKey));
+
+        _cacheService.Verify(
+            x => x.GetAsync<ResetEmailSession>(sessionKey),
+            Times.Once);
+
+        _eventBus.Verify(
+            x => x.PublishAsync(
+                It.IsAny<UserVerifyIntegrationEvent>(),
+                It.IsAny<CancellationToken>()),
+            Times.Never);
+    }
+    #endregion
+
+    #region VerifyUserAsync
+
+    [Fact]
+    public async Task VerifyUserAsync_Should_ReturnSuccess_When_OtpIsCorrect()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+
+        var session = new ResetEmailSession
+        {
+            NewEmail = null,
+            IsConfirmOldEmail = false,
+            IsConfirmNewEmail = false,
+            IsNewEmailExist = true
+        };
+
+        var otp = "834271";
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        _cacheService
+            .Setup(x => x.GetAsync<string>($"OTP:{sessionKey}"))
+            .ReturnsAsync(otp);
+
+        // Act
+
+        var result = await _service.VerifyUserAsync(otp,sessionKey );
+
+        // Assert
+
+        Assert.True(result.IsSuccess);
+        Assert.True(session.IsConfirmOldEmail);
+
+        _cacheService.Verify(
+            x => x.SetAsync(
+                sessionKey,
+                session,
+                It.IsAny<TimeSpan>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task VerifyUserAsync_Should_ReturnBadRequest_When_SessionKeyIsEmpty()
+    {
+        // Arrange
+
+        var sessionKey = "";
+        var otp = "834271";
+
+        // Act
+
+        var result = await _service.VerifyUserAsync(otp, sessionKey);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.BadRequest, result.MainError.ErrorType);
+
+        _cacheService.Verify(
+            x => x.GetAsync<ResetEmailSession>(It.IsAny<string>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task VerifyUserAsync_Should_ReturnNotFound_When_SessionDoesNotExist()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+        var otp = "834271";
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync((ResetEmailSession?)null);
+
+        // Act
+
+        var result = await _service.VerifyUserAsync(otp, sessionKey);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.NotFound, result.MainError.ErrorType);
+
+        _cacheService.Verify(
+            x => x.GetAsync<ResetEmailSession>(sessionKey),
+            Times.Once);
+
+        _cacheService.Verify(
+            x => x.GetAsync<string>($"OTP:{sessionKey}"),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task VerifyUserAsync_Should_ReturnBadRequest_When_OtpIsEmpty()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+        var otp = "";
+
+        var session = new ResetEmailSession
+        {
+            NewEmail = null,
+            IsConfirmNewEmail = false,
+            IsConfirmOldEmail = false,
+            IsNewEmailExist = true
+        };
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        // Act
+
+        var result = await _service.VerifyUserAsync(otp, sessionKey);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.BadRequest, result.MainError.ErrorType);
+
+        _cacheService.Verify(
+            x => x.GetAsync<ResetEmailSession>(sessionKey),
+            Times.Once);
+
+        _cacheService.Verify(
+            x => x.GetAsync<string>($"OTP:{sessionKey}"),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task VerifyUserAsync_Should_ReturnNotFound_When_OtpDoesNotExist()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+        var otp = "834271";
+
+        var session = new ResetEmailSession
+        {
+            NewEmail = null,
+            IsConfirmNewEmail = false,
+            IsConfirmOldEmail = false,
+            IsNewEmailExist = true
+        };
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        _cacheService
+            .Setup(x => x.GetAsync<string>($"OTP:{sessionKey}"))
+            .ReturnsAsync((string?)null);
+
+        // Act
+
+        var result = await _service.VerifyUserAsync(otp, sessionKey);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.NotFound, result.MainError.ErrorType);
+
+        _cacheService.Verify(
+            x => x.GetAsync<ResetEmailSession>(sessionKey),
+            Times.Once);
+
+        _cacheService.Verify(
+            x => x.GetAsync<string>($"OTP:{sessionKey}"),
+            Times.Once);
+
+        _cacheService.Verify(
+            x => x.SetAsync(
+                It.IsAny<string>(),
+                It.IsAny<ResetEmailSession>(),
+                It.IsAny<TimeSpan>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task VerifyUserAsync_Should_ReturnBadRequest_When_OtpIsIncorrect()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+
+        var enteredOtp = "123456";
+        var storedOtp = "834271";
+
+        var session = new ResetEmailSession
+        {
+            NewEmail = null,
+            IsConfirmNewEmail = false,
+            IsConfirmOldEmail = false,
+            IsNewEmailExist = true
+        };
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        _cacheService
+            .Setup(x => x.GetAsync<string>($"OTP:{sessionKey}"))
+            .ReturnsAsync(storedOtp);
+
+        // Act
+
+        var result = await _service.VerifyUserAsync(
+            enteredOtp,
+            sessionKey);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.BadRequest, result.MainError.ErrorType);
+
+        Assert.False(session.IsConfirmOldEmail);
+
+        _cacheService.Verify(
+            x => x.SetAsync(
+                It.IsAny<string>(),
+                It.IsAny<ResetEmailSession>(),
+                It.IsAny<TimeSpan>()),
+            Times.Never);
+
+        _cacheService.Verify(
+            x => x.RemoveAsync($"OTP:{sessionKey}"),
+            Times.Never);
+    }
+
+    #endregion
+
+    #region WriteNewEmailAsync
+
+    [Fact]
+    public async Task WriteNewEmailAsync_Should_ReturnBadRequest_When_SessionKeyIsEmpty()
+    {
+        // Arrange
+
+        var sessionKey = "";
+        var newEmail = "new@email.com";
+
+        // Act
+
+        var result = await _service.WriteNewEmailAsync(
+            sessionKey,
+            newEmail);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.BadRequest, result.MainError.ErrorType);
+
+        _cacheService.Verify(
+            x => x.GetAsync<ResetEmailSession>(It.IsAny<string>()),
+            Times.Never);
+
+        _genericRepository.Verify(
+            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task WriteNewEmailAsync_Should_ReturnNotFound_When_SessionDoesNotExist()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+        var newEmail = "new@email.com";
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync((ResetEmailSession?)null);
+
+        // Act
+
+        var result = await _service.WriteNewEmailAsync(
+            sessionKey,
+            newEmail);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.NotFound, result.MainError.ErrorType);
+
+        _genericRepository.Verify(
+            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task WriteNewEmailAsync_Should_ReturnBadRequest_When_OldEmailIsNotConfirmed()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+        var newEmail = "new@email.com";
+
+        var session = new ResetEmailSession
+        {
+            NewEmail = null,
+            IsConfirmOldEmail = false,
+            IsConfirmNewEmail = false,
+            IsNewEmailExist = true
+        };
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        // Act
+
+        var result = await _service.WriteNewEmailAsync(
+            sessionKey,
+            newEmail);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.BadRequest, result.MainError.ErrorType);
+
+        _genericRepository.Verify(
+            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()),
+            Times.Never);
+
+        _cacheService.Verify(
+            x => x.SetAsync(
+                It.IsAny<string>(),
+                It.IsAny<ResetEmailSession>(),
+                It.IsAny<TimeSpan>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task WriteNewEmailAsync_Should_ReturnBadRequest_When_NewEmailIsEmpty()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+        var newEmail = "";
+
+        var session = new ResetEmailSession
+        {
+            NewEmail = null,
+            IsConfirmOldEmail = true,
+            IsConfirmNewEmail = false,
+            IsNewEmailExist = true
+        };
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        // Act
+
+        var result = await _service.WriteNewEmailAsync(
+            sessionKey,
+            newEmail);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.BadRequest, result.MainError.ErrorType);
+
+        _genericRepository.Verify(
+            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()),
+            Times.Never);
+
+        _cacheService.Verify(
+            x => x.SetAsync(
+                It.IsAny<string>(),
+                It.IsAny<ResetEmailSession>(),
+                It.IsAny<TimeSpan>()),
+            Times.Never);
+    }
+
+    [Fact]
+    public async Task WriteNewEmailAsync_Should_ReturnConflict_When_NewEmailAlreadyExists()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+        var newEmail = "existing@email.com";
+
+        var session = new ResetEmailSession
+        {
+            NewEmail = null,
+            IsConfirmOldEmail = true,
+            IsConfirmNewEmail = false,
+            IsNewEmailExist = true
+        };
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        _genericRepository
+            .Setup(x => x.ExistsAsync(
+                It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()))
+            .ReturnsAsync(true);
+
+        // Act
+
+        var result = await _service.WriteNewEmailAsync(
+            sessionKey,
+            newEmail);
+
+        // Assert
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(ErrorType.Conflict, result.MainError.ErrorType);
+
+        Assert.True(session.IsNewEmailExist);
+        Assert.Null(session.NewEmail);
+
+        _cacheService.Verify(
+            x => x.SetAsync(
+                sessionKey,
+                session,
+                It.IsAny<TimeSpan>()),
+            Times.Once);
+    }
+
+    [Fact]
+    public async Task WriteNewEmailAsync_Should_ReturnSuccess_When_NewEmailDoesNotExist()
+    {
+        // Arrange
+
+        var sessionKey = "RESET-EMAILSESSION-test";
+        var newEmail = "new@email.com";
+
+        var session = new ResetEmailSession
+        {
+            NewEmail = null,
+            IsConfirmOldEmail = true,
+            IsConfirmNewEmail = false,
+            IsNewEmailExist = true
+        };
+
+        _cacheService
+            .Setup(x => x.GetAsync<ResetEmailSession>(sessionKey))
+            .ReturnsAsync(session);
+
+        _genericRepository
+            .Setup(x => x.ExistsAsync(
+                It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()))
+            .ReturnsAsync(false);
+
+        // Act
+
+        var result = await _service.WriteNewEmailAsync(
+            sessionKey,
+            newEmail);
+
+        // Assert
+
+        Assert.True(result.IsSuccess);
+
+        Assert.Equal(newEmail, session.NewEmail);
+        Assert.False(session.IsNewEmailExist);
+
+        _cacheService.Verify(
+            x => x.SetAsync(
+                sessionKey,
+                session,
+                It.IsAny<TimeSpan>()),
+            Times.Once);
+    }
+    #endregion
+
 
     #region AddAsync
 
@@ -282,7 +960,7 @@ public class UserServiceTests
             Name = "Mohammed",
             Email = "old@test.com",
             Phone = "123456789",
-            DOB = new DateTime(2000, 1, 1),
+            DateOfBirth = new DateTime(2000, 1, 1),
             Gender = true
         };
 
@@ -308,7 +986,7 @@ public class UserServiceTests
         result.IsSuccess.Should().BeTrue();
 
         user.Name.Should().Be(dto.Name);
-        user.DOB.Should().Be(dto.DateOfBirth);
+        user.DateOfBirth.Should().Be(dto.DateOfBirth);
 
         _genericRepository.Verify(
             x => x.GetByIdAsync(dto.Id),
