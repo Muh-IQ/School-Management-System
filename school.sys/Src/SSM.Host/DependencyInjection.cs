@@ -1,4 +1,5 @@
-﻿using Modules.School.Application.Subscriber;
+﻿using Modules.Communication.Infrastructure.Subscriber;
+using Modules.School.Application.Subscriber;
 
 namespace SSM.Host.DependencyInjection;
 
@@ -12,6 +13,11 @@ public static class MediatRRegistration
             cfg.RegisterServicesFromAssembly(
                 typeof(UserCreatedSubscriber).Assembly
             );
+        });
+
+        services.AddMediatR(cfg =>
+        {
+            cfg.RegisterServicesFromAssembly(typeof(UserVerifySubscriber).Assembly);
         });
 
         return services;

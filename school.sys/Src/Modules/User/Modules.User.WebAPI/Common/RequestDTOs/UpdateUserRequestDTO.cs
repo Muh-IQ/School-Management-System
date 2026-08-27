@@ -1,4 +1,4 @@
-﻿namespace Modules.User.WebAPI.Common.DTOs
+﻿namespace Modules.User.WebAPI.Common.RequestDTOs
 {
     public class UpdateUserRequestDTO
     {

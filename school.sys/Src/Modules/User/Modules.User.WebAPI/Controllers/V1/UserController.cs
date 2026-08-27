@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Modules.User.Application.Common.DTOs;
 using Modules.User.Application.IServices;
 using Modules.User.Domain.IRepositories;
-using Modules.User.WebAPI.Common.DTOs;
+using Modules.User.WebAPI.Common.RequestDTOs;
 using Modules.User.WebAPI.Extensions;
 
 namespace Modules.User.WebAPI.Controllers.V1
@@ -18,6 +18,8 @@ namespace Modules.User.WebAPI.Controllers.V1
         public UserController(IUserService userService) {
             _userService = userService;
         }
+
+
 
         [HttpPost]
         public async Task <IActionResult> CreateUser(AddUserDTO dto){
@@ -41,6 +43,49 @@ namespace Modules.User.WebAPI.Controllers.V1
             var result = await _userService.UpdateAsync(dto);
 
             return result.ToHttpResult(StatusCodes.Status204NoContent);
+        }
+        // =========================
+        // Reset Email
+        // =========================
+
+        [HttpPost("reset-email/session")]
+        public async Task<IActionResult> OpenResetEmailSession()
+        {
+            var result = await _userService.OpenSessionAsync();
+
+            return result.ToHttpResult();
+        }
+
+        [HttpPost("reset-email/send-otp")]
+        public async Task<IActionResult> SendResetEmailOtp([FromQuery] string sessionKey)
+        {
+            var result = await _userService.SendVerficationCodeUserAsync(sessionKey);
+
+            return result.ToHttpResult();
+        }
+
+        [HttpPost("reset-email/verify-otp")]
+        public async Task<IActionResult> VerifyResetEmailOtp([FromQuery] string otp,[FromQuery] string sessionKey)
+        {
+            var result = await _userService.VerifyUserAsync(otp, sessionKey);
+
+            return result.ToHttpResult();
+        }
+
+        [HttpPost("reset-email/new-email")]
+        public async Task<IActionResult> WriteNewEmail([FromQuery] string sessionKey,[FromQuery] string newEmail)
+        {
+            var result = await _userService.WriteNewEmailAsync(sessionKey, newEmail);
+
+            return result.ToHttpResult();
+        }
+
+        [HttpPost("reset-email")]
+        public async Task<IActionResult> ResetEmail([FromQuery] string sessionKey)
+        {
+            var result = await _userService.ResetEmailAsync(sessionKey);
+
+            return result.ToHttpResult();
         }
     }
 }
