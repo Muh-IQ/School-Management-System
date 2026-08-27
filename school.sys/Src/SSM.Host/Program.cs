@@ -4,7 +4,7 @@ using Modules.Communication.Infrastructure.Subscriber;
 using Modules.Communication.WebAPI.Extensions;
 using Modules.School.Application.Subscriber;
 using Modules.School.WebAPI.Extensions;
-using Modules.User.WebAPI.Extensions;
+using Modules.IdP.WebAPI.Extensions;
 using SharedKernel;
 using SSM.Host.Common;
 using SSM.Host.DependencyInjection;

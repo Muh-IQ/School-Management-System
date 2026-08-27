@@ -19,8 +19,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Src\Modules\User\Modules.User.Application\Modules.User.Application.csproj" />
-    <ProjectReference Include="..\..\..\Src\Modules\User\Modules.User.Domain\Modules.User.Domain.csproj" />
+    <ProjectReference Include="..\..\..\Src\Modules\IdP\Modules.IdP.Application\Modules.IdP.Application.csproj" />
+    <ProjectReference Include="..\..\..\Src\Modules\IdP\Modules.IdP.Domain\Modules.IdP.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

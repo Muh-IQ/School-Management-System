@@ -1,9 +1,9 @@
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
-using Modules.User.Application.Common.DTOs;
-using Modules.User.Domain.Entities;
-using Modules.User.Infrastructure.Presistent;
+using Modules.IdP.Application.Common.DTOs;
+using Modules.IdP.Domain.Entities;
+using Modules.IdP.Infrastructure.Presistent;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -121,7 +121,7 @@ public class UserControllerTests
     {
         using var scope = factory.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<UserDbContext>();
-        context.Users.Add(new Modules.User.Domain.Entities.User
+        context.Users.Add(new Modules.IdP.Domain.Entities.User
         {
             Id = Guid.NewGuid(),
             Name = "Existing User",
