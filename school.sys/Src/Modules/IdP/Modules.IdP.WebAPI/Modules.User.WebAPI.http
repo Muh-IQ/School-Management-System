@@ -1,0 +1,6 @@
+@Modules.IdP.WebAPI_HostAddress = http://localhost:5003
+
+GET {{Modules.IdP.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

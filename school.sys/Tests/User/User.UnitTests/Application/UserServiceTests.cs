@@ -1,21 +1,20 @@
 ﻿using FluentAssertions;
-using Modules.User.Application.Common.DTOs;
-using Modules.User.Application.Common.Results;
-using Modules.User.Application.Common.StaticError;
-using Modules.User.Application.Helpers;
-using Modules.User.Application.IServices;
-using Modules.User.Application.Services;
-using Modules.User.Domain.DTOs;
-using Modules.User.Domain.Entities;
-using Modules.User.Domain.IRepositories;
-using Modules.User.Domain.Utilities;
+using Modules.IdP.Application.Common.DTOs;
+using Modules.IdP.Application.Common.Results;
+using Modules.IdP.Application.Common.StaticError;
+using Modules.IdP.Application.Helpers;
+using Modules.IdP.Application.IServices;
+using Modules.IdP.Application.Services;
+using Modules.IdP.Domain.DTOs;
+using Modules.IdP.Domain.IRepositories;
+using Modules.IdP.Domain.Utilities;
 using Moq;
 using SharedKernel;
 using SharedKernel.Events;
 using System.Linq.Expressions;
 using Xunit;
 
-using user = Modules.User.Domain.Entities;
+using user = Modules.IdP.Domain.Entities;
 
 namespace User.UnitTests.Application;
 
@@ -29,8 +28,8 @@ public class UserServiceTests
     private readonly Mock<IUnitOfWork> _unitOfWork;
     private readonly Mock<IEventBus> _eventBus;
     private readonly UserService _service;
-    private readonly MicroBatch<Modules.User.Domain.BatchRecord.UserRegistrationBatchItem> _userBatcher;
-    //private readonly MicroBatch<Modules.User.Domain.Entities.UserRole> _userRoleBatcher;
+    private readonly MicroBatch<Modules.IdP.Domain.BatchRecord.UserRegistrationBatchItem> _userBatcher;
+    //private readonly MicroBatch<Modules.IdP.Domain.Entities.UserRole> _userRoleBatcher;
 
     public UserServiceTests()
     {
@@ -43,12 +42,12 @@ public class UserServiceTests
         _eventBus = new Mock<IEventBus>();
 
         // Create MicroBatch instances
-        _userBatcher = new MicroBatch<Modules.User.Domain.BatchRecord.UserRegistrationBatchItem>(
+        _userBatcher = new MicroBatch<Modules.IdP.Domain.BatchRecord.UserRegistrationBatchItem>(
             100,
             TimeSpan.FromSeconds(10),
             async users => { });
 
-        //_userRoleBatcher = new MicroBatch<Modules.User.Domain.Entities.UserRole>(
+        //_userRoleBatcher = new MicroBatch<Modules.IdP.Domain.Entities.UserRole>(
         //    100,
         //    TimeSpan.FromSeconds(10),
         //    async userRoles => { });
@@ -635,7 +634,7 @@ public class UserServiceTests
             Times.Never);
 
         _genericRepository.Verify(
-            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()),
+            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.IdP.Domain.Entities.User, bool>>>()),
             Times.Never);
     }
 
@@ -663,7 +662,7 @@ public class UserServiceTests
         Assert.Equal(ErrorType.NotFound, result.MainError.ErrorType);
 
         _genericRepository.Verify(
-            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()),
+            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.IdP.Domain.Entities.User, bool>>>()),
             Times.Never);
     }
 
@@ -699,7 +698,7 @@ public class UserServiceTests
         Assert.Equal(ErrorType.BadRequest, result.MainError.ErrorType);
 
         _genericRepository.Verify(
-            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()),
+            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.IdP.Domain.Entities.User, bool>>>()),
             Times.Never);
 
         _cacheService.Verify(
@@ -742,7 +741,7 @@ public class UserServiceTests
         Assert.Equal(ErrorType.BadRequest, result.MainError.ErrorType);
 
         _genericRepository.Verify(
-            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()),
+            x => x.ExistsAsync(It.IsAny<Expression<Func<Modules.IdP.Domain.Entities.User, bool>>>()),
             Times.Never);
 
         _cacheService.Verify(
@@ -775,7 +774,7 @@ public class UserServiceTests
 
         _genericRepository
             .Setup(x => x.ExistsAsync(
-                It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()))
+                It.IsAny<Expression<Func<Modules.IdP.Domain.Entities.User, bool>>>()))
             .ReturnsAsync(true);
 
         // Act
@@ -822,7 +821,7 @@ public class UserServiceTests
 
         _genericRepository
             .Setup(x => x.ExistsAsync(
-                It.IsAny<Expression<Func<Modules.User.Domain.Entities.User, bool>>>()))
+                It.IsAny<Expression<Func<Modules.IdP.Domain.Entities.User, bool>>>()))
             .ReturnsAsync(false);
 
         // Act
@@ -954,7 +953,7 @@ public class UserServiceTests
         //Arrange
         var userId = Guid.NewGuid();
 
-        var user = new Modules.User.Domain.Entities.User
+        var user = new Modules.IdP.Domain.Entities.User
         {
             Id = userId,
             Name = "Mohammed",
@@ -977,7 +976,7 @@ public class UserServiceTests
     .ReturnsAsync(user);
 
         _genericRepository
-            .Setup(x => x.UpdateAsync(It.IsAny<Modules.User.Domain.Entities.User>()))
+            .Setup(x => x.UpdateAsync(It.IsAny<Modules.IdP.Domain.Entities.User>()))
             .ReturnsAsync(true);
         // Act
         var result = await _service.UpdateAsync(dto);
@@ -1012,7 +1011,7 @@ public class UserServiceTests
 
         _genericRepository
             .Setup(x => x.GetByIdAsync(dto.Id))
-            .ReturnsAsync((Modules.User.Domain.Entities.User?)null);
+            .ReturnsAsync((Modules.IdP.Domain.Entities.User?)null);
         // Act
 
         var result = await _service.UpdateAsync(dto);
@@ -1026,7 +1025,7 @@ public class UserServiceTests
             Times.Once);
 
         _genericRepository.Verify(
-            x => x.UpdateAsync(It.IsAny<Modules.User.Domain.Entities.User>()),
+            x => x.UpdateAsync(It.IsAny<Modules.IdP.Domain.Entities.User>()),
             Times.Never);
     }
 

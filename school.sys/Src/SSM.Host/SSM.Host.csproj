@@ -20,7 +20,7 @@
     <ProjectReference Include="..\Modules\School\Modules.School.Application\Modules.School.Application.csproj" />
     <ProjectReference Include="..\Modules\School\Modules.School.WebAPI\Modules.School.WebAPI.csproj" />
     <ProjectReference Include="..\Modules\SharedKernel\SharedKernel.csproj" />
-    <ProjectReference Include="..\Modules\User\Modules.User.WebAPI\Modules.User.WebAPI.csproj" />
+    <ProjectReference Include="..\Modules\IdP\Modules.IdP.WebAPI\Modules.IdP.WebAPI.csproj" />
   </ItemGroup>
 
 </Project>

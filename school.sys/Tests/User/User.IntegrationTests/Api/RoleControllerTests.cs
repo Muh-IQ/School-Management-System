@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
-using Modules.User.Domain.Entities;
-using Modules.User.Infrastructure.Presistent;
+using Modules.IdP.Domain.Entities;
+using Modules.IdP.Infrastructure.Presistent;
 using System.Net;
 using System.Text.Json;
 using Xunit;

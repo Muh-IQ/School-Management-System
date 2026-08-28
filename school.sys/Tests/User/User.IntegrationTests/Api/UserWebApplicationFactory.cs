@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Modules.User.Infrastructure.Presistent;
+using Modules.IdP.Infrastructure.Presistent;
 using SharedKernel;
 using System;
 

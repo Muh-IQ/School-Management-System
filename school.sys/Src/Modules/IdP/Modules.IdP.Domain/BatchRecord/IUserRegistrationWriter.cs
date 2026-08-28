@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Modules.IdP.Domain.BatchRecord
+{
+    public interface IUserRegistrationWriter
+    {
+       Task WriteAsync(
+        IReadOnlyCollection<UserRegistrationBatchItem> registrations);
+    }
+}

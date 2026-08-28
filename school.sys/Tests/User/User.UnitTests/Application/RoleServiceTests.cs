@@ -1,9 +1,9 @@
-﻿using Modules.User.Application.Common.Results;
-using Modules.User.Domain.DTOs;
-using Modules.User.Domain.IRepositories;
+﻿using Modules.IdP.Application.Common.Results;
+using Modules.IdP.Domain.DTOs;
+using Modules.IdP.Domain.IRepositories;
 using Moq;
-using Modules.User.Application.Services;
-using Modules.User.Application.IServices;
+using Modules.IdP.Application.IServices;
+using Modules.IdP.Application.Services;
 namespace User.UnitTests.Application;
 
 
