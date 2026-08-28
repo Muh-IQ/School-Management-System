@@ -34,7 +34,7 @@ namespace Modules.IdP.Infrastructure.Repositories
                 Email = u.Email,
                 Phone=u.Phone,
                 gender = u.Gender ? "Female" : "Male"
-                ,DOB=u.DOB,
+                ,DOB=u.DateOfBirth,
                 IsActive=u.IsActive
             })
             .ToListAsync();

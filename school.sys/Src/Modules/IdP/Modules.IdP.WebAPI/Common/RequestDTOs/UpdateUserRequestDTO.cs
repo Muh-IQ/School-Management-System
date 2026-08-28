@@ -1,4 +1,5 @@
-﻿namespace Modules.IdP.WebAPI.Common.DTOs
+﻿namespace Modules.IdP.WebAPI.Common.RequestDTOs
+
 {
     public class UpdateUserRequestDTO
     {

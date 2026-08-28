@@ -23,7 +23,7 @@ namespace Modules.IdP.Infrastructure.Presistent.Seeds
                     // and to avoid generating a new random salt on every migration.
                     Password = DefaultPasswordHash,
 
-                    DOB = new DateTime(1990, 1, 1),
+                    DateOfBirth = new DateTime(1990, 1, 1),
                     Gender = true,
                     StartDate = new DateTime(2026, 1, 1),
                     EndDate = null,
@@ -41,7 +41,7 @@ namespace Modules.IdP.Infrastructure.Presistent.Seeds
                     Phone = "0000000002",
                     Password = DefaultPasswordHash,
 
-                    DOB = new DateTime(1990, 1, 1),
+                    DateOfBirth = new DateTime(1990, 1, 1),
                     Gender = true,
                     StartDate = new DateTime(2026, 1, 1),
                     EndDate = null,
@@ -59,7 +59,7 @@ namespace Modules.IdP.Infrastructure.Presistent.Seeds
                     Phone = "0000000003",
                     Password = DefaultPasswordHash,
 
-                    DOB = new DateTime(1990, 1, 1),
+                    DateOfBirth = new DateTime(1990, 1, 1),
                     Gender = true,
                     StartDate = new DateTime(2026, 1, 1),
                     EndDate = null,
@@ -77,7 +77,7 @@ namespace Modules.IdP.Infrastructure.Presistent.Seeds
                     Phone = "0000000004",
                     Password = DefaultPasswordHash,
 
-                    DOB = new DateTime(2005, 1, 1),
+                    DateOfBirth = new DateTime(2005, 1, 1),
                     Gender = true,
                     StartDate = new DateTime(2026, 1, 1),
                     EndDate = null,
@@ -95,7 +95,7 @@ namespace Modules.IdP.Infrastructure.Presistent.Seeds
                     Phone = "0000000005",
                     Password = DefaultPasswordHash,
 
-                    DOB = new DateTime(1985, 1, 1),
+                    DateOfBirth = new DateTime(1985, 1, 1),
                     Gender = true,
                     StartDate = new DateTime(2026, 1, 1),
                     EndDate = null,

@@ -128,7 +128,7 @@ public class UserControllerTests
             Email = email,
             Phone = phone,
             Password = "hashed-password",
-            DOB = DateTime.UtcNow.AddYears(-25),
+            DateOfBirth = DateTime.UtcNow.AddYears(-25),
             Gender = true,
             StartDate = DateTime.UtcNow,
             IsActive = true,

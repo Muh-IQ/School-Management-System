@@ -13,7 +13,7 @@ namespace Modules.IdP.Domain.Entities
         public string Phone { get; set; }
         public string Password { get; set; }
 
-        public DateTime DOB { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public bool Gender { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime? EndDate { get; set; }

@@ -39,8 +39,13 @@ namespace Modules.Communication.Infrastructure.ThirdParty.Email
 
         public async Task SendPasswordAsync(string email, string password)
         {
-            string subject = "Your password";
+            string subject = "Your School Management System Password";
             await SendAsync(email, subject, HTMLBodys.SendPasswordBody(password));
+        }
+        public async Task SendOTPAsync(string email, string otp)
+        {
+            string subject = "Your School Management System Verification Code";
+            await SendAsync(email,subject,HTMLBodys.SendOtpBody(otp));
         }
        
     }
