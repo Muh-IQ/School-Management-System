@@ -9,7 +9,9 @@ namespace Modules.IdP.Domain.IRepositories
 {
         public interface IUserRepository
         {
-                Task<IEnumerable<DTOs.UserDto>> GetUsersAsync(int page, int pageSize);
+        Task <DTOs.UserTokenDTO?> GetUserTokenInfoByIdAsync(Guid id);
+
+        Task<IEnumerable<DTOs.UserDto>> GetUsersAsync(int page, int pageSize);
 
                 /// <summary>
                 /// Stages the specified entity for insertion into the database.
