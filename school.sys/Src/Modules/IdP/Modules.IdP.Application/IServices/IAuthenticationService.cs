@@ -1,4 +1,5 @@
 ﻿using Modules.IdP.Application.Common.Results;
+using Modules.IdP.Domain.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Modules.IdP.Application.IServices
 {
-    public interface IAuthNService
+    public interface IAuthenticationService
     {
-        Task<Result<string>> GenerateTokenAsync(Guid UserId);
+        Result<string> GenerateJWTToken(UserTokenDTO user);
     }
 }

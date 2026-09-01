@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Modules.IdP.Application.IServices;
+using Modules.IdP.Domain.DTOs;
 using Modules.IdP.WebAPI.Extensions;
 
 namespace Modules.IdP.WebAPI.Controllers.V1
 {
-    [Route("api/v1/AuthN")]
+    [Route("api/v1/Authentication")]
     [ApiController]
-    public class AuthNController : ControllerBase
+    public class AuthenticationController : ControllerBase
     {
-        private readonly IAuthNService _authNService;
-        public AuthNController(IAuthNService authNService)
+        private readonly IAuthenticationService _authNService;
+        public AuthenticationController(IAuthenticationService authNService)
         {
             _authNService = authNService;
         }
 
         //This api for test Generate token
         [HttpPost]
-        public async Task<IActionResult> GenerateToken(Guid Id)
+        public IActionResult GenerateToken(UserTokenDTO user)
         {
-            var result = await _authNService.GenerateTokenAsync(Id);
+            var result = _authNService.GenerateJWTToken(user);
             return result.ToHttpResult();
         }
     }

@@ -12,7 +12,7 @@ using System.Text;
 
 namespace Modules.IdP.Application.Services
 {
-    public class AuthNService : IAuthNService
+    public class AuthNService : IAuthenticationService
     {
         private readonly IUserRepository _userRepository;
         private readonly JWTSttings _settings;
@@ -23,29 +23,7 @@ namespace Modules.IdP.Application.Services
             _settings = settings.Value;
         }
 
-        public async Task<Result<string>> GenerateTokenAsync(Guid UserId)
-        {
-            var user = await _userRepository.GetUserTokenInfoByIdAsync(UserId);
-            if (user == null)
-            {
-                return Result<string>.Failure(ErrorType.NotFound, UserErrors.NotFoundMessage(UserId));
-            }
-            if (!user.IsActive)
-            {
-                return Result<string>.Failure(ErrorType.Unauthorized, UserErrors.ActivateFailedMessage());
-            }
-
-            if (string.IsNullOrWhiteSpace(user.RoleCode))
-            {
-                return Result<string>.Failure(ErrorType.Unauthorized, RoleErrors.UnauthorizedMessage());
-            }
-
-            var token = GenerateJWTToken(user);
-
-            return Result<string>.Success(token);
-        }
-
-        private string GenerateJWTToken(UserTokenDTO user)
+        public Result<string> GenerateJWTToken(UserTokenDTO user)
         {
             var claims = new List<Claim>
             {
@@ -69,7 +47,11 @@ namespace Modules.IdP.Application.Services
                 expires: DateTime.UtcNow.AddMinutes(_settings.ExpirationInMinutes),
                 signingCredentials: credentials);
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+           
+             var AccessToken = new JwtSecurityTokenHandler().WriteToken(token);
+
+            return Result<string>.Success(AccessToken);
         }
+
     }
 }
