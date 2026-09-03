@@ -17,7 +17,9 @@ namespace Modules.IdP.Application
             services.AddSingleton<ICacheService, MemoryCacheService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
-
+            services.AddScoped<IResetSecurityDataService, ResetSecurityDataService>();
+            services.AddScoped<IVerificationCodeService, VerficationCodeService>();
+            services.AddScoped<ISessionService, SessionService>();
 
             services.AddSingleton<MicroBatch<UserRegistrationBatchItem>>(sp =>
             {

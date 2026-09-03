@@ -3,7 +3,7 @@ using System.Security.Cryptography;
 
 namespace Modules.IdP.Application.Helpers
 {
-    public class OTP
+    public class OTPHelper
     {
         public string Generate()
         {
