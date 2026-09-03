@@ -63,7 +63,8 @@ namespace Modules.IdP.Application.Common.StaticError
 
         public static string NewEmailNotConfirmedMessage()
             => "The new email address has not been confirmed.";
-
+        public static string CurrentEmailNotConfirmedMessage()
+            => "The current email address has not been confirmed.";
         public static string CreateFailedMessage()
             => "Failed to create the session.";
 
