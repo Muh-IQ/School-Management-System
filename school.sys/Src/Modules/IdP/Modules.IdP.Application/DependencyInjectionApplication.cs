@@ -5,6 +5,8 @@ using Modules.IdP.Application.IServices;
 using Modules.IdP.Application.Services;
 using Modules.IdP.Domain.BatchRecord;
 using Modules.IdP.Domain.IRepositories;
+using Modules.IdP.Application.Extensions;
+using Microsoft.Extensions.Options;
 
 namespace Modules.IdP.Application
 {
@@ -17,7 +19,7 @@ namespace Modules.IdP.Application
             services.AddSingleton<ICacheService, MemoryCacheService>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserService, UserService>();
-
+            services.AddScoped<IAuthenticationService, AuthNService>();
 
             services.AddSingleton<MicroBatch<UserRegistrationBatchItem>>(sp =>
             {
@@ -41,6 +43,8 @@ namespace Modules.IdP.Application
                     });
             });
 
+            var JWTSettings = JWTSttingsExtension.CreateJWTSttings();
+            services.AddSingleton(Options.Create(JWTSettings));
 
             services.AddHostedService<UserBatchWorker>();
 

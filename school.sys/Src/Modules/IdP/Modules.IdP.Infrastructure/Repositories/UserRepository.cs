@@ -41,7 +41,25 @@ namespace Modules.IdP.Infrastructure.Repositories
 
             return users;
         }
-      
+
+        public async Task<UserTokenDTO?> GetUserTokenInfoByIdAsync(Guid id)
+        {
+            var user = await context.Users
+            .Where(u => u.Id == id)
+            .Select(u => new UserTokenDTO
+            {
+                Id = u.Id,
+                Email = u.Email,
+                IsActive = u.IsActive,
+                RoleCode = u.UserRoles
+                    .Where(ur => ur.IsActive && ur.Role.IsActive)
+                    .Select(ur => ur.Role.Code)
+                    .FirstOrDefault()
+            })
+            .FirstOrDefaultAsync();
+
+            return user;
+        }
         /// <summary>
         /// Stages the specified entity for insertion into the database.
         /// The entity is added to the current <see cref="DbContext"/> change tracker,
