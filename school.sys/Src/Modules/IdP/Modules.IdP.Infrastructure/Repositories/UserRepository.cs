@@ -2,12 +2,6 @@
 using Modules.IdP.Domain.DTOs;
 using Modules.IdP.Domain.IRepositories;
 using Modules.IdP.Infrastructure.Presistent;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Modules.IdP.Infrastructure.Repositories
@@ -21,7 +15,24 @@ namespace Modules.IdP.Infrastructure.Repositories
             return await context.Users
                         .FirstOrDefaultAsync(x => x.Id == id);
         }
-        
+
+        public Task<UserTokenDTO?> GetUserByEmailAndPasswordAsync(string email, string password)
+        {
+            return context.Users
+                .Where(u => u.Email == email && u.Password == password)
+                .Select(u => new UserTokenDTO
+                {
+                    Id = u.Id,
+                    Email = u.Email,
+                    IsActive = u.IsActive,
+                    RoleCode = u.UserRoles
+                        .Where(ur => ur.IsActive && ur.Role.IsActive)
+                        .Select(ur => ur.Role.Code)
+                        .FirstOrDefault()
+                })
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<IEnumerable<UserDto>> GetUsersAsync(int page, int pageSize)
         {
             var users = await context.Users
@@ -42,24 +53,6 @@ namespace Modules.IdP.Infrastructure.Repositories
             return users;
         }
 
-        public async Task<UserTokenDTO?> GetUserTokenInfoByIdAsync(Guid id)
-        {
-            var user = await context.Users
-            .Where(u => u.Id == id)
-            .Select(u => new UserTokenDTO
-            {
-                Id = u.Id,
-                Email = u.Email,
-                IsActive = u.IsActive,
-                RoleCode = u.UserRoles
-                    .Where(ur => ur.IsActive && ur.Role.IsActive)
-                    .Select(ur => ur.Role.Code)
-                    .FirstOrDefault()
-            })
-            .FirstOrDefaultAsync();
-
-            return user;
-        }
         /// <summary>
         /// Stages the specified entity for insertion into the database.
         /// The entity is added to the current <see cref="DbContext"/> change tracker,

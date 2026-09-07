@@ -9,7 +9,7 @@ namespace Modules.IdP.Domain.IRepositories
 {
         public interface IUserRepository
         {
-        Task <DTOs.UserTokenDTO?> GetUserTokenInfoByIdAsync(Guid id);
+        Task <UserTokenDTO?> GetUserByEmailAndPasswordAsync(string email, string password);
 
         Task<IEnumerable<DTOs.UserDto>> GetUsersAsync(int page, int pageSize);
 

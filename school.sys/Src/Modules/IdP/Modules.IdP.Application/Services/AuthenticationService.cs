@@ -12,18 +12,19 @@ using System.Text;
 
 namespace Modules.IdP.Application.Services
 {
-    public class AuthNService : IAuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly IUserRepository _userRepository;
         private readonly JWTSttings _settings;
-
-        public AuthNService(IUserRepository userRepository, IOptions<JWTSttings> settings)
+        private readonly ICacheService _cacheService;
+        public AuthenticationService(IUserRepository userRepository, IOptions<JWTSttings> settings,ICacheService cacheService)
         {
             _userRepository = userRepository;
             _settings = settings.Value;
+            _cacheService = cacheService;
         }
 
-        public Result<string> GenerateJWTToken(UserTokenDTO user)
+        private string GenerateJWTToken(UserTokenDTO user)
         {
             var claims = new List<Claim>
             {
@@ -50,8 +51,46 @@ namespace Modules.IdP.Application.Services
            
              var AccessToken = new JwtSecurityTokenHandler().WriteToken(token);
 
-            return Result<string>.Success(AccessToken);
+            return AccessToken;
         }
 
+        public async Task<Result<string>> LoginAsync(string Email, string Password)
+        {
+            var attemptKey = $"LOGIN-ATTEMPTS-{Email.ToLowerInvariant()}";
+
+            var attempts = await _cacheService.GetAsync<int>(attemptKey);
+
+            if (attempts >= 5)
+            {
+                return Result<string>.Failure(ErrorType.Unauthorized,UserErrors.AccountLockedMessage());
+            }
+
+            var user = await _userRepository
+                .GetUserByEmailAndPasswordAsync(Email, Password);
+
+            if (user == null)
+            {
+                attempts++;
+
+                await _cacheService.SetAsync(attemptKey,attempts,TimeSpan.FromMinutes(15));
+
+                if (attempts >= 5)
+                {
+                    return Result<string>.Failure(ErrorType.Unauthorized,UserErrors.AccountLockedMessage());
+                }
+
+                return Result<string>.Failure(ErrorType.Unauthorized,UserErrors.InvalidCredentialsMessage());
+            }
+
+            await _cacheService.RemoveAsync(attemptKey);
+
+            var token = GenerateJWTToken(user);
+
+            var cacheKey = $"USER-TOKEN-{user.Id}";
+
+            await _cacheService.SetAsync(cacheKey,token,TimeSpan.FromHours(1));
+
+            return Result<string>.Success(token);
+        }
     }
 }
