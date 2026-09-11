@@ -2,6 +2,10 @@
 {
     public static class UserErrors
     {
+        public static string AccountLockedMessage()
+    => "Account is locked due to too many failed login attempts.";
+        public static string InvalidCredentialsMessage() 
+            => "Invalid email or password.";
         public static string UnauthorizedMessage(Guid id)
             => $"User with ID '{id}' is not authorized to perform this operation.";
 

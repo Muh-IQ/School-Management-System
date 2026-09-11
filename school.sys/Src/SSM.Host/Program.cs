@@ -44,7 +44,7 @@ builder.Services.AddControllers();
 builder.Services.AddSchoolModule(builder.Configuration);
 builder.Services.AddUserModule();
 builder.Services.AddCommunicationModule();
-
+builder.Services.AddJwtAuthentication();
 
 
 
@@ -74,9 +74,9 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");      
+app.UseCors("AllowAll");
 
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
