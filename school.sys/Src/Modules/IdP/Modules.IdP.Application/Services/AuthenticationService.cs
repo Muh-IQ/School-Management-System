@@ -86,10 +86,6 @@ namespace Modules.IdP.Application.Services
 
             var token = GenerateJWTToken(user);
 
-            var cacheKey = $"USER-TOKEN-{user.Id}";
-
-            await _cacheService.SetAsync(cacheKey,token,TimeSpan.FromHours(1));
-
             return Result<string>.Success(token);
         }
     }
